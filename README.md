@@ -19,7 +19,7 @@ Project starting on port 3000.
  
 ## Netlify
 
-The project has been published on Netlify and is accessible via the link: [open](https://dulcet-faloodeh-fd8eb8.netlify.app/src/pages/profile/edit).
+The project has been published on Netlify and is accessible via the link: [open](https://dulcet-faloodeh-fd8eb8.netlify.app/index.html).
 
 ## Development stack
 <a name="devstack"></a>
