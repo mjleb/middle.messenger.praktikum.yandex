@@ -4,7 +4,7 @@
 Development of a web chat using pure JavaScript.
 
 ## Design
-Chat layout in Figma ![open](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?)node-id=0%3A1
+Chat layout in Figma [open](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1)
 
 ## Status
 Project in the development stage:
@@ -19,7 +19,7 @@ Project starting on port 3000.
  
 ## Netlify
 
-The project has been published on Netlify and is accessible via the link: ![open](https://dulcet-faloodeh-fd8eb8.netlify.app/src/pages/profile/edit).
+The project has been published on Netlify and is accessible via the link: [open](https://dulcet-faloodeh-fd8eb8.netlify.app/src/pages/profile/edit).
 
 ## Development stack
 <a name="devstack"></a>
