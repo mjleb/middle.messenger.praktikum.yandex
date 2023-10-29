@@ -1,0 +1,13 @@
+.auth {
+    &>div {
+        max-width: 340px;
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+}
+ 
+.card {
+    box-shadow: 0px 0px 6px 0px #00000024;
+    padding: 3rem;
+    border-radius: 12px;
+  }

@@ -1,0 +1,22 @@
+{{#page title="Чат"}}
+<section class="chat">
+    <div class="menu">
+        <div class="profile_link"><a href="../profile/index.html">Профиль ></a></div>
+        <div class="search">
+            <form onsubmit="return false;">
+                {{> forms/input label="" name="search"  type="text" value=""  helpingText="" placeholder="Поиск" }}
+            </form>
+        </div>
+        <div class="users">
+            {{> chat/user  img="" name="Киноклуб" date="15:12" text="Друзья, у меня для вас особенный выпуск новостей! для вас особенный выпуск" number_messages="4" status=""}}
+            {{> chat/user  img="" name="тет-а-теты" date="Ср" text="И Human Interface Guidelines и Material Design рекомендуют " number_messages="" status="active"}}
+
+        </div>
+    </div>
+    <div class="context">
+        <div class="no_data"></div>
+        Выберите чат чтобы отправить сообщение
+    </div>
+</section>
+
+{{/page}}

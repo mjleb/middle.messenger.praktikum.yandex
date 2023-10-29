@@ -1,0 +1,14 @@
+@import './pages/global.css'; /* global styles */
+@import './partials/forms/forms.css';
+@import './partials/modal/modal.css';
+@import './pages/auth/auth.css';
+@import './pages/profile/profile.css';
+@import './pages/chat/chat.css';
+@import './pages/errors/errors.css';
+
+/* index */
+.menu-link {
+  max-width: 340px;
+  font-size: 15px;
+  margin-bottom: 20px;
+}

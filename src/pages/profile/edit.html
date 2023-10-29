@@ -1,0 +1,11 @@
+{{#page title="Редактирование профиля"}}
+<script type="module" src="./index.js"></script>
+<section class="profile">
+    <div>
+        {{> profile/avatar name="Иван" type="submit" }}
+        {{> profile/edit first_name="Иван" second_name="Иванов" display_name="Иван" login="ivanivanov"
+        email="pochta@yandex.ru" phone="+7 (909) 967 30 30" }}
+    </div>
+</section>
+
+{{/page}}

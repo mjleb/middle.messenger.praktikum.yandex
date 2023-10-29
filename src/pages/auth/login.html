@@ -1,0 +1,18 @@
+{{#page title="Вход"}}
+<section class="auth">
+    <div class="card">
+      <form onsubmit="return false; ">
+        <h1>Вход</h1>
+        {{> forms/input label="Логин" name="login" required="true" type="text" value=""  helpingText="" status="" placeholder=""}}
+        {{> forms/input label="Пароль" name="password" required="true" type="password" value=""  helpingText="" status="" placeholder=""}}
+        {{> forms/button label="Войти" type="submit" }}
+        <div>
+          <a href="/src/pages/auth/signin.html">Нет аккаунта?</a>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+{{/page}}
+ 
