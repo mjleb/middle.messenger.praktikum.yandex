@@ -130,7 +130,7 @@
         & .date {
             display: flex;
             justify-content: right;
-            align-items: end;
+            align-items:flex-end;
             font-size: 11px;
             text-align: right;
 

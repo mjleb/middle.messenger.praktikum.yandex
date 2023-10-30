@@ -21,7 +21,6 @@
     "vite-plugin-handlebars": "^1.6.0"
   },
   "engines": {
-    "node": ">= 19.8.1",
-    "npm": ">= 9.5.1"
+    "node": ">= 16"
   }
 }
