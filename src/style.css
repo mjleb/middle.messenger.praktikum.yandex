@@ -33,8 +33,13 @@ main {
 }
 
 /* index */
+.menu{
+  padding-inline-start: 0px;
+}
 .menu-link {
   max-width: 340px;
   font-size: 15px;
   margin-bottom: 20px;
+  list-style: none;
+
 }
