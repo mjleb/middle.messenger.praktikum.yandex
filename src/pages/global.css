@@ -7,11 +7,9 @@
   --colorGrey: #999999;
 }
 
-/*                   */
-@font-face {
-  font-family: 'Inter';
-  src: url(../../public/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf) format('ttf');
-}
+/*                   
+
+*/
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
