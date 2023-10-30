@@ -6,6 +6,7 @@
 @import './pages/chat/chat.css';
 @import './pages/errors/errors.css';
 
+/*
 @font-face {
   font-family: 'Inter';
   src: url(../public/fonts/Inter/static/Inter-Regular.ttf) format('ttf');
@@ -21,6 +22,7 @@
   src: url(../public/fonts/Inter/static/Inter-SemiBold.ttf) format('ttf');
   font-weight: 600;
 }
+*/
 
 /* index */
 .menu-link {
