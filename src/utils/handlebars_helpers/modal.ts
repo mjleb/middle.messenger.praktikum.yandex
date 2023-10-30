@@ -13,6 +13,6 @@ export default function modal(this: Object, { fn, hash }: HelperOptions): string
         </div>
     </div>
 </div>
-<script  src="../../partials/modal/modal.js"></script>
+<script type="module" src="../../partials/modal/modal.js"></script>
     `;
 }
