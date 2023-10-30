@@ -1,4 +1,3 @@
-
 {{#modal title="Загрузите файл" id="avatar"}}
 <form onsubmit="return false; " id="form-avatar">
     {{> forms/input label="" name="avatar" required="true" type="file" value="" helpingText="" status=""
@@ -10,9 +9,10 @@
 
     {{> forms/button label="Поменять" type="submit" }}
 </form>
+
 {{/modal}}
 
-<div class="avatar" id="avatar" onclick="modalOpen('avatar');">
+<div class="avatar" id="avatar" onclick="modalOpen('avatar')">
     <div>
         <span class="notphoto">И</span>
         <h1>{{name}}</h1>

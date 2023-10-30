@@ -1,4 +1,5 @@
-@import './pages/global.css'; /* global styles */
+@import './pages/global.css';
+/* global styles */
 @import './partials/forms/forms.css';
 @import './partials/modal/modal.css';
 @import './pages/auth/auth.css';
@@ -23,6 +24,13 @@
   font-weight: 600;
 }
 */
+main {
+  display: flex;
+  place-items: center;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+}
 
 /* index */
 .menu-link {
