@@ -1,0 +1,45 @@
+@import './pages/global.css';
+/* global styles */
+@import './partials/forms/forms.css';
+@import './partials/modal/modal.css';
+@import './pages/auth/auth.css';
+@import './pages/profile/profile.css';
+@import './pages/chat/chat.css';
+@import './pages/errors/errors.css';
+
+/*
+@font-face {
+  font-family: 'Inter';
+  src: url(../public/fonts/Inter/static/Inter-Regular.ttf) format('ttf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url(../public/fonts/Inter/static/Inter-Medium.ttf) format('ttf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url(../public/fonts/Inter/static/Inter-SemiBold.ttf) format('ttf');
+  font-weight: 600;
+}
+*/
+main {
+  display: flex;
+  place-items: center;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* index */
+.menu{
+  padding-inline-start: 0px;
+}
+.menu-link {
+  max-width: 340px;
+  font-size: 15px;
+  margin-bottom: 20px;
+  list-style: none;
+
+}

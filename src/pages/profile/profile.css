@@ -1,0 +1,96 @@
+.profile {}
+
+.avatar {
+  display: inline-block;
+  text-align: center;
+  &>div:hover{
+    background-color: #c0c0c0;
+  }
+
+  &>div {
+    background-color: #EFEFEF;
+    border-radius: 50%;
+    display: inline-block;
+    width: 11rem;
+    height: 11rem;
+    justify-content: center;
+  }
+
+  & .notphoto {
+    border-radius: 50%;
+    color: #CDCDCD;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 11rem;
+    height: 11rem;
+    font-size: 4rem;
+    font-weight: 500;
+    pointer-events: none;
+    text-transform: uppercase;
+  }
+}
+
+.profile {
+
+  &>div {
+    max-width: 510px;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  & .label {
+    text-align: left;
+    width: 35%;
+  }
+
+  & .data {
+    text-align: right;
+    width: 65%;
+    color: #999999;
+  }
+
+  & ul {
+    margin-top: 5rem;
+    padding-inline-start: 0px;
+  }
+
+  & li {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+
+    font-size: 13px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: rgb(45, 55, 75);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid transparent;
+    border-bottom-color: rgb(220, 224, 229);
+  }
+
+  & li:last-child {
+    border: 0px solid transparent;
+  }
+
+  & .logout {
+    color: var(--colorDanger);
+  }
+
+  & input {
+    border-color: transparent;
+    margin-bottom: 0rem;
+    text-align: right;
+    color: #999999;
+  }
+
+  & .group-input {
+    margin-bottom: 0rem;
+  }
+
+  & button {
+    max-width: 280px;
+    margin-top: 2rem;
+  }
+}

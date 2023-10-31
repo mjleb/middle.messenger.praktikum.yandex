@@ -1,0 +1,118 @@
+@custom-media --viewport-xs(width<768px);
+@custom-selector :--heading h1, h2, h3, h4, h5, h6;
+
+:root {
+  --colorDanger: #FF2F2F;
+  --colorPrimary: #3369F3;
+  --colorGrey: #999999;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0em;
+  color: #1E1E1E;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+section {
+  display: block;
+  width: 100%;
+
+
+  text-align: center;
+  align-items: center;
+}
+
+section>div {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1280px;
+  margin: auto auto;
+
+}
+
+a {
+  font-size: 11px;
+  color: var(--colorPrimary);
+  text-decoration: inherit;
+}
+
+:--heading {
+  font-weight: 500;
+
+}
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 4rem;
+  font-weight: 500;
+}
+
+h2 {
+  font-size: 13px;
+}
+
+h3 {
+  font-size: 12px;
+}
+
+button {
+  --color: #fff;
+  --background-color: rgb(51, 105, 243);
+  --border-color: rgb(61, 112, 241);
+
+  font-family: inherit;
+  width: 100%;
+  font-weight: 500;
+  font-size: 13px;
+  color: #FFFFFF;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);;
+  background-color: var(--colorPrimary);
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: border-color 0.25s;
+
+  color: var(--color);
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+
+  &:focus {
+    filter: brightness(90%);
+  }
+
+  &:hover {
+    filter: brightness(95%);
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
+  }
+
+}
+
+.text-left {
+  text-align: left;
+}
