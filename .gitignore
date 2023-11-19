@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+public/font-awesome-4/less
+public/font-awesome-4/scss
