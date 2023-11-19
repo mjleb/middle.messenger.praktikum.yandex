@@ -6,7 +6,8 @@ section.errors {
   flex-direction: column;
   justify-self: center;
 
-  &>div {}
+  & > div {
+  }
 
   & h1 {
     font-size: 40px;
