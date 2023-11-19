@@ -20,7 +20,7 @@ function router(): void {
   console.log('window.location.href', window.location.href);
   // const template = new pageLogin();
   switch (window.location.pathname) {
-    case '/index.html':
+    case '/':
       render('#app', new PageNav());
       break;
     case '/login':
