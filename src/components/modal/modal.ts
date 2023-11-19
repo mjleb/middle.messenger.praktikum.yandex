@@ -1,7 +1,6 @@
-import Block from '@/services/block';
-import { IProps } from '@/types';
 import { tpl } from './modal.tpl';
-import { ItagEdit } from '@/types.ts';
+import Block from '@/services/block';
+import { IProps, ItagEdit } from '@/types';
 
 export class Modal extends Block {
   constructor(props: IProps) {

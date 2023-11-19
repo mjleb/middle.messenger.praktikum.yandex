@@ -183,11 +183,7 @@ export default abstract class Block {
       return;
     }
     Object.entries(this._events).forEach(([eventName, event]) => {
-      this._element.removeEventListener(
-        eventName,
-        event,
-        this._meta.tagName === 'form',
-      );
+      this._element.removeEventListener(eventName, event, this._meta.tagName === 'form');
     });
   }
 
@@ -204,11 +200,7 @@ export default abstract class Block {
           targetEl = this._element.querySelector(child) as HTMLElement;
         }
         // Add useCapture() for form elements
-        targetEl.addEventListener(
-          eventName,
-          events[eventName],
-          this._meta.tagName === 'form',
-        );
+        targetEl.addEventListener(eventName, events[eventName], this._meta.tagName === 'form');
       }
     });
   }
@@ -277,11 +269,7 @@ export default abstract class Block {
     const props: PropsType = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (
-        Array.isArray(value) &&
-        value.length > 0 &&
-        value.every((v) => v instanceof Block)
-      ) {
+      if (Array.isArray(value) && value.length > 0 && value.every((v) => v instanceof Block)) {
         children[key] = value;
       } else if (value instanceof Block) {
         children[key] = value;
@@ -297,26 +285,19 @@ export default abstract class Block {
   compile(template: string, context: PropsType) {
     const propsAndStubs = { ...context };
 
-    Object.entries(this.children).forEach(
-      ([key, component]: [string, Block | any]) => {
-        if (Array.isArray(component)) {
-          propsAndStubs[key] = component.map(
-            (child) => `<div data-id="${child.id}"></div>`,
-          );
-        } else {
-          propsAndStubs[key] = `<div data-id="${component._id}"></div>`;
-        }
-      },
-    );
-    //const tpl = Handlebars.compile(template)(propsAndStubs);
+    Object.entries(this.children).forEach(([key, component]: [string, Block | any]) => {
+      if (Array.isArray(component)) {
+        propsAndStubs[key] = component.map((child) => `<div data-id="${child.id}"></div>`);
+      } else {
+        propsAndStubs[key] = `<div data-id="${component._id}"></div>`;
+      }
+    });
     const html = Handlebars.compile(template)(propsAndStubs);
     const fragment = document.createElement('template');
     fragment.innerHTML = html;
 
     const replaceStub = (component: Block) => {
-      const stub = fragment.content.querySelector(
-        `[data-id="${component._id}"]`,
-      );
+      const stub = fragment.content.querySelector(`[data-id="${component._id}"]`);
       if (!stub) {
         return;
       }

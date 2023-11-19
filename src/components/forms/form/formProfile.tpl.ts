@@ -1,4 +1,4 @@
-export const tpl: string = ` 
+const tpl: string = ` 
     <ul>
     {{#each inputs}}
             <li>{{{this}}}</li>

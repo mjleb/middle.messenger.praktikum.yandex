@@ -31,21 +31,14 @@ export class HTTPTransport {
     if (dataGet) {
       urlnew = `${url}?${queryStringify(dataGet)}`;
     }
-    return this.request(
-      urlnew,
-      { ...options, method: METHODS.GET },
-      options.timeout,
-    );
+    return this.request(urlnew, { ...options, method: METHODS.GET }, options.timeout);
   };
 
-  put = (url: string, options: RequestOptions = {}) =>
-    this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  put = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
 
-  post = (url: string, options: RequestOptions = {}) =>
-    this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  post = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
 
-  delete = (url: string, options: RequestOptions = {}) =>
-    this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
 
   // PUT, POST, DELETE
 

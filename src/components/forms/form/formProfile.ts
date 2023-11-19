@@ -1,6 +1,6 @@
+import tpl from './formProfile.tpl';
 import Block from '@/services/block';
 import { IProps } from '@/types.ts';
-import tpl from './formProfile.tpl';
 
 export default class FormProfile extends Block {
   constructor(props: IProps) {

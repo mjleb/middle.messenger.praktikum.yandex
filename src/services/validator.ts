@@ -56,19 +56,22 @@ export default class InputValidator {
     const helpElement: ItextContent = document.getElementById(`${id}-help`);
     if (errorElement) errorElement.textContent = '';
     if (helpElement) helpElement.textContent = '';
-    if (errorElement)
-      if (helpElement)
+    if (errorElement) {
+      if (helpElement) {
         if (value.trim() === '') {
           errorElement.textContent = 'Пожалуйста, заполните это поле.';
           helpElement.textContent = obj.text;
           return;
         }
+      }
+    }
     if (!obj.pattern.test(value)) {
-      if (errorElement)
+      if (errorElement) {
         if (helpElement) {
           errorElement.textContent = 'Пожалуйста, введите корректные данные';
           helpElement.textContent = obj.text;
         }
+      }
     }
   }
 }
