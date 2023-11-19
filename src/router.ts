@@ -20,28 +20,28 @@ function router(): void {
   console.log('window.location.href', window.location.href);
   // const template = new pageLogin();
   switch (window.location.pathname) {
-    case '/':
+    case '/index.html':
       render('#app', new PageNav());
       break;
-    case '/login':
+    case '/login.html':
       render('#app', new PageLogin());
       break;
-    case '/signin':
+    case '/signin.html':
       render('#app', new PageSignin());
       break;
-    case '/profile':
+    case '/profile.html':
       render('#app', new PageProfile());
       break;
-    case '/profile-edit':
+    case '/profile-edit.html':
       render('#app', new PageProfileEdit());
       break;
-    case '/profile-edit-password':
+    case '/profile-edit-password.html':
       render('#app', new PageProfileEditPassw());
       break;
-    case '/chat':
+    case '/chat.html':
       render('#app', new PageChat());
       break;
-    case '/errors-500':
+    case '/errors-500.html':
       render('#app', new Page500());
       break;
     default:
