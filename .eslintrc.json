@@ -30,6 +30,14 @@
         "devDependencies": true
       }
     ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["external", "internal", "type", "parent", "sibling", "index"]
+        ]
+      }
+    ],
     "default-param-last": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "no-restricted-syntax": "off",
