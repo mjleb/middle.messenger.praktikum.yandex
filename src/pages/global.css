@@ -27,20 +27,20 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #EFEFEF;
 }
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0rem;
   text-align: center;
 }
 
 section {
   display: block;
   width: 100%;
-
-
+  background-color: #fff;
   text-align: center;
   align-items: center;
 }
@@ -92,7 +92,8 @@ button {
   color: #FFFFFF;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid var(--border-color);;
+  border: 1px solid var(--border-color);
+  ;
   background-color: var(--colorPrimary);
   margin-bottom: 1rem;
   cursor: pointer;
@@ -108,11 +109,15 @@ button {
 
   &:hover {
     filter: brightness(95%);
-    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
   }
 
 }
 
 .text-left {
   text-align: left;
+}
+
+.card {
+  background-color: #fff;
 }

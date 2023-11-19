@@ -3,58 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="src/style.css">
+  <link rel="stylesheet" href="./public/font-awesome-4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./src/style.css">
   <title></title>
 </head>
 
 <body>
-  <main>
-    <section class="auth">
-      <div class="card">
-        <h1>Страницы</h1>
-        <nav>
-        <ul class="menu text-left">
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/auth/login.html" target="_blank">Логин</a>
-            </li>
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/auth/signin.html" target="_blank">Регистрация</a>
-            </li>
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/profile/index.html" target="_blank">Профиль</a>
-            </li>
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/profile/edit.html" target="_blank">Профиль/Редактирование данных</a>
-            </li>
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/profile/edit_password.html" target="_blank">Профиль/Редактирование пароля</a>
-            </li>
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/chat/chat.html" target="_blank">Чат</a>
-            </li>
-
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/errors/404.html" target="_blank">Ошибка 404</a>
-            </li>
-            <!-- -->
-            <li class="menu-link">
-              <a href="src/pages/errors/500.html" target="_blank">Ошибка 500</a>
-            </li>
-            <!-- -->
-          
-          </ul>
-      </nav>
-      </div>
-    </section>
-  </main>
+  <main id="app"></main>
+  <script type="module" src="./src/main.ts"></script>
 </body>
+
 </html>

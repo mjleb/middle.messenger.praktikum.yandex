@@ -1,9 +1,12 @@
-.profile {}
+.profile {
+  height: 100vh;
+}
 
 .avatar {
   display: inline-block;
   text-align: center;
-  &>div:hover{
+
+  &>div:hover {
     background-color: #c0c0c0;
   }
 
@@ -14,6 +17,7 @@
     width: 11rem;
     height: 11rem;
     justify-content: center;
+    margin-top: 50px;
   }
 
   & .notphoto {
@@ -40,12 +44,14 @@
     margin-bottom: 20px;
   }
 
-  & .label {
+  & .label,
+  & label {
     text-align: left;
     width: 35%;
   }
 
-  & .data {
+  & .data,
+  & .inputItem {
     text-align: right;
     width: 65%;
     color: #999999;
@@ -70,6 +76,12 @@
     border-bottom-color: rgb(220, 224, 229);
   }
 
+  & .group-input {
+    position: relative;
+    display: flex;
+
+  }
+
   & li:last-child {
     border: 0px solid transparent;
   }
@@ -83,6 +95,7 @@
     margin-bottom: 0rem;
     text-align: right;
     color: #999999;
+    background-color: rgba(0, 0, 0, 0.01);
   }
 
   & .group-input {
@@ -92,5 +105,16 @@
   & button {
     max-width: 280px;
     margin-top: 2rem;
+  }
+
+  & .helping-text {
+    position: relative;
+    display: block;
+  }
+
+  & label {
+    font-size: 13px;
+    color: #2d374b;
+    font-weight: 500;
   }
 }
