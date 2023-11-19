@@ -1,10 +1,10 @@
-import Block from '@/services/block.ts';
-import { IProps } from '@/types.ts';
-import { tpl as tplModal } from '../modal/modal.tpl.ts';
+import tpl from '../modal/modal.tpl.ts';
 import Form from '../forms/form/form.ts';
 import Input from '../forms/input/index.ts';
 import Button from '../forms/button/button.ts';
 import { submitForm } from '@/services/http.ts';
+import Block from '@/services/block.ts';
+import { IProps } from '@/types.ts';
 
 export default class ModalAvatar extends Block {
   constructor(props: IProps) {
@@ -56,7 +56,7 @@ export default class ModalAvatar extends Block {
   }
 
   render() {
-    return this.compile(tplModal, { ...this.props });
+    return this.compile(tpl, { ...this.props });
   }
 }
 /*
