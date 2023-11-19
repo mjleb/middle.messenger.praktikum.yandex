@@ -34,11 +34,17 @@ export class HTTPTransport {
     return this.request(urlnew, { ...options, method: METHODS.GET }, options.timeout);
   };
 
-  put = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  put = (url: string, options: RequestOptions = {}) => {
+    this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  };
 
-  post = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  post = (url: string, options: RequestOptions = {}) => {
+    this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  };
 
-  delete = (url: string, options: RequestOptions = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete = (url: string, options: RequestOptions = {}) => {
+    this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  };
 
   // PUT, POST, DELETE
 
@@ -46,12 +52,8 @@ export class HTTPTransport {
   // headers — obj
   // data — obj
   request = (url: string, options: any, timeout = 5000) => {
-    let { method, data } = options;
+    const { method, data } = options;
     console.log(timeout);
-
-    if (method === METHODS.POST || method === METHODS.PUT) {
-      data = JSON.stringify(data);
-    }
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -72,7 +74,7 @@ export class HTTPTransport {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(method === METHODS.POST || method === METHODS.PUT ? JSON.stringify(data) : data);
       }
     });
   };
