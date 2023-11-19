@@ -18,30 +18,31 @@ function render(query: string, block: any) {
 
 function router(): void {
   console.log('window.location.href', window.location.href);
+  console.log('window.location.pathname', window.location.pathname);
   // const template = new pageLogin();
   switch (window.location.pathname) {
-    case '/index.html':
+    case '/':
       render('#app', new PageNav());
       break;
-    case '/login.html':
+    case '/login':
       render('#app', new PageLogin());
       break;
-    case '/signin.html':
+    case '/signin':
       render('#app', new PageSignin());
       break;
-    case '/profile.html':
+    case '/profile':
       render('#app', new PageProfile());
       break;
-    case '/profile-edit.html':
+    case '/profile-edit':
       render('#app', new PageProfileEdit());
       break;
-    case '/profile-edit-password.html':
+    case '/profile-edit-password':
       render('#app', new PageProfileEditPassw());
       break;
-    case '/chat.html':
+    case '/chat':
       render('#app', new PageChat());
       break;
-    case '/errors-500.html':
+    case '/errors-500':
       render('#app', new Page500());
       break;
     default:

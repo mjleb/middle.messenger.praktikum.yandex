@@ -8,7 +8,7 @@ const tpl: string = `
         <div class="content">
             <div class="title">
                 <span class="name">{{this.name}} </span>
-                <span class="date">{{date}}</span>
+                <span class="datelast">{{date}}</span>
             </div> 
             <div class="message">
                 <div class="text">{{text}} </div>

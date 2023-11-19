@@ -1,6 +1,6 @@
 const tpl: string = `
 <div class="menu">
-    <div class="profile_link">
+    <div class="profile-link">
         <a href="/profile">Профиль ></a>
     </div>
     <div class="search">

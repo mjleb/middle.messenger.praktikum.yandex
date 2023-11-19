@@ -4,18 +4,26 @@
   align-items: stretch;
   justify-content: stretch;
   flex-direction: row;
-  color: var(--colorGrey);
-  overflow-y: hidden;
-  overflow-x: hidden;
+  color: var(--colorgrey);
+  overflow: hidden hidden;
   height: 100vh;
   max-height: 100vh;
 
+  & input {
+    background-color: #efefef;
+    height: 32px;
+    border-bottom-width: 0;
+
+    &::placeholder {
+      text-align: center;
+    }
+  }
+
   & .search {
     display: flex;
-    flex-direction: row;
+    flex-flow: row nowrap;
     justify-content: space-between;
-    flex-wrap: nowrap;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding: 10px;
 
     & form {
@@ -26,7 +34,7 @@
 
       & .group-input {
         flex-grow: 1;
-        margin-bottom: 0px;
+        margin-bottom: 0;
       }
 
       & .button {
@@ -34,8 +42,8 @@
       }
 
       & button {
-        border-bottom-left-radius: 0px;
-        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
       }
 
       & input {
@@ -50,13 +58,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     width: auto;
     max-width: 80%;
     background-color: #fff;
-    margin: 0px;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    margin: 0;
+    overflow: hidden hidden;
 
     & .user {
       flex: auto;
@@ -73,8 +79,7 @@
       vertical-align: bottom;
       padding: 10px;
       text-align: left;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden auto;
       align-items: self-end;
 
       & .post {
@@ -82,14 +87,14 @@
         background-color: #f8f8f8;
         padding: 10px;
         border-radius: 10px;
-        border-top-left-radius: 0px;
+        border-top-left-radius: 0;
 
         & .date {
           font-size: 9px;
           font-weight: 500;
           text-align: right;
           margin-top: 10px;
-          color: #999999;
+          color: #999;
 
           & .read {
             color: #3369f3;
@@ -101,16 +106,15 @@
         float: right;
         background-color: #e4edfd;
         border-top-left-radius: 10px;
-        border-end-end-radius: 0px;
+        border-end-end-radius: 0;
       }
     }
 
     & .input-message {
       flex: auto;
       display: flex;
-      flex-direction: row;
+      flex-flow: row nowrap;
       justify-content: space-between;
-      flex-wrap: nowrap;
       padding: 10px;
       max-height: 50px;
       text-align: start;
@@ -146,7 +150,7 @@
           padding-right: 24px;
           width: 95%;
 
-          & ::-webkit-input-placeholder {
+          & ::placeholder {
             text-align: center;
           }
         }
@@ -163,29 +167,11 @@
     width: 20%;
     max-width: 310px;
     background-color: #fbfbfb;
-    margin: 0px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    margin: 0;
+    overflow: hidden scroll;
     height: auto;
     max-height: 100vh;
     justify-content: flex-start;
-    /*
-        position: fixed;
-        top: 0px;
-        left: 0;
-        bottom: 0;
-        width: 20%;
-        padding: 0px;
-        max-width: 310px;
-        background-color: #FBFBFB;
-        flex-flow: column;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        height: 100%;
-        max-height: 100vh;
-        z-index: 99;
-        justify-content: flex-start;
-        */
   }
 
   & .img {
@@ -196,30 +182,19 @@
     border-radius: 50%;
   }
 
-  & .profile_link {
+  & .profile-link {
     margin-bottom: 20px;
     text-align: right;
     padding: 10px;
 
     & a {
-      color: #999999;
-    }
-  }
-
-  & input {
-    background-color: #efefef;
-    height: 32px;
-    border-bottom-width: 0px;
-
-    &::placeholder {
-      text-align: center;
+      color: #999;
     }
   }
 
   & .users {
     display: flex;
     flex-direction: column;
-
     justify-content: stretch;
 
     & .user {
@@ -230,7 +205,6 @@
       border-top: 1px solid #eaeaea;
       padding: 10px;
       padding-top: 13px;
-
       margin-bottom: 13px;
 
       &.active {
@@ -255,7 +229,7 @@
       }
     }
 
-    & .date {
+    & .datelast {
       display: flex;
       justify-content: right;
       align-items: flex-end;
@@ -291,7 +265,7 @@
         align-items: center;
         color: #fff;
         font-size: 11px;
-        background-color: var(--colorPrimary);
+        background-color: var(--colorprimary);
         border-radius: 50%;
         height: 20px;
         min-width: 20px;

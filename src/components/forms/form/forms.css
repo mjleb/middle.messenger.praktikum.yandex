@@ -3,6 +3,7 @@ form {
     padding: 15px;
     color: green;
   }
+
   & .footer {
     margin-top: 4rem;
   }
@@ -19,7 +20,7 @@ input[type='file' i]::-webkit-file-upload-button {
   color: #51596c;
   background-color: #fff;
   background-clip: padding-box;
-  border: 0.0625rem solid rgba(220, 224, 229, 0.6);
+  border: 0.0625rem solid rgb(220 224 229 / 60%);
   appearance: none;
   border-radius: 0.25rem;
   transition:
@@ -37,32 +38,32 @@ input[type='file' i]::-webkit-file-upload-button {
   font-size: 8px;
 
   & .help-block {
-    color: var(--colorDanger);
+    color: var(--colordanger);
   }
 
   & .error {
-    color: var(--colorDanger);
+    color: var(--colordanger);
   }
 }
 
 label {
-  color: #999999;
+  color: #999;
   display: inline-block;
   font-size: 9px;
   line-height: 9px;
 }
 
 span.required {
-  color: var(--colorDanger);
+  color: var(--colordanger);
 }
 
 input {
   display: block;
   width: 100%;
-  border-top: 0px;
-  border-left: 0px;
-  border-right: 0px;
-  border-color: var(--colorPrimary);
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color: var(--colorprimary);
   font-size: 13px;
   outline: none;
   margin-bottom: 0.5rem;
