@@ -1,4 +1,4 @@
-export const tpl: string = ` 
+const tpl: string = ` 
         <div class="modal-dialog-centered">
             <div class="modal-content">
                 {{#each buttons}}
@@ -9,3 +9,4 @@ export const tpl: string = `
             </div>
         </div>
 `;
+export default tpl;

@@ -1,4 +1,4 @@
-import { tpl } from './modal.tpl';
+import tpl from './modal.tpl';
 import Block from '@/services/block';
 import { IProps, ItagEdit } from '@/types';
 
