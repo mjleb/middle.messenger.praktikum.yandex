@@ -1,67 +1,69 @@
 form {
-    & .sucsess{
-        padding: 15px;
-        color: green;
-    }
-    & .footer {
-        margin-top: 4rem;
-    }
+  & .sucsess {
+    padding: 15px;
+    color: green;
+  }
+  & .footer {
+    margin-top: 4rem;
+  }
 }
 
-input[type="file" i]::-webkit-file-upload-button {
-    overflow: hidden;
-    display: block;
-    width: 100%;
-    padding: 0.75rem 1.8125rem;
-    font-size: .9375rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #51596c;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 0.0625rem solid rgba(220, 224, 229, .6);
-    appearance: none;
-    border-radius: 0.25rem;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+input[type='file' i]::-webkit-file-upload-button {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1.8125rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #51596c;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0.0625rem solid rgba(220, 224, 229, 0.6);
+  appearance: none;
+  border-radius: 0.25rem;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
 }
 
 .group-input {
-    display: block;
-    box-sizing: border-box;
-    text-align: left;
-    width: 100%;
-    margin-bottom: 2rem;
-    font-weight: 400;
-    font-size: 8px;
+  display: block;
+  box-sizing: border-box;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  font-size: 8px;
 
-    & .help-block {
-        color: var(--colorDanger);
-    }
+  & .help-block {
+    color: var(--colorDanger);
+  }
 
-    & .error {
-        color: var(--colorDanger);
-    }
+  & .error {
+    color: var(--colorDanger);
+  }
 }
 
 label {
-    color: #999999;
-    display: inline-block;
-    font-size: 9px;
-    line-height: 9px;
+  color: #999999;
+  display: inline-block;
+  font-size: 9px;
+  line-height: 9px;
 }
 
 span.required {
-    color: var(--colorDanger);
+  color: var(--colorDanger);
 }
 
 input {
-    display: block;
-    width: 100%;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    border-color: var(--colorPrimary);
-    font-size: 13px;
-    outline: none;
-    margin-bottom: 0.5rem;
+  display: block;
+  width: 100%;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: var(--colorPrimary);
+  font-size: 13px;
+  outline: none;
+  margin-bottom: 0.5rem;
 }

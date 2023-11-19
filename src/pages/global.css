@@ -2,8 +2,8 @@
 @custom-selector :--heading h1, h2, h3, h4, h5, h6;
 
 :root {
-  --colorDanger: #FF2F2F;
-  --colorPrimary: #3369F3;
+  --colorDanger: #ff2f2f;
+  --colorPrimary: #3369f3;
   --colorGrey: #999999;
 }
 
@@ -13,7 +13,7 @@
   font-size: 12px;
   line-height: 1;
   letter-spacing: 0em;
-  color: #1E1E1E;
+  color: #1e1e1e;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -27,7 +27,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #EFEFEF;
+  background-color: #efefef;
 }
 
 #app {
@@ -45,14 +45,13 @@ section {
   align-items: center;
 }
 
-section>div {
+section > div {
   display: flex;
   flex: auto;
   flex-direction: column;
   justify-content: center;
   max-width: 1280px;
   margin: auto auto;
-
 }
 
 a {
@@ -63,7 +62,6 @@ a {
 
 :--heading {
   font-weight: 500;
-
 }
 
 h1 {
@@ -89,11 +87,10 @@ button {
   width: 100%;
   font-weight: 500;
   font-size: 13px;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 12px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  ;
   background-color: var(--colorPrimary);
   margin-bottom: 1rem;
   cursor: pointer;
@@ -111,7 +108,6 @@ button {
     filter: brightness(95%);
     filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.3));
   }
-
 }
 
 .text-left {

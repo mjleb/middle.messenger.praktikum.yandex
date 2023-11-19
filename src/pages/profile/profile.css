@@ -6,12 +6,12 @@
   display: inline-block;
   text-align: center;
 
-  &>div:hover {
+  & > div:hover {
     background-color: #c0c0c0;
   }
 
-  &>div {
-    background-color: #EFEFEF;
+  & > div {
+    background-color: #efefef;
     border-radius: 50%;
     display: inline-block;
     width: 11rem;
@@ -22,7 +22,7 @@
 
   & .notphoto {
     border-radius: 50%;
-    color: #CDCDCD;
+    color: #cdcdcd;
 
     display: flex;
     justify-content: center;
@@ -37,8 +37,7 @@
 }
 
 .profile {
-
-  &>div {
+  & > div {
     max-width: 510px;
     font-size: 15px;
     margin-bottom: 20px;
@@ -79,7 +78,6 @@
   & .group-input {
     position: relative;
     display: flex;
-
   }
 
   & li:last-child {
