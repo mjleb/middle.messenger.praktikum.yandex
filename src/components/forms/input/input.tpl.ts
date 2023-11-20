@@ -5,7 +5,7 @@ const tpl: string = `
         {{#if required}}<span class="required">*</span>{{/if}}
     </label>
     {{/if}}
-    <div class="inputItem">
+    <div class="inputitem">
         <input type="{{type}}" class="{{class}}{{#if status}}{{status}}{{/if}}" id="{{id}}" name="{{name}}" value="{{value}}"
             {{#if required}}required{{/if}} placeholder="{{placeholder}}" />
         <div class="helping-text">
