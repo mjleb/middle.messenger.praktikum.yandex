@@ -1,24 +1,21 @@
-@custom-media --viewport-xs(width<768px);
 @custom-selector :--heading h1, h2, h3, h4, h5, h6;
 
 :root {
-  --colorDanger: #FF2F2F;
-  --colorPrimary: #3369F3;
-  --colorGrey: #999999;
-}
+  --colordanger: #ff2f2f;
+  --colorprimary: #3369f3;
+  --colorgrey: #999;
 
-:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 500;
   font-size: 12px;
   line-height: 1;
-  letter-spacing: 0em;
-  color: #1E1E1E;
+  letter-spacing: 0;
+  color: #1e1e1e;
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -27,43 +24,41 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #efefef;
 }
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
 }
 
 section {
   display: block;
   width: 100%;
-
-
+  background-color: #fff;
   text-align: center;
   align-items: center;
 }
 
-section>div {
+section > div {
   display: flex;
   flex: auto;
   flex-direction: column;
   justify-content: center;
   max-width: 1280px;
-  margin: auto auto;
-
+  margin: auto;
 }
 
 a {
   font-size: 11px;
-  color: var(--colorPrimary);
+  color: var(--colorprimary);
   text-decoration: inherit;
 }
 
 :--heading {
   font-weight: 500;
-
 }
 
 h1 {
@@ -82,22 +77,19 @@ h3 {
 
 button {
   --color: #fff;
-  --background-color: rgb(51, 105, 243);
-  --border-color: rgb(61, 112, 241);
+  --background-color: #3369f3;
+  --border-color: #3d70f1;
 
   font-family: inherit;
   width: 100%;
   font-weight: 500;
   font-size: 13px;
-  color: #FFFFFF;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid var(--border-color);;
-  background-color: var(--colorPrimary);
+  border: 1px solid var(--border-color);
   margin-bottom: 1rem;
   cursor: pointer;
   transition: border-color 0.25s;
-
   color: var(--color);
   background-color: var(--background-color);
   border-color: var(--border-color);
@@ -107,12 +99,17 @@ button {
   }
 
   &:hover {
-    filter: brightness(95%);
-    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
-  }
+    --colorshadow: rgb(0 0 0 / 30%);
 
+    filter: brightness(95%);
+    filter: drop-shadow(5px 5px 5px var(--colorshadow));
+  }
 }
 
 .text-left {
   text-align: left;
+}
+
+.card {
+  background-color: #fff;
 }

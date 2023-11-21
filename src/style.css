@@ -1,11 +1,10 @@
-@import './pages/global.css';
-/* global styles */
-@import './partials/forms/forms.css';
-@import './partials/modal/modal.css';
-@import './pages/auth/auth.css';
-@import './pages/profile/profile.css';
-@import './pages/chat/chat.css';
-@import './pages/errors/errors.css';
+@import url('./pages/global.css');
+@import url('./components/forms/form/forms.css');
+@import url('./components/modal/modal.css');
+@import url('./pages/auth/auth.css');
+@import url('./pages/profile/profile.css');
+@import url('./pages/chat/chat.css');
+@import url('./pages/errors/errors.css');
 
 /*
 @font-face {
@@ -33,13 +32,13 @@ main {
 }
 
 /* index */
-.menu{
-  padding-inline-start: 0px;
+.menu {
+  padding-inline-start: 0;
 }
+
 .menu-link {
   max-width: 340px;
   font-size: 15px;
   margin-bottom: 20px;
   list-style: none;
-
 }

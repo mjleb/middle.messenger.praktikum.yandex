@@ -1,0 +1,60 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "globals": {
+    "__dirname": true
+  },
+  "extends": ["airbnb"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["external", "internal", "type", "parent", "sibling", "index"]
+        ]
+      }
+    ],
+    "no-unused-vars": "off",
+    "no-param-reassign": "off",
+    "default-param-last": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-restricted-syntax": "off",
+    "prettier/prettier": "warn",
+    "class-methods-use-this": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_$"
+      }
+    ],
+    "no-underscore-dangle": "off",
+    "no-console": "off",
+    "eqeqeq": "off"
+  }
+}
