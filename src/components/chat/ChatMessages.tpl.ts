@@ -25,7 +25,7 @@ const tpl: string = `
             {{{this}}}
         {{/each}}
     {{else}}
-        <div class="no_data  ">Выберите чат чтобы отправить сообщение</div> 
+        <div class="nodata">Выберите чат чтобы отправить сообщение</div> 
     {{/if}}
 </div>
 {{#if chatTitle }}

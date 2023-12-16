@@ -1,4 +1,5 @@
 @custom-selector :--heading h1, h2, h3, h4, h5, h6;
+
 /*
 :root {
   --colordanger: #ff2f2f;
@@ -22,6 +23,7 @@
 html {
   height: 100%;
 }
+
 body {
   margin: 0;
   display: flex;
@@ -33,7 +35,7 @@ body {
 }
 
 #app {
-  max-width: 100%; /*1280px;*/
+  max-width: 100%;
   margin: 0 auto;
   padding: 0;
   text-align: center;
@@ -139,22 +141,24 @@ button {
   background-color: #fff8e9;
   border-color: #ffcd65;
 }
+
 .alert-error {
   color: #e7026e;
   background-color: #ffe5f1;
   border-color: #fe9ecb;
 }
+
 .alert-succsess {
   color: #45a197;
   background-color: #f7fdfc;
   border-color: #a3ebe4;
 }
+
 .links-list {
   margin-top: 20px;
   display: flex;
   font-size: 18px;
-  flex-direction: column;
-  flex-wrap: nowrap;
+  flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: flex-start;
   max-height: 300px;

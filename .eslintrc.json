@@ -33,9 +33,7 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          ["external", "internal", "type", "parent", "sibling", "index"]
-        ]
+        "groups": [["external", "internal", "type", "parent", "sibling", "index"]]
       }
     ],
     "no-unused-vars": "off",
