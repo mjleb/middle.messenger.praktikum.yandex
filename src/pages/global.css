@@ -1,9 +1,10 @@
 @custom-selector :--heading h1, h2, h3, h4, h5, h6;
-
+/*
 :root {
   --colordanger: #ff2f2f;
   --colorprimary: #3369f3;
   --colorgrey: #999;
+  --colorwhite: #fff;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 500;
@@ -17,26 +18,33 @@
   -moz-osx-font-smoothing: grayscale;
   text-size-adjust: 100%;
 }
-
+*/
+html {
+  height: 100%;
+}
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  height: 100vh;
   background-color: #efefef;
 }
 
 #app {
-  max-width: 1280px;
+  max-width: 100%; /*1280px;*/
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  height: auto;
 }
 
 section {
   display: block;
   width: 100%;
+  height: auto;
+  min-height: inherit;
   background-color: #fff;
   text-align: center;
   align-items: center;
@@ -49,12 +57,15 @@ section > div {
   justify-content: center;
   max-width: 1280px;
   margin: auto;
+  height: auto;
 }
 
-a {
+a,
+.link {
   font-size: 11px;
   color: var(--colorprimary);
   text-decoration: inherit;
+  cursor: pointer;
 }
 
 :--heading {
@@ -63,7 +74,7 @@ a {
 
 h1 {
   font-size: 20px;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   font-weight: 500;
 }
 
@@ -112,4 +123,54 @@ button {
 
 .card {
   background-color: #fff;
+}
+
+.alert {
+  position: relative;
+  padding: 1rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-top: 20px;
+  margin-bottom: 1rem;
+}
+
+.alert-warning {
+  color: #c18300;
+  background-color: #fff8e9;
+  border-color: #ffcd65;
+}
+.alert-error {
+  color: #e7026e;
+  background-color: #ffe5f1;
+  border-color: #fe9ecb;
+}
+.alert-succsess {
+  color: #45a197;
+  background-color: #f7fdfc;
+  border-color: #a3ebe4;
+}
+.links-list {
+  margin-top: 20px;
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  max-height: 300px;
+  overflow: hidden auto;
+
+  & .link {
+    font-size: 18px;
+    padding: 10px;
+    color: inherit;
+    line-height: 1;
+  }
+
+  & span {
+    font-size: 18px;
+    line-height: 1;
+    color: var(--colorprimary);
+    padding-right: 10px;
+  }
 }

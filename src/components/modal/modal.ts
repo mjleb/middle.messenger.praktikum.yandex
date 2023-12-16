@@ -11,6 +11,7 @@ export class Modal extends Block {
     }
 
     this.element.classList.add('modal');
+    this.element.setAttribute('id', props.id);
   }
 
   render() {
@@ -19,7 +20,7 @@ export class Modal extends Block {
 }
 
 export function modalOpen(id: string): void {
-  console.log('function modalOpen');
+  // console.log('function modalOpen');
   const tagEdit: ItagEdit = document.getElementById(id);
   if (tagEdit) tagEdit.style.display = 'block';
 }

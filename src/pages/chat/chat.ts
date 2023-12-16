@@ -1,12 +1,16 @@
+import links from '../links.json';
+import tpl from './chatpage.tpl';
 import Block from '@/services/block';
 import Input from '@/components/forms/input/index';
 import Button from '@/components/forms/button/button';
-import tpl from './chat.tpl';
 import Form from '@/components/forms/form/form';
-import { submitForm } from '@/services/http';
-import ChatUsers from '@/components/chat/chatUser';
-import ChatPosts from '@/components/chat/ChatPosts';
-
+import { submitForm } from '@/services/helpers';
+import ChatList from '@/components/chat/ChatList';
+import ChatMessages from '@/components/chat/ChatMessages';
+import chatController from '@/controllers/chat';
+import { Modal, modalClose, modalOpen } from '@/components/modal/modal';
+import store, { StoreEvents } from '@/services/store';
+/*
 const APIusers = [
   {
     active: false,
@@ -25,6 +29,7 @@ const APIusers = [
     numbermessages: null,
   },
 ];
+*/
 const APImessages = [
   {
     self: false,
@@ -42,83 +47,37 @@ const APIuserName = 'тет-а-теты';
 // status: got,send, read
 export default class PageChat extends Block {
   constructor() {
-    super('section', { user: APIuserName });
+    super('section', { user: APIuserName, links });
 
     this.element.classList.add('chat');
+    /*
+    store.on(StoreEvents.Updated, () => {
+      const chats = store.getState()?.chats;
+      this.setProps({ chats });
+      const search = store.getState()?.search;
+      this.setProps({ search });
+      console.log('search', search);
+    });
+    chatController.chatList();
+    */
   }
 
   init() {
-    this.children.formSearch = new Form({
-      id: 'form-search',
-      events: {
-        click(e: any) {
-          e.preventDefault();
-        },
-      },
-      inputs: [
-        new Input({
-          label: '',
-          name: 'search',
-          id: 'search',
-          type: 'text',
-          required: false,
-          status: '',
-          value: '',
-          placeholder: ' Поиск',
-          helpingText: '',
-        }),
-      ],
-      buttons: [
-        new Button({
-          label: '<i class="fa fa-search" aria-hidden="true"></i> ',
-          id: 'search',
-          type: 'submit',
-          events: {
-            click(e: any) {
-              e.preventDefault();
-              submitForm('form-search');
-            },
-          },
-        }),
-      ],
-    });
-    this.children.users = new ChatUsers({ users: APIusers });
-    this.children.posts = new ChatPosts({ posts: APImessages });
-    this.children.formMessage = new Form({
-      id: 'form-message',
-      events: {
-        click(e: any) {
-          e.preventDefault();
-        },
-      },
-      inputs: [
-        new Input({
-          class: ['validator-message'],
-          label: '',
-          name: 'message',
-          id: 'message',
-          type: 'text',
-          required: true,
-          status: '',
-          value: '',
-          placeholder: 'Сообщение',
-          helpingText: '',
-        }),
-      ],
-      buttons: [
-        new Button({
-          label: '<i class="fa fa-arrow-right" aria-hidden="true"></i>',
-          id: 'send',
-          type: 'submit',
-          events: {
-            click(e: any) {
-              e.preventDefault();
-              submitForm('form-message');
-            },
-          },
-        }),
-      ],
-    });
+    this.children.chats = new ChatList();
+    this.children.messages = new ChatMessages();
+    //this.children.posts = new ChatPosts({ posts: APImessages });
+  }
+
+  componentDidUpdate(): boolean {
+    const state = store?.getState();
+
+    const search = state?.search;
+
+    if (!search) {
+      return false;
+    }
+    this.children.modalSearch.setProps(search);
+    return true;
   }
 
   render() {

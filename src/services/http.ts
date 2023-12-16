@@ -1,4 +1,4 @@
-import { RequestOptions, JsonObject } from '@/types.ts';
+import { Ioptions, IoptionsData, IoptionsRequest } from '@/types';
 
 const METHODS = {
   GET: 'GET',
@@ -7,8 +7,7 @@ const METHODS = {
   DELETE: 'DELETE',
 } as const;
 
-function queryStringify(data: string) {
-  // Можно делать трансформацию GET-параметров в отдельной функции
+function queryStringify(data: Record<string, any>) {
   let url = '';
   for (const [key, value] of Object.entries(data)) {
     if (url.length != 0) {
@@ -19,85 +18,71 @@ function queryStringify(data: string) {
   console.log('url', url);
   return url;
 }
-type Ioptions = {
-  dataGet: any;
-  method: string;
-  timeout: number;
-};
-export class HTTPTransport {
-  get = (url: string, options: Ioptions) => {
-    const { dataGet } = options;
-    let urlnew: string = url;
-    if (dataGet) {
-      urlnew = `${url}?${queryStringify(dataGet)}`;
-    }
-    return this.request(urlnew, { ...options, method: METHODS.GET }, options.timeout);
-  };
 
-  put = (url: string, options: RequestOptions = {}) => {
-    this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
-  };
+type IHTTPрrops = (url: string, options?: Ioptions) => Promise<unknown>;
 
-  post = (url: string, options: RequestOptions = {}) => {
-    this.request(url, { ...options, method: METHODS.POST }, options.timeout);
-  };
+class HTTPTransport {
+  get: IHTTPрrops = (url: string, options?: Ioptions) =>
+    this.request(
+      `${url}?${options?.data ? queryStringify(options.data) : ''}`,
+      { ...options, data: {}, method: METHODS.GET },
+      options?.timeout,
+    );
 
-  delete = (url: string, options: RequestOptions = {}) => {
-    this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
-  };
+  put = (url: string, options?: IoptionsData) =>
+    this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
 
+  post = (url: string, options?: IoptionsData) =>
+    this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
+
+  delete = (url: string, options?: Ioptions) =>
+    this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
   // PUT, POST, DELETE
 
   // options:
   // headers — obj
   // data — obj
-  request = (url: string, options: any, timeout = 5000) => {
-    const { method, data } = options;
-    console.log(timeout);
+  request = (url: string, options: IoptionsRequest, timeout = 5000) => {
+    const { method, data, headers } = options;
 
     return new Promise((resolve, reject) => {
+      if (!method) {
+        reject(new Error('error'));
+        return;
+      }
+
       const xhr = new XMLHttpRequest();
 
       xhr.open(method, url);
-      if (method === METHODS.POST || method === METHODS.PUT) {
-        xhr.setRequestHeader('Content-type', 'application/json; charset=utf8');
+
+      if (headers && Object.keys(headers).length) {
+        Object.keys(headers).forEach((header) => {
+          xhr.setRequestHeader(header, headers[header]);
+        });
       }
 
-      xhr.onload = () => {
+      xhr.onload = function () {
         resolve(xhr);
       };
-
+      xhr.withCredentials = true;
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
+      xhr.timeout = timeout;
+
+      if (options?.type !== 'form') {
+        xhr.setRequestHeader('Content-Type', 'application/json');
+      }
 
       if (method === METHODS.GET || !data) {
         xhr.send();
+      } else if (options?.type === 'form') {
+        xhr.send(data as FormData);
       } else {
-        xhr.send(method === METHODS.POST || method === METHODS.PUT ? JSON.stringify(data) : data);
+        xhr.send(JSON.stringify(data));
       }
     });
   };
 }
 
-export function submitForm(id: string): void {
-  const form = document.getElementById(id) as HTMLFormElement;
-
-  if (!form) {
-    console.log('Форма не найдена');
-    return;
-  }
-
-  // Создаем объект FormData, который автоматически соберет все данные формы
-  const formData = new FormData(form);
-
-  // Преобразуем данные в JSON
-  const jsonData: JsonObject = {};
-
-  formData.forEach((value: any, key: string) => {
-    jsonData[key] = value;
-  });
-
-  // Выводим результат в консоль (вместо этого вы можете отправить данные на сервер)
-  console.log(jsonData);
-}
+export default HTTPTransport;

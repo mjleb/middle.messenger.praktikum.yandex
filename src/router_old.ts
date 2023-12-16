@@ -1,12 +1,12 @@
 import PageLogin from './pages/auth/login.ts';
-import PageSignin from './pages/auth/signup';
+import PageSignUp from './pages/auth/signup.ts';
 import Page404 from './pages/errors/error404.ts';
 import Page500 from './pages/errors/error500.ts';
-import PageNav from './components/nav/nav';
-import PageProfile from './pages/profile/profile';
-import PageChat from './pages/chat/chat';
-import PageProfileEdit from './pages/profile/profileEdit';
-import PageProfileEditPassw from './pages/profile/profileEditPassw';
+import PageNav from './components/nav/nav.ts';
+import PageProfile from './pages/profile/profile.ts';
+import PageChat from './pages/chat/chat.ts';
+import PageProfileEdit from './pages/profile/profileEdit.ts';
+import PageProfileEditPassw from './pages/profile/profileEditPassw.ts';
 
 function render(query: string, block: any) {
   const root = document.querySelector(query);
@@ -28,7 +28,7 @@ function router(): void {
       render('#app', new PageLogin());
       break;
     case '/signin':
-      render('#app', new PageSignin());
+      render('#app', new PageSignUp());
       break;
     case '/profile':
       render('#app', new PageProfile());

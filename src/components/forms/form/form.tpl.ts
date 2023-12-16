@@ -1,6 +1,6 @@
 const tpl: string = ` 
     {{#each inputs}}
-            {{{this}}}
+        {{{this}}}
     {{/each}}
     <div class="button">
         {{#each buttons}}

@@ -1,26 +1,23 @@
-import Block from '@/services/block';
 import tpl from './profileEditPassw.tpl';
+import Block from '@/services/block';
 import Avatar from '@/components/profile/avatar';
 import ModalAvatar from '@/components/profile/avatarmodal';
 import { modalClose, modalOpen } from '@/components/modal/modal';
 import Button from '@/components/forms/button/button';
 import FormProfile from '@/components/forms/form/formProfile';
 import Input from '@/components/forms/input';
-import { submitForm } from '@/services/http';
+import { submitForm } from '@/services/helpers';
+import authController from '@/controllers/auth';
+import links from '@/pages/links.json';
+import Link from '@/components/nav/link';
+import router from '@/services/router';
 
 export default class PageProfileEditPassw extends Block {
   constructor() {
-    super('section', {
-      id: 'profile',
-      email: 'pochta@yandex.ru',
-      login: 'ivanivanov',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      display_name: 'Иван',
-      phone: '+7 (909) 967 30 30',
-    });
+    super('section', {});
 
     this.element.classList.add('profile');
+    authController.getUserId();
   }
 
   init() {
@@ -111,6 +108,30 @@ export default class PageProfileEditPassw extends Block {
           },
         }),
       ],
+    });
+    this.children.linkProfile = new Link({
+      name: 'Профиль',
+      events: {
+        click(e: any) {
+          router.go(links.profile);
+        },
+      },
+    });
+    this.children.linkProfileEdit = new Link({
+      name: 'Изменить данные',
+      events: {
+        click(e: any) {
+          router.go(links.profileedit);
+        },
+      },
+    });
+    this.children.linkLogout = new Link({
+      name: 'Выйти',
+      events: {
+        click(e: any) {
+          router.go(links.logout);
+        },
+      },
     });
   }
 

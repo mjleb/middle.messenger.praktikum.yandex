@@ -4,11 +4,12 @@ import tpl from './avatarphoto.tpl.ts';
 
 export default class AvatarPhoto extends Block {
   constructor(props: IProps) {
-    super('span', props);
+    super('div', props);
     if (!this.element) {
       return;
     }
-    this.element.classList.add('notphoto');
+    /*this.element.classList.add('notphoto'); // notphoto photo*/
+    this.element.setAttribute('id', props.id);
   }
 
   render() {

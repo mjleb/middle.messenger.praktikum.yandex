@@ -1,25 +1,24 @@
+import tpl from '@/pages/profile/profileEdit.tpl';
 import Block from '@/services/block';
-import tpl from './profileEdit.tpl';
 import Avatar from '@/components/profile/avatar';
 import ModalAvatar from '@/components/profile/avatarmodal';
 import { modalClose, modalOpen } from '@/components/modal/modal';
 import Button from '@/components/forms/button/button';
 import FormProfile from '@/components/forms/form/formProfile';
 import Input from '@/components/forms/input';
-import { submitForm } from '@/services/http';
+import { cleanAlert, submitForm } from '@/services/helpers';
+import connect, { connectProps } from '@/services/connect';
+import profileController from '@/controllers/profile';
+import { userDefault } from '@/shared/models';
+import links from '@/pages/links.json';
+import Link from '@/components/nav/link';
+import router from '@/services/router';
+import store from '@/services/store';
+import authController from '@/controllers/auth';
 
-export default class PageProfileEdit extends Block {
+class PageProfileEdit extends Block {
   constructor() {
-    super('section', {
-      id: 'profile',
-      email: 'pochta@yandex.ru',
-      login: 'ivanivanov',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      display_name: 'Иван',
-      phone: '+7 (909) 967 30 30',
-    });
-
+    super('section', { user: store.getState().user ? store.getState().user : userDefault });
     this.element.classList.add('profile');
   }
 
@@ -44,7 +43,6 @@ export default class PageProfileEdit extends Block {
     });
     this.children.avatar = new Avatar({
       id: 'avatar',
-      name: 'Иван',
       events: {
         click(e: any) {
           e.preventDefault();
@@ -66,10 +64,10 @@ export default class PageProfileEdit extends Block {
           label: 'Почта',
           name: 'email',
           id: 'email',
-          type: 'text',
+          type: 'email',
           required: false,
           status: '',
-          value: this.props.email,
+          value: this.props.user.email,
           placeholder: '',
           helpingText: '',
         }),
@@ -81,7 +79,7 @@ export default class PageProfileEdit extends Block {
           type: 'text',
           required: false,
           status: '',
-          value: this.props.login,
+          value: this.props.user.login,
           placeholder: '',
           helpingText: '',
         }),
@@ -93,7 +91,7 @@ export default class PageProfileEdit extends Block {
           type: 'text',
           required: false,
           status: '',
-          value: this.props.first_name,
+          value: this.props.user.first_name,
           placeholder: '',
           helpingText: '',
         }),
@@ -105,7 +103,7 @@ export default class PageProfileEdit extends Block {
           type: 'text',
           required: false,
           status: '',
-          value: this.props.second_name,
+          value: this.props.user.second_name,
           placeholder: '',
           helpingText: '',
         }),
@@ -117,7 +115,7 @@ export default class PageProfileEdit extends Block {
           type: 'text',
           required: false,
           status: '',
-          value: this.props.display_name,
+          value: this.props.user.display_name,
           placeholder: '',
           helpingText: '',
         }),
@@ -129,7 +127,7 @@ export default class PageProfileEdit extends Block {
           type: 'text',
           required: false,
           status: '',
-          value: this.props.phone,
+          value: this.props.user.phone,
           placeholder: '',
           helpingText: '',
         }),
@@ -142,12 +140,42 @@ export default class PageProfileEdit extends Block {
           events: {
             click(e: any) {
               e.preventDefault();
-              submitForm('form-profile');
+              const data = submitForm('form-profile');
+              profileController.profileSave(data);
             },
           },
         }),
       ],
     });
+    this.children.linkProfile = new Link({
+      name: 'Профиль',
+      events: {
+        click(e: any) {
+          router.go(links.profile);
+        },
+      },
+    });
+    this.children.linkProfilePassword = new Link({
+      name: 'Изменить пароль',
+      events: {
+        click(e: any) {
+          router.go(links.profilepassword);
+        },
+      },
+    });
+    this.children.linkLogout = new Link({
+      name: 'Выйти',
+      events: {
+        click(e: any) {
+          router.go(links.logout);
+        },
+      },
+    });
+  }
+
+  componentDidUpdate(oldProps: any, newProps: any) {
+    this.init();
+    return true;
   }
 
   render() {
@@ -155,3 +183,5 @@ export default class PageProfileEdit extends Block {
     return this.compile(tpl, { ...this.props });
   }
 }
+
+export default connect(PageProfileEdit, connectProps);

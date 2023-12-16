@@ -1,5 +1,5 @@
 import Block from '@/services/block';
-import tpl from './nav.tpl';
+import tpl from '@/components/nav/nav.tpl';
 
 export default class PageNav extends Block {
   constructor() {

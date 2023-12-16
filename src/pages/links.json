@@ -1,0 +1,12 @@
+{
+  "home": "/",
+  "login": "/sign-in",
+  "logout": "/logout",
+  "signup": "/sign-up",
+  "profile": "/settings",
+  "profileedit": "/settings/edit",
+  "profilepassword": "/settings/password",
+  "chat": "/messenger",
+  "error500": "/error-500",
+  "error400": "/error-400"
+}

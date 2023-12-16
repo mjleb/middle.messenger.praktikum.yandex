@@ -1,5 +1,5 @@
 const tpl: string = ` 
-    <ul>
+<ul>
     {{#each inputs}}
             <li>{{{this}}}</li>
     {{/each}}

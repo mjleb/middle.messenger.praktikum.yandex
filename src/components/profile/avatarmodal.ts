@@ -1,10 +1,12 @@
+import { v4 as makeUUID } from 'uuid';
 import tpl from '../modal/modal.tpl.ts';
 import Form from '../forms/form/form.ts';
 import Input from '../forms/input/index.ts';
 import Button from '../forms/button/button.ts';
-import { submitForm } from '@/services/http.ts';
+import { submitFormFile } from '@/services/helpers';
 import Block from '@/services/block.ts';
 import { IProps } from '@/types.ts';
+import profileController from '@/controllers/profile';
 
 export default class ModalAvatar extends Block {
   constructor(props: IProps) {
@@ -16,6 +18,7 @@ export default class ModalAvatar extends Block {
 
     this.element.classList.add('modal');
     this.element.setAttribute('id', props.id);
+    // this.id = `form-file-avatar-${makeUUID()}`;
   }
 
   init() {
@@ -23,20 +26,15 @@ export default class ModalAvatar extends Block {
       id: 'form-file-avatar',
       events: {
         click(e: any) {
-          e.preventDefault();
+          //e.preventDefault();
         },
       },
       inputs: [
         new Input({
-          label: '',
-          name: 'photo',
-          id: 'photo',
+          name: 'avatar',
+          id: 'avatar',
           type: 'file',
           required: true,
-          status: '',
-          value: '',
-          placeholder: '',
-          helpingText: '',
         }),
       ],
       buttons: [
@@ -46,8 +44,10 @@ export default class ModalAvatar extends Block {
           type: 'submit',
           events: {
             click(e: any) {
-              e.preventDefault();
-              submitForm('form-file-avatar');
+              /*e.preventDefault();*/
+              const data = submitFormFile('form-file-avatar');
+              console.log('file load', data);
+              profileController.avatarSave(data);
             },
           },
         }),
@@ -56,57 +56,7 @@ export default class ModalAvatar extends Block {
   }
 
   render() {
+    this.init();
     return this.compile(tpl, { ...this.props });
   }
 }
-/*
-export default class ModalAvatar extends Block {
-  constructor(props: IProps) {
-    super('div', props);
-
-    if (!this.element) {
-      return;
-    }
-
-    this.element.classList.add('modal');
-    this.element.setAttribute('id', props.id);
-  }
-  init() {
-    this.children.body = new Form({
-      id: 'form-file-avatar',
-      events: {
-        click(e: any) {
-          e.preventDefault();
-        },
-      },
-      inputs: [
-        new Input({
-          label: '',
-          name: 'avatar',
-          id: 'avatar',
-          type: 'file',
-          status: '',
-          value: '',
-          placeholder: '',
-          helpingText: '',
-        }),
-      ],
-      buttons: [
-        new Button({
-          label: 'Отправить',
-          id: 'send',
-          type: 'submit',
-          events: {
-            click(e: any) {
-              e.preventDefault();
-            },
-          },
-        }),
-      ],
-    });
-  }
-  render() {
-    return this.compile(tplModal, { ...this.props });
-  }
-}
-*/

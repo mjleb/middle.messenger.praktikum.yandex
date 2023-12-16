@@ -1,6 +1,10 @@
 import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './event-bus.ts';
+import { isEmpty } from './helpers.ts';
+import { devLog } from '@/shared/lib.ts';
+import authController from '@/controllers/auth';
+import store from '@/services/store';
 
 type PropsType = Record<string, any>;
 
@@ -34,11 +38,12 @@ export default abstract class Block {
   _logging = false;
 
   constructor(tagName = 'div', propsAndChildren: PropsType) {
+    //devLog('Block', 'constructor');
+
     // Create a new event bus
     const eventBus = new EventBus();
 
     const { children, props } = this._getChildren(propsAndChildren);
-
     // Save children
     this.children = children;
 
@@ -53,9 +58,12 @@ export default abstract class Block {
       this._id = makeUUID();
     }
 
-    // Create proxy
-    this.props = this._makePropsProxy({ ...props, __id: this._id });
+    // --------- Login ?
 
+    // Create proxy
+    this.props = this._makePropsProxy({ ...props, __id: makeUUID() }); //__id: this._id
+
+    //----------
     // Set link to the new event bus
     this._eventBus = eventBus;
 
@@ -64,6 +72,24 @@ export default abstract class Block {
 
     // Emit "init" event
     eventBus.emit(Block.EVENTS.INIT);
+  }
+
+  public async checkLogin() {
+    try {
+      const auth = await authController.authCheck();
+      /// console.log('Block auth', auth);
+      if (!isEmpty(auth)) {
+        // console.log('!!!! Block checkLogin !isEmpty', auth);
+        Object.entries(auth).forEach(([key, value]) => {
+          this.props = this._makePropsProxy({ ...this.props, key: value });
+        });
+
+        this._logging = true;
+      }
+      return true;
+    } catch (e: any) {
+      return false;
+    }
   }
 
   // Register required events
@@ -96,11 +122,14 @@ export default abstract class Block {
 
   init() {}
 
+  start() {}
+
   // EVENT: "componentDidMount" function
   _componentDidMount() {
     if (this._logging) {
-      console.log('EVENT: CDM', this);
+      //console.log('EVENT: CDM', this);
     }
+
     this.componentDidMount();
 
     Object.values(this.children).forEach((component) => {
@@ -122,9 +151,11 @@ export default abstract class Block {
 
   // EVENT: "componentDidUpdate" function
   _componentDidUpdate(oldProps: PropsType, newProps: PropsType) {
+    //console.log('_componentDidUpdate', oldProps, newProps);
     if (this._logging) {
-      console.log('EVENT: CDU', this);
+      //console.log('EVENT: CDU', this);
     }
+    this._componentDidMount();
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
       this._eventBus.emit(Block.EVENTS.FLOW_RENDER, 'emit render');
@@ -133,7 +164,8 @@ export default abstract class Block {
 
   // Could be redeclared by user
   componentDidUpdate(oldProps: PropsType, newProps: PropsType) {
-    return JSON.stringify(oldProps) === JSON.stringify(newProps);
+    //return JSON.stringify(oldProps) === JSON.stringify(newProps);
+    return true;
   }
 
   // Set block props
@@ -150,7 +182,7 @@ export default abstract class Block {
   // Could be overriden externally with render()
   _render() {
     if (this._logging) {
-      console.log('EVENT: RENDER', this);
+      //console.log('EVENT: RENDER', this);
     }
 
     if (!this._element) {
@@ -320,7 +352,8 @@ export default abstract class Block {
     if (!this._element) {
       return;
     }
-    this._element.style.display = 'block';
+
+    this._element.style.display = 'flex';
     console.log('show internal');
   }
 

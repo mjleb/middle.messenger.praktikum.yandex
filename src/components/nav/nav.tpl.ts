@@ -5,36 +5,36 @@ const tpl: string = `<section class="auth">
   <ul class="menu text-left">
       <!-- -->
       <li class="menu-link">
-        <a href="/login" target="_blank">Логин</a>
+        <a href="/sign-in" >Логин</a>
       </li>
       <!-- -->
       <li class="menu-link">
-        <a href="/signin" target="_blank">Регистрация</a>
+        <a href="/sign-up" >Регистрация</a>
       </li>
       <!-- -->
       <li class="menu-link">
-        <a href="/profile" target="_blank">Профиль</a>
+        <a href="/settings" >Профиль</a>
       </li>
       <!-- -->
       <li class="menu-link">
-        <a href="/profile-edit" target="_blank">Профиль/Редактирование данных</a>
+        <a href="/settings/edit" >Профиль/Редактирование данных</a>
       </li>
       <!-- -->
       <li class="menu-link">
-        <a href="/profile-edit-password" target="_blank">Профиль/Редактирование пароля</a>
+        <a href="/settings/password" >Профиль/Редактирование пароля</a>
       </li>
       <!-- -->
       <li class="menu-link">
-        <a href="/chat" target="_blank">Чат</a>
+        <a href="/messenger" >Чат</a>
       </li>
 
       <!-- -->
       <li class="menu-link">
-        <a href="/errors-404" target="_blank">Ошибка 404</a>
+        <a href="/error-404" >Ошибка 404</a>
       </li>
       <!-- -->
       <li class="menu-link">
-        <a href="/errors-500" target="_blank">Ошибка 500</a>
+        <a href="/error-500" >Ошибка 500</a>
       </li>
       <!-- -->
     

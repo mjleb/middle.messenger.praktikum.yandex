@@ -1,13 +1,32 @@
+import tpl from './login.tpl';
+
+import links from '../links.json';
 import Block from '@/services/block';
 import Input from '@/components/forms/input/index';
 import Button from '@/components/forms/button/button';
-import tpl from './login.tpl';
 import Form from '@/components/forms/form/form';
-import { submitForm } from '@/services/http';
+import { submitForm } from '@/services/helpers';
+import authController from '@/controllers/auth';
 
-export default class PageLogin extends Block {
+import connect, { connectProps } from '@/services/connect';
+import { Indexed } from '@/types';
+import { devLog } from '@/shared/lib';
+
+class PageLogin extends Block {
   constructor() {
-    super('section', {});
+    devLog('PageLogin constructor', '');
+    /*
+    (async () => {
+      const auth = await authController.authCheck();
+      devLog('PageLogin auth', auth);
+    })();
+    */
+
+    super('section', {
+      links,
+      login: '',
+      password: '',
+    });
 
     this.element.classList.add('auth');
   }
@@ -29,7 +48,7 @@ export default class PageLogin extends Block {
           type: 'text',
           required: true,
           status: '',
-          value: '',
+          value: this.props.login,
           placeholder: '',
           helpingText: '',
         }),
@@ -41,7 +60,7 @@ export default class PageLogin extends Block {
           type: 'password',
           required: true,
           status: '',
-          value: '',
+          value: this.props.password,
           placeholder: '',
           helpingText: '',
         }),
@@ -54,7 +73,8 @@ export default class PageLogin extends Block {
           events: {
             click(e: any) {
               e.preventDefault();
-              submitForm('form-sign-in');
+              const data = submitForm('form-sign-in');
+              authController.login(data);
             },
           },
         }),
@@ -67,3 +87,5 @@ export default class PageLogin extends Block {
     return this.compile(tpl, { ...this.props });
   }
 }
+
+export default connect(PageLogin, connectProps);

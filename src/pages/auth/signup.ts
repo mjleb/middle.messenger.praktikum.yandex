@@ -1,19 +1,25 @@
+import tpl from './signup.tpl';
+import links from '../links.json';
 import Block from '@/services/block';
 import Input from '@/components/forms/input/index';
 import Button from '@/components/forms/button/button';
-import tpl from './signup.tpl';
 import Form from '@/components/forms/form/form';
-import { submitForm } from '@/services/http';
+import { submitForm } from '@/services/helpers';
+import authController from '@/controllers/auth';
+import { Indexed } from '@/types';
+import connect from '@/services/connect';
 
-export default class PageSignin extends Block {
+class PageSignUp extends Block {
   constructor() {
     super('section', {
-      email: 'pochta@yandex.ru',
-      login: 'ivanivanov',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      display_name: 'Иван',
-      phone: '+7 (909) 967 30 30',
+      links,
+      email: '',
+      login: '',
+      first_name: '',
+      second_name: '',
+      display_name: '',
+      phone: '',
+      password: '',
     });
     if (!this.element) {
       return;
@@ -93,7 +99,7 @@ export default class PageSignin extends Block {
           type: 'password',
           required: true,
           status: '',
-          value: '',
+          value: this.props.password,
           placeholder: '',
           helpingText: '',
         }),
@@ -105,7 +111,7 @@ export default class PageSignin extends Block {
           type: 'password',
           required: true,
           status: '',
-          value: '',
+          value: this.props.password,
           placeholder: '',
           helpingText: '',
         }),
@@ -118,7 +124,9 @@ export default class PageSignin extends Block {
           events: {
             click(e: any) {
               e.preventDefault();
-              submitForm('form-sign-up');
+              const data = submitForm('form-sign-up');
+              const result = authController.signup(data);
+              console.log('form-sign-up result', result);
             },
           },
         }),
@@ -131,3 +139,14 @@ export default class PageSignin extends Block {
     return this.compile(tpl, { ...this.props });
   }
 }
+
+function Props(state: Indexed) {
+  return {
+    user: state.user,
+    warning: state.warning,
+    error: state.error,
+    succsess: state.succsess,
+  };
+}
+
+export default connect(PageSignUp, Props);

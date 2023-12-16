@@ -57,7 +57,6 @@
     flex-direction: column;
     width: 100%;
     color: var(--bs-modal-color);
-    pointer-events: auto;
     background-color: var(--bs-modal-bg);
     background-clip: padding-box;
     border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);
@@ -65,6 +64,11 @@
     outline: 0;
     padding: 20px;
     justify-content: center;
+
+    & .inputitem {
+      width: 100%;
+      margin-top: 12px;
+    }
   }
 
   & .button-close {

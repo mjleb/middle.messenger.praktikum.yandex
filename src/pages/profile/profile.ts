@@ -1,20 +1,21 @@
-import Block from '@/services/block';
 import tpl from './profile.tpl';
+import Block from '@/services/block';
 import Avatar from '@/components/profile/avatar';
 import ModalAvatar from '@/components/profile/avatarmodal';
 import { modalClose, modalOpen } from '@/components/modal/modal';
 import Button from '@/components/forms/button/button';
+import connect, { connectProps } from '@/services/connect';
+import links from '@/pages/links.json';
+import Link from '@/components/nav/link';
+import router from '@/services/router';
+import store from '@/services/store';
+import { userDefault } from '@/shared/models';
 
-export default class PageProfile extends Block {
+class PageProfile extends Block {
   constructor() {
     super('section', {
-      id: 'profile',
-      email: 'pochta@yandex.ru',
-      login: 'ivanivanov',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      display_name: 'Иван',
-      phone: '+7 (909) 967 30 30',
+      links,
+      user: store.getState().user ? store.getState().user : userDefault,
     });
 
     this.element.classList.add('profile');
@@ -39,9 +40,9 @@ export default class PageProfile extends Block {
         }),
       ],
     });
+
     this.children.avatar = new Avatar({
       id: 'avatar',
-      name: 'Иван',
       events: {
         click(e: any) {
           e.preventDefault();
@@ -50,10 +51,38 @@ export default class PageProfile extends Block {
         },
       },
     });
+    this.children.linkProfileEdit = new Link({
+      settings: { withInternalID: true },
+      name: 'Изменить данные',
+      events: {
+        click(e: any) {
+          router.go(links.profileedit);
+        },
+      },
+    });
+    this.children.linkProfilePassword = new Link({
+      name: 'Изменить пароль',
+      events: {
+        click(e: any) {
+          router.go(links.profilepassword);
+        },
+      },
+    });
+    this.children.linkLogout = new Link({
+      name: 'Выйти',
+      events: {
+        click(e: any) {
+          router.go(links.logout);
+        },
+      },
+    });
   }
 
   render() {
     this.dispatchComponentDidMount();
+    this.init();
     return this.compile(tpl, { ...this.props });
   }
 }
+
+export default connect(PageProfile, connectProps);

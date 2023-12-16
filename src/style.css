@@ -23,6 +23,27 @@
   font-weight: 600;
 }
 */
+:root {
+  --colordanger: #ff2f2f;
+  --colorprimary: #3369f3;
+  --colorgrey: #999;
+  --colorwhite: #fff;
+  --textgray: #cdcdcd;
+  --bggray: #efefef;
+
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #1e1e1e;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
 main {
   display: flex;
   place-items: center;

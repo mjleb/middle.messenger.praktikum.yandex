@@ -3,6 +3,8 @@ import { IProps } from '@/types.ts';
 import tpl from './avatar.tpl.ts';
 import AvatarPhoto from './avatarphoto.ts';
 import { modalOpen } from '../modal/modal.ts';
+import { userDefault } from '@/shared/models.ts';
+import store from '@/services/store';
 
 export default class Avatar extends Block {
   constructor(props: IProps) {
@@ -11,12 +13,13 @@ export default class Avatar extends Block {
       return;
     }
     this.element.classList.add('avatar');
+    this.element.setAttribute('id', props.id);
   }
 
   init() {
     this.children.photo = new AvatarPhoto({
       id: 'avatar-photo',
-      name: 'И',
+      user: store.getState().user ? store.getState().user : userDefault,
       events: {
         click(e: any) {
           e.preventDefault();
@@ -28,6 +31,7 @@ export default class Avatar extends Block {
   }
 
   render() {
+    this.init();
     return this.compile(tpl, { ...this.props });
   }
 }
