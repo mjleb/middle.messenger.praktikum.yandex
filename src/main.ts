@@ -31,5 +31,5 @@ window.addEventListener('popstate', () => {
 // Создаем экземпляр класса при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
   const inputValidator = new InputValidator();
-  //console.log(inputValidator);
+  console.log(inputValidator);
 });

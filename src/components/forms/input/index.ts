@@ -1,8 +1,6 @@
 import tpl from './input.tpl.ts';
 import Block from '@/services/block.ts';
-import store, { StoreEvents } from '@/services/store.ts';
 import { IProps } from '@/types.ts';
-import { connectProps } from '@/services/connect';
 
 export default class Input extends Block {
   /** JSDoc

@@ -1,5 +1,4 @@
 import store from '@/services/store';
-
 import chatController from '@/controllers/chat';
 
 export class WS {
@@ -90,7 +89,7 @@ export class WS {
       if (Array.isArray(data)) {
         store.set('messages', data.reverse());
       } else {
-        const messages = store?.getState()?.messages;
+        const messages: any = store?.getState()?.messages;
         messages.push({ ...data, chat_id: this._chatId });
         store.set('messages', messages);
         console.log('ws store.set');

@@ -3,7 +3,6 @@ import tpl from './ChatSearch.tpl.ts';
 import Block from '@/services/block.ts';
 import store, { StoreEvents } from '@/services/store.ts';
 import { IProps } from '@/types.ts';
-import chatController from '@/controllers/chat.ts';
 
 export default class ChatSearch extends Block {
   constructor(props: IProps) {
@@ -33,14 +32,13 @@ export default class ChatSearch extends Block {
     search.forEach((item: any) => {
       this.children.usernew.push(
         new Button({
+          // eslint-disable-next-line prefer-template
           label: 'Добавить ' + item.login,
           id: item.id,
           events: {
             click(e: any) {
               e.preventDefault();
               console.log('Button', e, item.id);
-
-              chatController.profileSave(data);
             },
           },
         }),

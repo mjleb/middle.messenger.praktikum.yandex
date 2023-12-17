@@ -1,14 +1,17 @@
+/* eslint-disable operator-linebreak */
 import { IChat, IChatDetails, Indexed, JsonObject } from '@/types';
 import store from '@/services/store';
 import { devLog } from '@/shared/lib';
 
 //--------------
-const isObject = (value: Indexed) =>
+const isObject = (value: any) =>
+  //  implicit-arrow-linebreak
+  // eslint-disable-next-line implicit-arrow-linebreak
   typeof value === 'object' && !Array.isArray(value) && value !== null;
 //--------------
 const isString = (value: unknown) => typeof value === 'string' || value instanceof String;
 //--------------
-export function isEqual(a: Indexed, b: Indexed) {
+export function isEqual(a: Indexed | any, b: Indexed | any) {
   if (a === null || b === null || typeof a !== 'object' || typeof b !== 'object') {
     return a === b;
   }
@@ -25,11 +28,10 @@ export function isEqual(a: Indexed, b: Indexed) {
   }
   return true;
 }
-export function isEmpty(value) {
-  //console.log('typeof=', typeof value, ', value=', value);
-
+export function isEmpty(value: any) {
   let result = true;
-  let valType = typeof value;
+  const valType: string = typeof value;
+
   if (
     valType === 'undefined' ||
     valType === 'boolean' ||
@@ -40,32 +42,38 @@ export function isEmpty(value) {
   ) {
     result = true;
   } else {
-    if (valType == 'object')
+    if (valType == 'object') {
       if (Object.keys(value).length > 0 || value.size > 0) {
         result = false;
       }
-    if (valType == 'Array')
+    }
+    if (valType == 'Array') {
       if (value.length > 0) {
         result = false;
       }
-    if (valType == 'Map')
+    }
+    if (valType == 'Map') {
       if (value.size > 0) {
         result = false;
       }
-    if (valType == 'Set')
+    }
+    if (valType == 'Set') {
       if (value.size > 0) {
         result = false;
       }
-    if (valType == 'string')
+    }
+    if (valType == 'string') {
       if (value.length > 0) {
         result = false;
       }
+    }
   }
 
-  //console.log(result);
+  // console.log(result);
   return result;
 }
 //--------------
+
 const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
   // eslint-disable-next-line no-restricted-syntax
   for (const j in rhs) {
@@ -87,6 +95,7 @@ const merge = (lhs: Indexed, rhs: Indexed): Indexed => {
   }
   return lhs;
 };
+
 //--------------
 export const set = (object: Indexed | unknown, path: string, value: unknown): Indexed | unknown => {
   if (!isObject) {
@@ -153,19 +162,18 @@ export function messageWarning(response: any) {
   const { reason } = message;
   console.warn(`warning: ${reason}`);
   store.set('warning', reason);
-  //return reason;
+  // return reason;
 }
 export function messageError(e: any) {
   console.error(`error: ${e.message}`);
   store.set('error', e.message);
-  //return e.message;
+  // return e.message;
 }
 export function messageSuccsess(response: any) {
   const message = JSON.parse(response);
   const { reason } = message;
   devLog(`succsess: ${reason}`);
-
-  //return reason;
+  // return reason;
 }
 
 export function cleanAlert() {

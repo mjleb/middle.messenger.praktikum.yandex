@@ -1,15 +1,9 @@
 import links from '../links.json';
 import tpl from './chatpage.tpl';
 import Block from '@/services/block';
-import Input from '@/components/forms/input/index';
-import Button from '@/components/forms/button/button';
-import Form from '@/components/forms/form/form';
-import { submitForm } from '@/services/helpers';
 import ChatList from '@/components/chat/ChatList';
 import ChatMessages from '@/components/chat/ChatMessages';
-import chatController from '@/controllers/chat';
-import { Modal, modalClose, modalOpen } from '@/components/modal/modal';
-import store, { StoreEvents } from '@/services/store';
+import store from '@/services/store';
 /*
 const APIusers = [
   {
@@ -29,7 +23,7 @@ const APIusers = [
     numbermessages: null,
   },
 ];
-*/
+
 const APImessages = [
   {
     self: false,
@@ -43,6 +37,8 @@ const APImessages = [
     status: 'read',
   },
 ];
+
+*/
 const APIuserName = 'тет-а-теты';
 // status: got,send, read
 export default class PageChat extends Block {

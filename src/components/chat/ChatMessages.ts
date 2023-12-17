@@ -1,18 +1,17 @@
 import tpl from './ChatMessages.tpl.ts';
-import { Modal, modalClose, modalOpen } from '../modal/modal.ts';
+import ModalAddUser from '../modal/modalAddUser.ts';
+import ModalDeleteUser from '../modal/modalDeleteUser.ts';
+import { modalClose, modalOpen } from '../modal/modal.ts';
 import MessageItem from './message.ts';
 import Form from '../forms/form/form.ts';
 import Input from '../forms/input/index.ts';
 import Button from '../forms/button/button.ts';
 import Block from '@/services/block.ts';
-import { IMessageApi, IMessageItem } from '@/types.ts';
+import { IMessageApi } from '@/types.ts';
 import { submitForm } from '@/services/helpers.ts';
 import store, { StoreEvents } from '@/services/store.ts';
-
 import chatController from '@/controllers/chat';
 import Link from '@/components/nav/link.ts';
-import ModalAddUser from '../modal/modalAddUser.ts';
-import ModalDeleteUser from '../modal/modalDeleteUser.ts';
 
 export default class ChatMessages extends Block {
   constructor() {
@@ -75,7 +74,7 @@ export default class ChatMessages extends Block {
       class: 'a',
       icon: 'add_circle',
       events: {
-        click(e: any) {
+        click() {
           console.log('Добавить пользователя');
           modalOpen('modal-useradd');
         },
@@ -87,7 +86,7 @@ export default class ChatMessages extends Block {
       class: 'a',
       icon: 'cancel',
       events: {
-        async click(e: any) {
+        async click() {
           console.log('Удалить пользователя');
           await chatController.usersInChat();
           modalOpen('modal-userdelete');
@@ -124,12 +123,12 @@ export default class ChatMessages extends Block {
           events: {
             click(e: any) {
               e.preventDefault();
-              //submitForm('form-message');
+              // submitForm('form-message');
               const data = submitForm('form-message');
               const addmessage = chatController.sendMessage(data.message);
               console.log('chat message ', data.message, addmessage);
               const form = document.getElementById('form-message') as HTMLFormElement;
-              let elem = form.elements.message;
+              const elem = form.elements[0] as HTMLInputElement;
               elem.value = '';
             },
           },

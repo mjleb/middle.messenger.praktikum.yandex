@@ -20,11 +20,11 @@ class AuthController {
       // devLog('getUserId res.response', res.response);
       // console.log('AuthController getUserId router', router);
       if (res.status == 401 && path != `${links.login}` && path != `${links.signup}`) {
-        //router.go(links.login);
+        router.go(links.login);
       }
 
       if (res.status !== 200) {
-        //messageWarning(res.response);
+        // messageWarning(res.response);
         return false;
       }
       const user = JSON.parse(res.response);
@@ -35,8 +35,8 @@ class AuthController {
       if (user) {
         if (isEmpty(userStore)) {
           store.set('user', user);
-          if (path != links.chat) {
-            // router.go(links.chat);
+          if (path != links.chat && path == `${links.login}`) {
+            router.go(links.chat);
           }
         }
       }
@@ -75,7 +75,7 @@ class AuthController {
 
   public async signup(data: Record<string, any>) {
     try {
-      //cleanAlert();
+      // cleanAlert();
       // ------
       const dataRecord = {
         first_name: data.first_name,
@@ -91,10 +91,10 @@ class AuthController {
         messageWarning(res.response);
         return;
       }
-      const id = await this.getUserId();
+      await this.getUserId();
       router.go(links.chat);
       // -------
-    } catch (error) {
+    } catch (e: any) {
       messageError(e);
     }
   }

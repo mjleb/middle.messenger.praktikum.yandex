@@ -1,5 +1,4 @@
 import tpl from './login.tpl';
-
 import links from '../links.json';
 import Block from '@/services/block';
 import Input from '@/components/forms/input/index';
@@ -7,20 +6,14 @@ import Button from '@/components/forms/button/button';
 import Form from '@/components/forms/form/form';
 import { submitForm } from '@/services/helpers';
 import authController from '@/controllers/auth';
-
 import connect, { connectProps } from '@/services/connect';
-import { Indexed } from '@/types';
 import { devLog } from '@/shared/lib';
+import Link from '@/components/nav/link';
+import router from '@/services/router';
 
 class PageLogin extends Block {
   constructor() {
     devLog('PageLogin constructor', '');
-    /*
-    (async () => {
-      const auth = await authController.authCheck();
-      devLog('PageLogin auth', auth);
-    })();
-    */
 
     super('section', {
       links,
@@ -79,6 +72,14 @@ class PageLogin extends Block {
           },
         }),
       ],
+    });
+    this.children.linkSignUp = new Link({
+      name: 'Нет аккаунта?',
+      events: {
+        click() {
+          router.go(links.signup);
+        },
+      },
     });
   }
 

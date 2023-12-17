@@ -1,9 +1,9 @@
 import tpl from './modalDeleteUser.tpl';
+import Link from '../nav/link';
 import Block from '@/services/block';
-import { IMessageApi, IProps, ItagEdit } from '@/types';
+import { IProps } from '@/types';
 import store, { StoreEvents } from '@/services/store';
 import chatController from '@/controllers/chat';
-import Link from '../nav/link';
 
 export default class ModalDeleteUser extends Block {
   constructor(props: IProps) {
@@ -40,7 +40,7 @@ export default class ModalDeleteUser extends Block {
     this.children.result = [];
 
     if (searchUsers) {
-      searchUsers.forEach((item: IMessageApi) => {
+      searchUsers.forEach((item: any) => {
         console.log('messages item', item);
 
         this.children.result.push(
@@ -50,7 +50,7 @@ export default class ModalDeleteUser extends Block {
             class: 'a',
             icon: 'cancel',
             events: {
-              async click(e: any) {
+              async click() {
                 console.log('Удален', item.id, 'в чат ', chatActiveId);
                 await chatController.deleteChatUser(item.id);
                 await chatController.usersInChat();

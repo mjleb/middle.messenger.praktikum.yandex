@@ -1,4 +1,4 @@
-import { IProps, Ioptions, LoginProps } from '@/types';
+import { IProps } from '@/types';
 import BaseAPI from '@/api/base-api';
 import HTTPTransport from '@/services/http';
 
@@ -11,7 +11,7 @@ export default class AuthAPI extends BaseAPI {
     return authAPIInstance.post(`${AuthAPI.apiPath}/signup/`, { data });
   }
 
-  signin(data: LoginProps) {
+  signin(data: any) {
     return authAPIInstance.post(`${AuthAPI.apiPath}/signin/`, { data });
   }
 

@@ -1,8 +1,6 @@
 import Block from '@/services/block';
-import { IChat, IChatProps, Indexed } from '@/types.ts';
+import { IChatProps } from '@/types.ts';
 import tpl from '@/components/chat/chat.tpl';
-import store, { StoreEvents } from '@/services/store';
-import connect from '@/services/connect';
 
 export default class ChatItem extends Block {
   constructor(props: IChatProps) {

@@ -2,9 +2,7 @@ import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './event-bus.ts';
 import { isEmpty } from './helpers.ts';
-import { devLog } from '@/shared/lib.ts';
 import authController from '@/controllers/auth';
-import store from '@/services/store';
 
 type PropsType = Record<string, any>;
 
@@ -38,7 +36,7 @@ export default abstract class Block {
   _logging = false;
 
   constructor(tagName = 'div', propsAndChildren: PropsType) {
-    //devLog('Block', 'constructor');
+    // devLog('Block', 'constructor');
 
     // Create a new event bus
     const eventBus = new EventBus();
@@ -80,7 +78,11 @@ export default abstract class Block {
       /// console.log('Block auth', auth);
       if (!isEmpty(auth)) {
         // console.log('!!!! Block checkLogin !isEmpty', auth);
-        Object.entries(auth).forEach(([key, value]) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        Object.entries(auth).forEach((entry) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [key, value] = entry;
+          console.log('key=', key);
           this.props = this._makePropsProxy({ ...this.props, key: value });
         });
 
@@ -127,7 +129,7 @@ export default abstract class Block {
   // EVENT: "componentDidMount" function
   _componentDidMount() {
     if (this._logging) {
-      //console.log('EVENT: CDM', this);
+      // console.log('EVENT: CDM', this);
     }
 
     this.componentDidMount();
@@ -151,9 +153,9 @@ export default abstract class Block {
 
   // EVENT: "componentDidUpdate" function
   _componentDidUpdate(oldProps: PropsType, newProps: PropsType) {
-    //console.log('_componentDidUpdate', oldProps, newProps);
+    // console.log('_componentDidUpdate', oldProps, newProps);
     if (this._logging) {
-      //console.log('EVENT: CDU', this);
+      // console.log('EVENT: CDU', this);
     }
     this._componentDidMount();
     const response = this.componentDidUpdate(oldProps, newProps);
@@ -164,8 +166,7 @@ export default abstract class Block {
 
   // Could be redeclared by user
   componentDidUpdate(oldProps: PropsType, newProps: PropsType) {
-    //return JSON.stringify(oldProps) === JSON.stringify(newProps);
-    return true;
+    return JSON.stringify(oldProps) === JSON.stringify(newProps);
   }
 
   // Set block props
@@ -182,14 +183,14 @@ export default abstract class Block {
   // Could be overriden externally with render()
   _render() {
     if (this._logging) {
-      //console.log('EVENT: RENDER', this);
+      // console.log('EVENT: RENDER', this);
     }
 
     if (!this._element) {
       return;
     }
 
-    const block = this.render();
+    const block: any = this.render();
 
     // Remove events
     this._removeEvents();
@@ -208,7 +209,8 @@ export default abstract class Block {
   }
 
   // Could be redeclared by user
-  abstract render(): DocumentFragment;
+  //abstract render(): DocumentFragment;
+  render() {}
 
   _removeEvents() {
     if (!(this._events && Object.keys(this._events).length)) {

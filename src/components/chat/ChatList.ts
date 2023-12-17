@@ -1,14 +1,12 @@
-import Block from '@/services/block';
-
 import Button from '../forms/button/button';
 import Input from '../forms/input';
 import Form from '../forms/form/form';
 import { Modal, modalClose, modalOpen } from '../modal/modal';
 import ChatSearch from './ChatSearch';
+import Block from '@/services/block';
 import { getChatDatetime, getTimestamp, submitForm } from '@/services/helpers';
 import chatController from '@/controllers/chat';
 import tpl from '@/components/chat/ChatList.tpl';
-import { IChat, Indexed } from '@/types.ts';
 import store, { StoreEvents } from '@/services/store';
 import ChatItem from '@/components/chat/chat';
 
@@ -142,7 +140,7 @@ export default class ChatList extends Block {
               const search = chatController.searchChats(data);
 
               console.log('chat search ', search);
-              //modalOpen('modal-search');
+              // modalOpen('modal-search');
             },
           },
         }),
@@ -165,41 +163,41 @@ export default class ChatList extends Block {
   }
 
   componentDidUpdate(): boolean {
-    const state: Indexed = store?.getState();
+    const state = store?.getState();
     const chats = state?.chats;
-    const chatActiveId = store.getState()?.chatActiveId;
+    const chatActiveId: any = store.getState()?.chatActiveId;
 
     if (!chats) {
       return false;
     }
     this.children.chats = [];
-
-    chats.forEach((chat: IChat) => {
-      const active: boolean = chatActiveId == chat.id ? true : false;
-      const timestamp = getTimestamp(chat?.last_message?.time);
-      const date = timestamp ? getChatDatetime(timestamp) : null;
-      this.children.chats.push(
-        new ChatItem({
-          id: chat.id,
-          avatar: chat.avatar,
-          title: chat.title,
-          last_message: chat.last_message,
-          unread: chat.unread_count ? chat.unread_count : 0,
-          datetime: date,
-          active,
-          events: {
-            async click(e) {
-              e.preventDefault();
-              store.set('chatActiveId', chat.id);
-              console.log('click chatId store', store.getState());
-              await chatController.connect(chat.id);
-              console.log('messages', store.getState()?.messages);
+    if (chats) {
+      chats.forEach((chat: any) => {
+        const active: boolean = chatActiveId == chat.id ? true : false;
+        const timestamp = getTimestamp(chat?.last_message?.time);
+        const date = timestamp ? getChatDatetime(timestamp) : null;
+        this.children.chats.push(
+          new ChatItem({
+            id: chat.id,
+            avatar: chat.avatar,
+            title: chat.title,
+            lastMessage: chat.last_message,
+            unread: chat.unread_count ? chat.unread_count : 0,
+            datetime: date,
+            active,
+            events: {
+              async click(e) {
+                e.preventDefault();
+                store.set('chatActiveId', chat.id);
+                console.log('click chatId store', store.getState());
+                await chatController.connect(chat.id);
+                console.log('messages', store.getState()?.messages);
+              },
             },
-          },
-        }),
-      );
-    });
-
+          }),
+        );
+      });
+    }
     return true;
   }
 

@@ -6,7 +6,7 @@ import { modalClose, modalOpen } from '@/components/modal/modal';
 import Button from '@/components/forms/button/button';
 import FormProfile from '@/components/forms/form/formProfile';
 import Input from '@/components/forms/input';
-import { cleanAlert, submitForm } from '@/services/helpers';
+import { submitForm } from '@/services/helpers';
 import connect, { connectProps } from '@/services/connect';
 import profileController from '@/controllers/profile';
 import { userDefault } from '@/shared/models';
@@ -14,7 +14,6 @@ import links from '@/pages/links.json';
 import Link from '@/components/nav/link';
 import router from '@/services/router';
 import store from '@/services/store';
-import authController from '@/controllers/auth';
 
 class PageProfileEdit extends Block {
   constructor() {
@@ -150,7 +149,7 @@ class PageProfileEdit extends Block {
     this.children.linkProfile = new Link({
       name: 'Профиль',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.profile);
         },
       },
@@ -158,7 +157,7 @@ class PageProfileEdit extends Block {
     this.children.linkProfilePassword = new Link({
       name: 'Изменить пароль',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.profilepassword);
         },
       },
@@ -166,14 +165,14 @@ class PageProfileEdit extends Block {
     this.children.linkLogout = new Link({
       name: 'Выйти',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.logout);
         },
       },
     });
   }
 
-  componentDidUpdate(oldProps: any, newProps: any) {
+  componentDidUpdate(): boolean {
     this.init();
     return true;
   }

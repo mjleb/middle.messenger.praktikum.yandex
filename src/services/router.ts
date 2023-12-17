@@ -5,23 +5,24 @@ import links from '@/pages/links.json';
 import authController from '@/controllers/auth';
 
 class Router {
-  __instance: any;
+  static __instance: any;
 
   _baseUrl = new URL(window.location.href).origin;
 
-  routes: any[] | undefined;
+  routes: any[] = [];
 
-  history: History | undefined;
+  history!: History;
 
   _currentRoute: any;
 
   _rootQuery;
 
-  _privatePage: any[];
+  _privatePage: any[] = [];
 
   constructor(rootQuery: string) {
     // devLog('Router constructor');
     if (Router.__instance) {
+      // eslint-disable-next-line no-constructor-return
       return Router.__instance;
     }
 
@@ -97,7 +98,7 @@ class Router {
   }
 
   getPath() {
-    return _baseUrl;
+    return this._baseUrl;
   }
 
   // true|false access for content

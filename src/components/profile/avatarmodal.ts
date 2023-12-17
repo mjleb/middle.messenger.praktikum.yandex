@@ -1,4 +1,3 @@
-import { v4 as makeUUID } from 'uuid';
 import tpl from '../modal/modal.tpl.ts';
 import Form from '../forms/form/form.ts';
 import Input from '../forms/input/index.ts';
@@ -25,8 +24,8 @@ export default class ModalAvatar extends Block {
     this.children.body = new Form({
       id: 'form-file-avatar',
       events: {
-        click(e: any) {
-          //e.preventDefault();
+        click() {
+          // e.preventDefault();
         },
       },
       inputs: [
@@ -43,8 +42,8 @@ export default class ModalAvatar extends Block {
           id: 'send',
           type: 'submit',
           events: {
-            click(e: any) {
-              /*e.preventDefault();*/
+            click() {
+              /* e.preventDefault(); */
               const data = submitFormFile('form-file-avatar');
               console.log('file load', data);
               profileController.avatarSave(data);

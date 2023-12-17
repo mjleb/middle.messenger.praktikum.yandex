@@ -6,7 +6,7 @@ const tpl: string = `
          {{#if warning}}<div class="alert alert-warning">{{warning}}</div>{{/if}}
         {{{form}}}
         <div>
-        <a href="{{links.signup}}">Нет аккаунта?</a>
+        {{{linkSignUp}}}
         </div>
     </div>
 `;

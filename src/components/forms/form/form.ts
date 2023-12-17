@@ -14,7 +14,7 @@ export default class Form extends Block {
 
     this.element.classList.add('form');
     this.element.setAttribute('id', props.id);
-    //this.element.setAttribute('action', '#');
+    // this.element.setAttribute('action', '#');
   }
 
   render() {

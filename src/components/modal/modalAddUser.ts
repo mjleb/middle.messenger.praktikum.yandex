@@ -1,14 +1,13 @@
 import tpl from './modalAddUser.tpl';
-import Block from '@/services/block';
-import { IMessageApi, IProps, ItagEdit } from '@/types';
+import Link from '../nav/link';
 import Form from '../forms/form/form';
 import Input from '../forms/input';
 import Button from '../forms/button/button';
+import { IProps } from '@/types';
+import Block from '@/services/block';
 import { submitForm } from '@/services/helpers';
 import store, { StoreEvents } from '@/services/store';
 import chatController from '@/controllers/chat';
-import Link from '../nav/link';
-import { modalClose } from './modal';
 
 export default class ModalAddUser extends Block {
   constructor(props: IProps) {
@@ -65,7 +64,7 @@ export default class ModalAddUser extends Block {
               const data = submitForm('form-useradd');
               const user = await chatController.searchUser(data);
               console.log('modal user add', store.getState()?.searchusers, user);
-              //modalOpen('modal-search');
+              // modalOpen('modal-search');
             },
           },
         }),
@@ -80,7 +79,7 @@ export default class ModalAddUser extends Block {
     this.children.result = [];
 
     if (searchUsers) {
-      searchUsers.forEach((item: IMessageApi) => {
+      searchUsers.forEach((item: any) => {
         console.log('messages item', item);
 
         this.children.result.push(
@@ -90,7 +89,7 @@ export default class ModalAddUser extends Block {
             class: 'a',
             icon: 'add_circle',
             events: {
-              async click(e: any) {
+              async click() {
                 console.log('Добавлен', item.id, 'в чат ', chatActiveId);
                 await chatController.addChatUser(item.id);
                 store.set('searchusers', []);

@@ -112,7 +112,7 @@ export default class PageProfileEditPassw extends Block {
     this.children.linkProfile = new Link({
       name: 'Профиль',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.profile);
         },
       },
@@ -120,7 +120,7 @@ export default class PageProfileEditPassw extends Block {
     this.children.linkProfileEdit = new Link({
       name: 'Изменить данные',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.profileedit);
         },
       },
@@ -128,7 +128,7 @@ export default class PageProfileEditPassw extends Block {
     this.children.linkLogout = new Link({
       name: 'Выйти',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.logout);
         },
       },

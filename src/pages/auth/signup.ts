@@ -8,6 +8,8 @@ import { submitForm } from '@/services/helpers';
 import authController from '@/controllers/auth';
 import { Indexed } from '@/types';
 import connect from '@/services/connect';
+import Link from '@/components/nav/link';
+import router from '@/services/router';
 
 class PageSignUp extends Block {
   constructor() {
@@ -131,6 +133,14 @@ class PageSignUp extends Block {
           },
         }),
       ],
+    });
+    this.children.linkLogin = new Link({
+      name: 'Вход',
+      events: {
+        click() {
+          router.go(links.login);
+        },
+      },
     });
   }
 

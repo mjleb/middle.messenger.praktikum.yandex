@@ -9,7 +9,7 @@ export interface RequestOptions {
 }
 export type ICallback = (...args: any) => any;
 export type IListeners = Record<string, ICallback[]>;
-export type IProps = Record<string, any> | FormData;
+export type IProps = Record<string, any> | FormData | any;
 export type ItagEdit = HTMLElement | null;
 export type ItextContent = HTMLElement | null;
 export type Iobj = {

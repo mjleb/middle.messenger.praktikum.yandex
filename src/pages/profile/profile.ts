@@ -55,7 +55,7 @@ class PageProfile extends Block {
       settings: { withInternalID: true },
       name: 'Изменить данные',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.profileedit);
         },
       },
@@ -63,7 +63,7 @@ class PageProfile extends Block {
     this.children.linkProfilePassword = new Link({
       name: 'Изменить пароль',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.profilepassword);
         },
       },
@@ -71,7 +71,7 @@ class PageProfile extends Block {
     this.children.linkLogout = new Link({
       name: 'Выйти',
       events: {
-        click(e: any) {
+        click() {
           router.go(links.logout);
         },
       },
