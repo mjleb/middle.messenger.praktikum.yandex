@@ -1,4 +1,4 @@
-const tpl: string = `<section class="auth">
+const tpl: string = ` 
 <div class="card">
   <h1>Страницы</h1>
   <nav>
@@ -41,5 +41,5 @@ const tpl: string = `<section class="auth">
     </ul>
 </nav>
 </div>
-</section>`;
+ `;
 export default tpl;
