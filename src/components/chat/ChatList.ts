@@ -9,6 +9,9 @@ import chatController from '@/controllers/chat';
 import tpl from '@/components/chat/ChatList.tpl';
 import store, { StoreEvents } from '@/services/store';
 import ChatItem from '@/components/chat/chat';
+import Link from '@/components/nav/link';
+import router from '@/services/router';
+import links from '@/pages/links.json';
 
 export default class ChatList extends Block {
   constructor() {
@@ -107,6 +110,15 @@ export default class ChatList extends Block {
       body: new ChatSearch({
         id: 'searchr',
       }),
+    });
+    this.children.linkProfile = new Link({
+      name: 'Профиль >>',
+      class: 'a',
+      events: {
+        click() {
+          router.go(links.profile);
+        },
+      },
     });
     this.children.formSearch = new Form({
       id: 'form-search',

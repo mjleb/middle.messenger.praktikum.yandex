@@ -3,7 +3,7 @@ const tpl: string = `
 {{{modalSearch}}}
 
     <div class="profile-link">
-        <a href="{{links.profile}}">Профиль ></a>
+        {{{linkProfile}}}
         
     </div>
     <div class="search">

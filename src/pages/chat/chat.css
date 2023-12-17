@@ -219,7 +219,8 @@
     text-align: right;
     padding: 10px;
 
-    & a {
+    & a,
+    & .link {
       color: #999;
     }
   }
