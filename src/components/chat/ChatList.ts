@@ -173,7 +173,7 @@ export default class ChatList extends Block {
     this.children.chats = [];
     if (chats) {
       chats.forEach((chat: any) => {
-        const active: boolean = chatActiveId == chat.id ? true : false;
+        const active: boolean = !!(chatActiveId == chat.id);
         const timestamp = getTimestamp(chat?.last_message?.time);
         const date = timestamp ? getChatDatetime(timestamp) : null;
         this.children.chats.push(

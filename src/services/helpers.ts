@@ -1,4 +1,5 @@
 /* eslint-disable operator-linebreak */
+// eslint-disable-next-line object-curly-newline
 import { IChat, IChatDetails, Indexed, JsonObject } from '@/types';
 import store from '@/services/store';
 import { devLog } from '@/shared/lib';
@@ -20,6 +21,7 @@ export function isEqual(a: Indexed | any, b: Indexed | any) {
   if (keysA.length !== keysB.length) {
     return false;
   }
+  // eslint-disable-next-line no-plusplus
   for (let i = 0, keysA1 = keysA; i < keysA1.length; i++) {
     const key = keysA1[i];
     if (keysB.indexOf(key) === -1 || !isEqual(a[key], b[key])) {
@@ -136,7 +138,7 @@ export function submitForm(id: string): Record<string, any> {
   });
 
   // Выводим результат в консоль (вместо этого вы можете отправить данные на сервер)
-  //console.log(jsonData);
+  // console.log(jsonData);
 
   return jsonData;
 }
@@ -233,7 +235,7 @@ export const getChatDetails = (chat: IChat): IChatDetails => {
   const messageOwnerLogin: string = chat?.last_message?.user?.login;
   const currentUserLogin = store?.getState()?.user?.login;
 
-  const own = messageOwnerLogin && messageOwnerLogin === currentUserLogin ? true : false;
+  const own = !!(messageOwnerLogin && messageOwnerLogin === currentUserLogin);
 
   return {
     datetime: date,

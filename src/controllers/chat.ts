@@ -25,7 +25,6 @@ class ChatController {
       console.log('create chat', responseText);
       return responseText;
     } catch (e: any) {
-      alert(`Oops, something went wrong: ${e.message}`);
       console.error(e.message);
     }
     return true;
@@ -120,10 +119,8 @@ class ChatController {
       if (response.status !== 200) {
         const { reason } = responseText;
         console.warn(`Wrong: ${reason}`);
-        return false;
       }
       store.set('usersinchat', responseText);
-      return responseText;
     } catch (e: any) {
       console.error(e.message);
     }
@@ -141,7 +138,6 @@ class ChatController {
     }
   }
 
-  // ========================
   getChatTitle(chatId: number) {
     const chats = store?.getState()?.chats;
     const currentChat = chats.filter((chat: IChat) => Number(chat.id) === Number(chatId));
@@ -179,7 +175,6 @@ class ChatController {
 
   async connect(chatActiveId: number) {
     try {
-      // get chat token
       const token = await this.getChatToken(chatActiveId);
 
       if (!token) {
@@ -187,7 +182,6 @@ class ChatController {
         return;
       }
 
-      // establish WS connection and load messages with a store update
       WS.connect(chatActiveId, token);
       this.getChatTitle(chatActiveId);
     } catch (e: any) {

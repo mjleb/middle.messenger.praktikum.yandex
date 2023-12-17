@@ -23,6 +23,7 @@ type IHTTPрrops = (url: string, options?: Ioptions) => Promise<unknown>;
 
 class HTTPTransport {
   get: IHTTPрrops = (url: string, options?: Ioptions) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
     this.request(
       `${url}?${options?.data ? queryStringify(options.data) : ''}`,
       { ...options, data: {}, method: METHODS.GET },
@@ -30,12 +31,15 @@ class HTTPTransport {
     );
 
   put = (url: string, options?: IoptionsData) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
     this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
 
   post = (url: string, options?: IoptionsData) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
     this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
 
   delete = (url: string, options?: Ioptions) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
     this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
   // PUT, POST, DELETE
 

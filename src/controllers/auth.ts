@@ -1,4 +1,5 @@
 import AuthAPI from '@/api/auth-api';
+// eslint-disable-next-line object-curly-newline
 import { cleanAlert, isEmpty, messageError, messageWarning } from '@/services/helpers';
 import links from '@/pages/links.json';
 import store from '@/services/store';

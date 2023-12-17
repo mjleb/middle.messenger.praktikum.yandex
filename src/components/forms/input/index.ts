@@ -23,7 +23,7 @@ export default class Input extends Block {
 */
     this.element.classList.add('group-input');
 
-    //console.log('input props.value', props.value);
+    // console.log('input props.value', props.value);
   }
 
   render() {
