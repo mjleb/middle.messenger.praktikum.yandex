@@ -6,7 +6,8 @@
     background-color: #fbfbfb;
     align-items: center;
 
-    & a {
+    & a,
+    & .link {
       width: 28px;
       height: 28px;
       color: var(--colorwhite);

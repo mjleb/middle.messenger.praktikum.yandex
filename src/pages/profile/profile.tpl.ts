@@ -1,8 +1,6 @@
 const tpl: string = `
 <div class="link-back ">
-    <a href="{{{links.chat}}}" title="К чату">
-        <span class="material-symbols-outlined"> arrow_back </span> 
-    </a>
+    {{{linkChat}}}
 </div>
 
 <div>  

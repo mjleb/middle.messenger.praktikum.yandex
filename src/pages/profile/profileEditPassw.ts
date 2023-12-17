@@ -21,6 +21,16 @@ export default class PageProfileEditPassw extends Block {
   }
 
   init() {
+    this.children.linkChat = new Link({
+      id: 'tochat',
+      class: 'a',
+      icon: 'arrow_back',
+      events: {
+        click() {
+          router.go(links.chat);
+        },
+      },
+    });
     this.children.modal = new ModalAvatar({
       id: 'modal-avatar',
       h1: 'Загрузите файл',
