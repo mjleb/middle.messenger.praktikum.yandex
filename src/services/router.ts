@@ -54,6 +54,7 @@ class Router {
 
     window.onpopstate = ((event: any) => {
       this._onRoute(event.currentTarget.location.pathname);
+      // eslint-disable-next-line no-extra-bind
     }).bind(this);
 
     this._onRoute(window.location.pathname);

@@ -65,6 +65,7 @@ class HTTPTransport {
         });
       }
 
+      // eslint-disable-next-line func-names
       xhr.onload = function () {
         resolve(xhr);
       };

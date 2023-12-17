@@ -1,3 +1,4 @@
+// eslint-disable-next-line object-curly-newline
 import { cleanAlert, messageError, messageSuccsess, messageWarning } from '@/services/helpers';
 
 import UserAPI from '@/api/user-api';

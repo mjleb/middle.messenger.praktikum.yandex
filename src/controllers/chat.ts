@@ -1,4 +1,4 @@
-import WS from '@/services/ws';
+import WSS from '@/services/ws';
 import AuthAPI from '@/api/auth-api';
 import ChatAPI from '@/api/chat-api';
 import UserAPI from '@/api/user-api';
@@ -167,7 +167,7 @@ class ChatController {
 
   async sendMessage(message: string) {
     try {
-      await WS.sendMessage(message);
+      await WSS.sendMessage(message);
     } catch (e: any) {
       console.error(e.message);
     }
@@ -182,7 +182,7 @@ class ChatController {
         return;
       }
 
-      WS.connect(chatActiveId, token);
+      WSS.connect(chatActiveId, token);
       this.getChatTitle(chatActiveId);
     } catch (e: any) {
       console.error(e.message);
@@ -190,7 +190,7 @@ class ChatController {
   }
 
   async disconnect() {
-    await WS.disconnect();
+    await WSS.disconnect();
   }
 }
 

@@ -59,7 +59,7 @@ export default abstract class Block {
     // --------- Login ?
 
     // Create proxy
-    this.props = this._makePropsProxy({ ...props, __id: makeUUID() }); //__id: this._id
+    this.props = this._makePropsProxy({ ...props, __id: makeUUID() });
 
     //----------
     // Set link to the new event bus
@@ -209,7 +209,7 @@ export default abstract class Block {
   }
 
   // Could be redeclared by user
-  //abstract render(): DocumentFragment;
+  // abstract render(): DocumentFragment;
   render() {}
 
   _removeEvents() {
