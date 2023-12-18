@@ -1,4 +1,5 @@
 import { Iobj, ItextContent } from '@/types.ts';
+/* eslint-disable */
 
 type tplotOptions = {
   [key: string]: any;
