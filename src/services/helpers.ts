@@ -235,3 +235,12 @@ export const getChatDatetime = (timestamp: number): string => {
   }
   return `${getMonthName(date.getMonth())} ${date.getDate() + 1}, ${date.getFullYear()}`;
 };
+
+export function fJSONparse(event: any) {
+  try {
+    return JSON.parse(event.data);
+  } catch (error: any) {
+    console.log(error.message);
+    return event.data;
+  }
+}
