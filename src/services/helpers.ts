@@ -238,7 +238,8 @@ export const getChatDatetime = (timestamp: number): string => {
 
 export function fJSONparse(event: any) {
   try {
-    return JSON.parse(event.data);
+    const data = JSON.parse(event.data);
+    return data;
   } catch (error: any) {
     console.log(error.message);
     return event.data;

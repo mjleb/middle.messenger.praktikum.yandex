@@ -1,6 +1,5 @@
 import store from '@/services/store';
 import chatController from '@/controllers/chat';
-import { fJSONparse } from './helpers';
 
 export class WS {
   static basePath = 'wss://ya-praktikum.tech/ws/chats';
@@ -80,9 +79,7 @@ export class WS {
 
     this._socket.addEventListener('message', async (event) => {
       // console.log('event.data', event.data);
-
-      const data = fJSONparse(event.data);
-
+      const data = JSON.parse(event.data);
       if (data.type === 'pong') {
         return;
       }
