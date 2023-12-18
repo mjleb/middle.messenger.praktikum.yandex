@@ -14,6 +14,7 @@ import links from '@/pages/links.json';
 import Link, { boxLinkLogout, boxLinkProfile, boxLinkProfilePassword } from '@/components/nav/link';
 import router from '@/services/router';
 import store from '@/services/store';
+import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
 
 class PageProfileEdit extends Block {
   constructor() {
@@ -61,7 +62,7 @@ class PageProfileEdit extends Block {
       },
     });
     this.children.form = new FormProfile({
-      id: 'form-profile',
+      id: 'form-profile-edit',
       events: {
         click(e: any) {
           e.preventDefault();
@@ -72,9 +73,9 @@ class PageProfileEdit extends Block {
           class: ['validator-email'],
           label: 'Почта',
           name: 'email',
-          id: 'email',
+          id: 'id-email',
           type: 'email',
-          required: false,
+          required: true,
           status: '',
           value: this.props.user.email,
           placeholder: '',
@@ -84,9 +85,9 @@ class PageProfileEdit extends Block {
           class: ['validator-login'],
           label: 'Логин',
           name: 'login',
-          id: 'login',
+          id: 'id-login',
           type: 'text',
-          required: false,
+          required: true,
           status: '',
           value: this.props.user.login,
           placeholder: '',
@@ -96,9 +97,9 @@ class PageProfileEdit extends Block {
           class: ['validator-string'],
           label: 'Имя',
           name: 'first_name',
-          id: 'first_name',
+          id: 'id-first_name',
           type: 'text',
-          required: false,
+          required: true,
           status: '',
           value: this.props.user.first_name,
           placeholder: '',
@@ -108,9 +109,9 @@ class PageProfileEdit extends Block {
           class: ['validator-string'],
           label: 'Фамилия',
           name: 'second_name',
-          id: 'second_name',
+          id: 'id-second_name',
           type: 'text',
-          required: false,
+          required: true,
           status: '',
           value: this.props.user.second_name,
           placeholder: '',
@@ -120,9 +121,9 @@ class PageProfileEdit extends Block {
           class: ['validator-string'],
           label: 'Имя в чате',
           name: 'display_name',
-          id: 'display_name',
+          id: 'id-display_name',
           type: 'text',
-          required: false,
+          required: true,
           status: '',
           value: this.props.user.display_name,
           placeholder: '',
@@ -132,7 +133,7 @@ class PageProfileEdit extends Block {
           class: ['validator-phone'],
           label: 'Телефон',
           name: 'phone',
-          id: 'phone',
+          id: 'id-phone',
           type: 'text',
           required: false,
           status: '',
@@ -147,10 +148,42 @@ class PageProfileEdit extends Block {
           id: 'save',
           type: 'submit',
           events: {
-            click(e: any) {
+            async click(e: any) {
               e.preventDefault();
-              const data = submitForm('form-profile');
-              profileController.profileSave(data);
+
+              const formname = 'form-profile-edit';
+              alertClean(formname);
+              let FlagError = true;
+
+              if (validatorRules('id-email', 'email')) {
+                FlagError = false;
+              }
+
+              if (validatorRules('id-login', 'login')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-first_name', 'string')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-second_name', 'string')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-display_name', 'message')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-phone', 'phone')) {
+                FlagError = false;
+              }
+              console.log(FlagError);
+              if (FlagError) {
+                const data = submitForm(formname);
+                const res = await profileController.profileSave(data);
+                if (res == 'OK') {
+                  alertSuccess(formname, `Данные успешно обновлены`);
+                } else {
+                  alertMessage('error', formname, res);
+                }
+              }
             },
           },
         }),
@@ -162,6 +195,7 @@ class PageProfileEdit extends Block {
   }
 
   componentDidUpdate(): boolean {
+    alertClean('form-profile-edit');
     this.init();
     return true;
   }

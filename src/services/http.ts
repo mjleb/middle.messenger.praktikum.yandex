@@ -9,7 +9,6 @@ const METHODS = {
   DELETE: 'DELETE',
 } as const;
 
-/*
 function queryStringify(data: Record<string, any>) {
   let url = '';
   for (const [key, value] of Object.entries(data)) {
@@ -21,33 +20,35 @@ function queryStringify(data: Record<string, any>) {
   console.log('url', url);
   return url;
 }
-*/
 
 // type IHTTPрrops = (url: string, options?: Ioptions) => Promise<unknown>;
 
 type HTTPMethod = <T>(url: string, options?: Ioptions) => Promise<T>;
 
-function StatusNot200(status: number, responseText: any) {
+function StatusNot200(status: number, res: any) {
   const path = window.location.pathname;
-  if (status !== 200) {
-    const { reason } = responseText;
-    console.warn(`Wrong: ${reason}`);
-    if (status == 401 && path != `${links.login}` && path != `${links.signup}`) {
-      router.go(links.login);
+  try {
+    const responseText = JSON.parse(res.response);
+    if (status !== 200) {
+      const { reason } = responseText;
+      console.warn(`Wrong: ${reason}`);
+      if (status == 401 && path != `${links.login}` && path != `${links.signup}`) {
+        router.go(links.login);
+      }
+      return reason;
     }
-    return false;
+    return responseText;
+  } catch (e) {
+    return res.response;
   }
-  return responseText;
 }
 
 class HTTPTransport {
   get: HTTPMethod = async (url, options = {}) => {
     try {
-      const response = (await this.request(url, { ...options, method: METHODS.GET }, options.timeout)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      console.log('get: HTTPMethod');
-      console.log(typeof response.response);
-      return StatusNot200(response.status, responseText);
+      const query = options.data ? `${url}?${queryStringify(options.data)}` : url;
+      const response = (await this.request(query, { ...options, method: METHODS.GET }, options.timeout)) as XMLHttpRequest;
+      return StatusNot200(response.status, response);
     } catch (error: any) {
       console.error(error.message);
       return false;
@@ -57,8 +58,7 @@ class HTTPTransport {
   put: HTTPMethod = async (url, options = {}) => {
     try {
       const response = (await this.request(url, { ...options, method: METHODS.PUT }, options?.timeout)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      return StatusNot200(response.status, responseText);
+      return StatusNot200(response.status, response);
     } catch (error: any) {
       console.error(error.message);
       return false;
@@ -68,9 +68,7 @@ class HTTPTransport {
   post: HTTPMethod = async (url, options = {}) => {
     try {
       const response = (await this.request(url, { ...options, method: METHODS.POST }, options?.timeout)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      console.log('post JSON.parse', responseText);
-      return StatusNot200(response.status, responseText);
+      return StatusNot200(response.status, response);
     } catch (error: any) {
       console.error(error.message);
       return false;
@@ -80,8 +78,8 @@ class HTTPTransport {
   delete: HTTPMethod = async (url: string, options?: Ioptions) => {
     try {
       const response = (await this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      return StatusNot200(response.status, responseText);
+      // const responseText = JSON.parse(response.response);
+      return StatusNot200(response.status, response);
     } catch (error: any) {
       console.error(error.message);
       return false;

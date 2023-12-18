@@ -37,7 +37,7 @@ class AuthController {
       return user;
     } catch (e: any) {
       console.error(e.message);
-      return false;
+      return e.message;
     }
   }
 
@@ -58,26 +58,33 @@ class AuthController {
       router.go(links.chat);
     } catch (e: any) {
       console.error(e.message);
+      return e.message;
     }
   }
 
   public async login(data: Record<string, any>) {
     try {
-      await this.authApi.signin(data);
-      await this.getUserId();
-      router.go(links.chat);
+      const res = await this.authApi.signin(data);
+      if (res == 'OK') {
+        await this.getUserId();
+        router.go(links.chat);
+      }
+      return res;
     } catch (e: any) {
       console.error(e.message);
+      return e.message;
     }
   }
 
   public async logout() {
     try {
-      await this.authApi.logout();
+      const res = await this.authApi.logout();
       store.set('user', {});
       router.go(links.login);
+      return res;
     } catch (e: any) {
       console.error(e.message);
+      return e.message;
     }
   }
 }

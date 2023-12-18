@@ -26,7 +26,7 @@ export default class ChatList extends Block {
       this.setProps({ chats });
       const search = store.getState()?.search;
       this.setProps({ search });
-      console.log('search', search);
+      // console.log('search', search);
     });
     chatController.chatList();
   }
@@ -146,9 +146,9 @@ export default class ChatList extends Block {
             click(e: any) {
               e.preventDefault();
               const data = submitForm('form-search');
-              const search = chatController.searchChats(data);
+              chatController.searchChats(data);
 
-              console.log('chat search ', search);
+              // console.log('chat search ', search);
               // modalOpen('modal-search');
             },
           },
@@ -165,7 +165,7 @@ export default class ChatList extends Block {
         click(e: any) {
           e.preventDefault();
           modalOpen('modal-new');
-          console.log('new chat');
+          // console.log('new chat');
         },
       },
     });
@@ -181,12 +181,12 @@ export default class ChatList extends Block {
     }
     this.children.chats = [];
     if (chats) {
-      console.log('chats list', chats);
+      // console.log('chats list', chats);
       chats.forEach((chat: any) => {
         const active: boolean = !!(chatActiveId == chat.id);
         const timestamp = getTimestamp(chat?.last_message?.time);
         const date = timestamp ? getChatDatetime(timestamp) : null;
-        console.log('chat', chat);
+        // console.log('chat', chat);
         this.children.chats.push(
           new ChatItem({
             id: chat.id,
@@ -200,9 +200,9 @@ export default class ChatList extends Block {
               async click(e) {
                 e.preventDefault();
                 store.set('chatActiveId', chat.id);
-                console.log('click chatId store', store.getState());
+                // console.log('click chatId store', store.getState());
                 await chatController.connect(chat.id);
-                console.log('messages', store.getState()?.messages);
+                // console.log('messages', store.getState()?.messages);
               },
             },
           }),

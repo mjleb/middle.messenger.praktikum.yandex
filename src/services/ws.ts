@@ -71,14 +71,14 @@ export class WS {
         console.warn('Websocket connection  closed  ');
       }
 
-      console.log(`Code: ${event.code}`);
+      // console.log(`Code: ${event.code}`);
       // remove WS connection timer if exists to avoid pinging multiples chats
       clearInterval(this._connTimer);
       store.set('connTimer', null);
     });
 
     this._socket.addEventListener('message', async (event) => {
-      console.log('event.data', event.data);
+      // console.log('event.data', event.data);
       const data = JSON.parse(event.data);
       if (data.type === 'pong') {
         return;
@@ -93,7 +93,7 @@ export class WS {
         const messages: any = store?.getState()?.messages;
         messages.push({ ...data, chat_id: this._chatId });
         store.set('messages', messages);
-        console.log('ws store.set');
+        // console.log('ws store.set');
       }
       store.set('chatActiveId', this._chatId);
       // fetch chats to update the list view

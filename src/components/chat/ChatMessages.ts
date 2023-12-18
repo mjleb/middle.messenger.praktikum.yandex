@@ -25,7 +25,7 @@ export default class ChatMessages extends Block {
       const state = store?.getState();
       const chatActiveId = store.getState()?.chatActiveId;
       this.setProps({ chatActiveId });
-      console.log('chatActiveId', chatActiveId);
+      // console.log('chatActiveId', chatActiveId);
       const chatTitle = state?.chatTitle;
       this.setProps({ chatTitle });
     });
@@ -76,7 +76,7 @@ export default class ChatMessages extends Block {
       icon: 'add_circle',
       events: {
         click() {
-          console.log('Добавить пользователя');
+          // console.log('Добавить пользователя');
           modalOpen('modal-useradd');
         },
       },
@@ -88,7 +88,7 @@ export default class ChatMessages extends Block {
       icon: 'cancel',
       events: {
         async click() {
-          console.log('Удалить пользователя');
+          // console.log('Удалить пользователя');
           await chatController.usersInChat();
           modalOpen('modal-userdelete');
         },
@@ -150,7 +150,7 @@ export default class ChatMessages extends Block {
       messages.forEach((item: IMessageApi) => {
         const timestamp = getTimestamp(item?.time);
         const date = getChatDatetime(timestamp);
-        console.log('messages item', item);
+        // console.log('messages item', item);
         this.children.messages.push(
           new MessageItem({
             user: item.user,

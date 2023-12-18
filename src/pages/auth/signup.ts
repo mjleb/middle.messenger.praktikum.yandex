@@ -10,6 +10,7 @@ import { Indexed } from '@/types';
 import connect from '@/services/connect';
 import Link from '@/components/nav/link';
 import router from '@/services/router';
+import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
 
 class PageSignUp extends Block {
   constructor() {
@@ -37,11 +38,11 @@ class PageSignUp extends Block {
           class: ['validator-string'],
           label: 'Имя',
           name: 'first_name',
-          id: 'first_name',
+          id: 'id-first_name',
           type: 'text',
           required: true,
           status: '',
-          value: this.props.first_name,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -49,11 +50,11 @@ class PageSignUp extends Block {
           class: ['validator-string'],
           label: 'Фамилия',
           name: 'second_name',
-          id: 'second_name',
+          id: 'id-second_name',
           type: 'text',
           required: true,
           status: '',
-          value: this.props.second_name,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -61,11 +62,11 @@ class PageSignUp extends Block {
           class: ['validator-email'],
           label: 'Почта',
           name: 'email',
-          id: 'email',
+          id: 'id-email',
           type: 'email',
           required: true,
           status: '',
-          value: this.props.email,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -73,11 +74,11 @@ class PageSignUp extends Block {
           class: ['validator-phone'],
           label: 'Телефон',
           name: 'phone',
-          id: 'phone',
+          id: 'id-phone',
           type: 'text',
           required: true,
           status: '',
-          value: this.props.phone,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -85,11 +86,11 @@ class PageSignUp extends Block {
           class: ['validator-login'],
           label: 'Логин',
           name: 'login',
-          id: 'login',
+          id: 'id-login',
           type: 'text',
           required: true,
           status: '',
-          value: this.props.login,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -97,11 +98,11 @@ class PageSignUp extends Block {
           class: ['validator-password'],
           label: 'Пароль',
           name: 'password',
-          id: 'password',
+          id: 'id-password',
           type: 'password',
           required: true,
           status: '',
-          value: this.props.password,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -109,11 +110,11 @@ class PageSignUp extends Block {
           class: ['validator-password'],
           label: 'Пароль (ещё раз)',
           name: 'password2',
-          id: 'password2',
+          id: 'id-password2',
           type: 'password',
           required: true,
           status: '',
-          value: this.props.password,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -121,14 +122,50 @@ class PageSignUp extends Block {
       buttons: [
         new Button({
           label: 'Зарегистрироваться',
-          id: 'sign-in',
+          id: 'sign-up',
           type: 'submit',
           events: {
-            click(e: any) {
+            async click(e: any) {
               e.preventDefault();
-              const data = submitForm('form-sign-up');
-              const result = authController.signup(data);
-              console.log('form-sign-up result', result);
+              const formname = 'form-sign-up';
+
+              alertClean(formname);
+              let FlagError = true;
+              if (validatorRules('id-first_name', 'string')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-second_name', 'string')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-email', 'email')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-phone', 'phone')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-login', 'login')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-password', 'password')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-password2', 'password')) {
+                FlagError = false;
+              }
+              const data = submitForm(formname);
+              if (data.password != data.password2) {
+                FlagError = false;
+                alertMessage('error', formname, 'Пароли не совпадают');
+              }
+              console.log(FlagError);
+              if (FlagError) {
+                const res = await authController.signup({ first_name: data.first_name, second_name: data.second_name, login: data.login, email: data.email, password: data.password, phone: data.phone });
+                if (res == 'OK') {
+                  alertSuccess(formname, `Данные успешно обновлены`);
+                } else {
+                  alertMessage('error', formname, res);
+                }
+              }
             },
           },
         }),

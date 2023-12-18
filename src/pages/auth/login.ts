@@ -9,7 +9,7 @@ import authController from '@/controllers/auth';
 import connect, { connectProps } from '@/services/connect';
 import Link from '@/components/nav/link';
 import router from '@/services/router';
-import { validatorRules } from '@/services/validator';
+import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
 
 class PageLogin extends Block {
   constructor() {
@@ -58,12 +58,26 @@ class PageLogin extends Block {
           id: 'sign-in',
           type: 'submit',
           events: {
-            click(e: any) {
+            async click(e: any) {
               e.preventDefault();
-              if (!validatorRules('id-login', 'login') && !validatorRules('id-password', 'password')) {
-                const data = submitForm('form-sign-in');
+              const formname = 'form-sign-in';
+              alertClean(formname);
+              let FlagError = true;
+              if (validatorRules('id-login', 'login')) {
+                FlagError = false;
+              }
+              if (validatorRules('id-password', 'password')) {
+                FlagError = false;
+              }
+              if (FlagError) {
+                const data = submitForm(formname);
                 console.log(data);
-                authController.login(data);
+                const res = await authController.login(data);
+                if (res == 'OK') {
+                  alertSuccess(formname, `Данные успешно обновлены`);
+                } else {
+                  alertMessage('error', formname, res);
+                }
               }
             },
           },
@@ -78,6 +92,11 @@ class PageLogin extends Block {
         },
       },
     });
+  }
+
+  componentDidUpdate(): boolean {
+    alertClean('form-sign-in');
+    return true;
   }
 
   render() {

@@ -21,19 +21,20 @@ class ChatController {
       return response;
     } catch (e: any) {
       console.error(e.message);
+      return e.message;
     }
-    return true;
   }
 
   async chatList() {
     try {
       const response = (await this.chatApi.get()) as XMLHttpRequest;
-      console.log('chatList response', response);
+      // console.log('chatList response', response);
       store.set('chats', response);
+      return response;
     } catch (e: any) {
       console.error(e.message);
+      return e.message;
     }
-    return true;
   }
 
   async searchChats(data: Record<string, any>) {
@@ -108,7 +109,7 @@ class ChatController {
   async getChatToken(chatActiveId: number) {
     try {
       const response: IgetChatToken = (await this.chatApi.getChatToken(chatActiveId)) as IgetChatToken;
-      console.log('getChatToken', chatActiveId, response);
+      // console.log('getChatToken', chatActiveId, response);
       if (!response.token) {
         console.warn('there is no chat token');
         return false;
@@ -132,7 +133,7 @@ class ChatController {
   async connect(chatActiveId: number) {
     try {
       const token = await this.getChatToken(chatActiveId);
-      console.log('token', token);
+      // console.log('token', token);
 
       if (!token) {
         console.warn('there is no chat token');

@@ -20,7 +20,7 @@ export default class UserAPI extends BaseAPI {
 
   // change avatar
   password(data: IProps): Promise<unknown> {
-    return userAPIInstance.put(`${UserAPI.apiPath}/profile/password/`, { data });
+    return userAPIInstance.put(`${UserAPI.apiPath}/password/`, { data });
   }
 
   getid(id: number): Promise<unknown> {
