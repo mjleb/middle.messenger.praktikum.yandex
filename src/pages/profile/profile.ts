@@ -6,11 +6,7 @@ import { modalClose, modalOpen } from '@/components/modal/modal';
 import Button from '@/components/forms/button/button';
 import connect, { connectProps } from '@/services/connect';
 import links from '@/pages/links.json';
-import Link, {
-  boxLinkLogout,
-  boxLinkProfileEdit,
-  boxLinkProfilePassword,
-} from '@/components/nav/link';
+import Link, { boxLinkLogout, boxLinkProfileEdit, boxLinkProfilePassword } from '@/components/nav/link';
 import router from '@/services/router';
 import store from '@/services/store';
 import { userDefault } from '@/shared/models';

@@ -34,14 +34,7 @@ export function isEmpty(value: any) {
   let result = true;
   const valType: string = typeof value;
 
-  if (
-    valType === 'undefined' ||
-    valType === 'boolean' ||
-    valType === 'number' ||
-    value == '' ||
-    value == 0 ||
-    value == null
-  ) {
+  if (valType === 'undefined' || valType === 'boolean' || valType === 'number' || value == '' || value == 0 || value == null) {
     result = true;
   } else {
     if (valType == 'object') {
@@ -191,20 +184,7 @@ export const getTimestamp = (date: string): number => Date.parse(date);
 const isToday = (date: Date): boolean => new Date().toDateString() === date.toDateString();
 
 const getMonthName = (monthNumber: number): string => {
-  const months = [
-    'Янв',
-    'Фев',
-    'Мар',
-    'Апр',
-    'Май',
-    'Июнь',
-    'Июль',
-    'Авг',
-    'Сент',
-    'Окт',
-    'Нояб',
-    'Дек',
-  ];
+  const months = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Нояб', 'Дек'];
   return months[monthNumber];
 };
 

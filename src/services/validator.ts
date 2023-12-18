@@ -1,4 +1,5 @@
 import { Iobj, ItextContent } from '@/types.ts';
+
 type tplotOptions = {
   [key: string]: any;
 };

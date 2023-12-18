@@ -260,6 +260,7 @@ export default abstract class Block {
   // Create proxy
   _makePropsProxy(props: PropsType) {
     // @todo Need to replace with a proper ES6 way
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     // @todo avoid re-assignment

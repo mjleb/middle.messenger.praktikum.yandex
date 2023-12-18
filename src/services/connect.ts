@@ -3,10 +3,7 @@ import Block from '@/services/block';
 import { Indexed } from '@/types';
 import store, { StoreEvents } from '@/services/store';
 
-export default function connect(
-  Component: typeof Block,
-  mapStateToProps: (state: Indexed) => Indexed,
-) {
+export default function connect(Component: typeof Block, mapStateToProps: (state: Indexed) => Indexed) {
   // используем class expression
   return class extends Component {
     constructor(props: any) {
