@@ -56,6 +56,7 @@ class AuthController {
       console.log('async signup', user);
       await this.getUserId();
       router.go(links.chat);
+      return true;
     } catch (e: any) {
       console.error(e.message);
       return e.message;
