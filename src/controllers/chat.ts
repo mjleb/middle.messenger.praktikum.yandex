@@ -5,6 +5,8 @@ import UserAPI from '@/api/user-api';
 import store from '@/services/store';
 import { IChat } from '@/types';
 
+type IgetChatToken = { token: string };
+
 class ChatController {
   authApi = new AuthAPI();
 
@@ -14,16 +16,9 @@ class ChatController {
 
   async create(title: string) {
     try {
-      const response = (await this.chatApi.create(title)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      if (response.status !== 200) {
-        const { reason } = responseText;
-        console.warn(`Oops, something went wrong: ${reason}`);
-
-        return false;
-      }
-      console.log('create chat', responseText);
-      return responseText;
+      const response = await this.chatApi.create(title);
+      console.log('create chat', response);
+      return response;
     } catch (e: any) {
       console.error(e.message);
     }
@@ -33,19 +28,8 @@ class ChatController {
   async chatList() {
     try {
       const response = (await this.chatApi.get()) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      console.log(responseText);
-      if (response.status !== 200) {
-        const { reason } = responseText;
-        console.warn(`Wrong: ${reason}`);
-
-        return false;
-      }
-      if (responseText) {
-        store.set('chats', responseText);
-      } else {
-        store.set('chats', null);
-      }
+      console.log('chatList response', response);
+      store.set('chats', response);
     } catch (e: any) {
       console.error(e.message);
     }
@@ -54,22 +38,13 @@ class ChatController {
 
   async searchChats(data: Record<string, any>) {
     try {
-      console.log('ChatController searchUser', data);
       let title = {};
       if (data.search != '') {
         title = { title: data.search };
       }
-      const response = (await this.chatApi.get(title)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      console.log('responseText', responseText);
-      if (response.status !== 200) {
-        const { reason } = responseText;
-        console.warn(`Wrong: ${reason}`);
-        return false;
-      }
-
-      store.set('chats', responseText);
-      return responseText;
+      const response = await this.chatApi.get(title);
+      store.set('chats', response);
+      return response;
     } catch (e: any) {
       console.error(e.message);
     }
@@ -78,17 +53,9 @@ class ChatController {
 
   async searchUser(data: Record<string, any>) {
     try {
-      console.log('ChatController searchUser', data);
-      const response = (await this.userApi.search({ login: data.login })) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      console.log('responseText', responseText);
-      if (response.status !== 200) {
-        const { reason } = responseText;
-        console.warn(`Wrong: ${reason}`);
-        return false;
-      }
-      store.set('searchusers', responseText);
-      return responseText;
+      const response = await this.userApi.search({ login: data.login });
+      store.set('searchusers', response);
+      return response;
     } catch (e: any) {
       console.error(e.message);
     }
@@ -113,14 +80,8 @@ class ChatController {
       if (!chatActiveId) {
         return;
       }
-      const response = (await this.chatApi.usersInChat(chatActiveId)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      console.log('responseText', responseText);
-      if (response.status !== 200) {
-        const { reason } = responseText;
-        console.warn(`Wrong: ${reason}`);
-      }
-      store.set('usersinchat', responseText);
+      const response = await this.chatApi.usersInChat(chatActiveId);
+      store.set('usersinchat', response);
     } catch (e: any) {
       console.error(e.message);
     }
@@ -146,19 +107,14 @@ class ChatController {
 
   async getChatToken(chatActiveId: number) {
     try {
-      const response = (await this.chatApi.getChatToken(chatActiveId)) as XMLHttpRequest;
-      const responseText = JSON.parse(response.response);
-      if (response.status !== 200) {
-        const { reason } = responseText;
-        console.warn(`wrong: ${reason}`);
-        return false;
-      }
-      if (!responseText.token) {
+      const response: IgetChatToken = (await this.chatApi.getChatToken(chatActiveId)) as IgetChatToken;
+      console.log('getChatToken', chatActiveId, response);
+      if (!response.token) {
         console.warn('there is no chat token');
         return false;
       }
-      store.set('token', responseText.token);
-      return responseText.token;
+      store.set('token', response.token);
+      return response.token;
     } catch (e: any) {
       console.error(e.message);
       return false;
@@ -176,6 +132,7 @@ class ChatController {
   async connect(chatActiveId: number) {
     try {
       const token = await this.getChatToken(chatActiveId);
+      console.log('token', token);
 
       if (!token) {
         console.warn('there is no chat token');

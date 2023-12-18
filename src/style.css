@@ -25,18 +25,21 @@
 */
 :root {
   --colordanger: #ff2f2f;
+  --colorgreen: green;
   --colorprimary: #3369f3;
   --colorgrey: #999;
+  --colorgreylight: #eaeaea;
   --colorwhite: #fff;
   --textgray: #cdcdcd;
   --bggray: #efefef;
+  --colorblack: #1e1e1e;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 500;
   font-size: 12px;
   line-height: 1;
   letter-spacing: 0;
-  color: #1e1e1e;
+  color: var(--colorblack);
   font-synthesis: none;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;

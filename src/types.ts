@@ -60,7 +60,7 @@ export type IMessageLast = {
 export type IChat = {
   id: number;
   title: string;
-  avatar: string | null;
+  avatar: Avatar | undefined;
   created_by: number;
   last_message: IMessageLast;
   unread_count: number;
@@ -78,7 +78,7 @@ export type IChatProps = {
   active: boolean;
   datetime?: string | null;
   unread?: number;
-  lastMessage?: string | null;
+  lastMessage?: IMessageLast;
   lastMessageImage?: boolean;
   lastMessageSticker?: boolean;
   own?: boolean;

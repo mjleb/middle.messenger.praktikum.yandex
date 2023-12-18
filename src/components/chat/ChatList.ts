@@ -12,6 +12,7 @@ import ChatItem from '@/components/chat/chat';
 import Link from '@/components/nav/link';
 import router from '@/services/router';
 import links from '@/pages/links.json';
+import { IChat, IChatProps } from '@/types';
 
 export default class ChatList extends Block {
   constructor() {
@@ -176,7 +177,7 @@ export default class ChatList extends Block {
 
   componentDidUpdate(): boolean {
     const state = store?.getState();
-    const chats = state?.chats;
+    const chats: IChat[] = state?.chats;
     const chatActiveId: any = store.getState()?.chatActiveId;
 
     if (!chats) {
@@ -184,10 +185,12 @@ export default class ChatList extends Block {
     }
     this.children.chats = [];
     if (chats) {
+      console.log('chats list', chats);
       chats.forEach((chat: any) => {
         const active: boolean = !!(chatActiveId == chat.id);
         const timestamp = getTimestamp(chat?.last_message?.time);
         const date = timestamp ? getChatDatetime(timestamp) : null;
+        console.log('chat', chat);
         this.children.chats.push(
           new ChatItem({
             id: chat.id,

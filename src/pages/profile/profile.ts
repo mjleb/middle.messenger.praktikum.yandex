@@ -6,7 +6,11 @@ import { modalClose, modalOpen } from '@/components/modal/modal';
 import Button from '@/components/forms/button/button';
 import connect, { connectProps } from '@/services/connect';
 import links from '@/pages/links.json';
-import Link from '@/components/nav/link';
+import Link, {
+  boxLinkLogout,
+  boxLinkProfileEdit,
+  boxLinkProfilePassword,
+} from '@/components/nav/link';
 import router from '@/services/router';
 import store from '@/services/store';
 import { userDefault } from '@/shared/models';
@@ -61,31 +65,9 @@ class PageProfile extends Block {
         },
       },
     });
-    this.children.linkProfileEdit = new Link({
-      settings: { withInternalID: true },
-      name: 'Изменить данные',
-      events: {
-        click() {
-          router.go(links.profileedit);
-        },
-      },
-    });
-    this.children.linkProfilePassword = new Link({
-      name: 'Изменить пароль',
-      events: {
-        click() {
-          router.go(links.profilepassword);
-        },
-      },
-    });
-    this.children.linkLogout = new Link({
-      name: 'Выйти',
-      events: {
-        click() {
-          router.go(links.logout);
-        },
-      },
-    });
+    this.children.linkProfileEdit = boxLinkProfileEdit;
+    this.children.linkProfilePassword = boxLinkProfilePassword;
+    this.children.linkLogout = boxLinkLogout;
   }
 
   render() {

@@ -7,19 +7,13 @@ import Form from '@/components/forms/form/form';
 import { submitForm } from '@/services/helpers';
 import authController from '@/controllers/auth';
 import connect, { connectProps } from '@/services/connect';
-import { devLog } from '@/shared/lib';
 import Link from '@/components/nav/link';
 import router from '@/services/router';
+import { validatorRules } from '@/services/validator';
 
 class PageLogin extends Block {
   constructor() {
-    devLog('PageLogin constructor', '');
-
-    super('section', {
-      links,
-      login: '',
-      password: '',
-    });
+    super('section', {});
 
     this.element.classList.add('auth');
   }
@@ -37,11 +31,11 @@ class PageLogin extends Block {
           class: ['validator-login'],
           label: 'Логин',
           name: 'login',
-          id: 'login',
+          id: 'id-login',
           type: 'text',
           required: true,
           status: '',
-          value: this.props.login,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -49,11 +43,11 @@ class PageLogin extends Block {
           class: ['validator-password'],
           label: 'Пароль',
           name: 'password',
-          id: 'password',
+          id: 'id-password',
           type: 'password',
           required: true,
           status: '',
-          value: this.props.password,
+          value: '',
           placeholder: '',
           helpingText: '',
         }),
@@ -66,8 +60,11 @@ class PageLogin extends Block {
           events: {
             click(e: any) {
               e.preventDefault();
-              const data = submitForm('form-sign-in');
-              authController.login(data);
+              if (!validatorRules('id-login', 'login') && !validatorRules('id-password', 'password')) {
+                const data = submitForm('form-sign-in');
+                console.log(data);
+                authController.login(data);
+              }
             },
           },
         }),

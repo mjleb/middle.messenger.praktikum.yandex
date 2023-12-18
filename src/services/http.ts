@@ -1,4 +1,6 @@
 import { Ioptions, IoptionsData, IoptionsRequest } from '@/types';
+import links from '@/pages/links.json';
+import router from './router';
 
 const METHODS = {
   GET: 'GET',
@@ -19,33 +21,72 @@ function queryStringify(data: Record<string, any>) {
   return url;
 }
 
-type IHTTPрrops = (url: string, options?: Ioptions) => Promise<unknown>;
+// type IHTTPрrops = (url: string, options?: Ioptions) => Promise<unknown>;
+
+type HTTPMethod = <T>(url: string, options?: Ioptions) => Promise<T>;
+
+function StatusNot200(status: number, responseText: any) {
+  const path = window.location.pathname;
+  if (status !== 200) {
+    const { reason } = responseText;
+    console.warn(`Wrong: ${reason}`);
+    if (status == 401 && path != `${links.login}` && path != `${links.signup}`) {
+      router.go(links.login);
+    }
+    return false;
+  }
+  return responseText;
+}
 
 class HTTPTransport {
-  get: IHTTPрrops = (url: string, options?: Ioptions) =>
-    // eslint-disable-next-line implicit-arrow-linebreak
-    this.request(
-      `${url}?${options?.data ? queryStringify(options.data) : ''}`,
-      { ...options, data: {}, method: METHODS.GET },
-      options?.timeout,
-    );
+  get: HTTPMethod = async (url, options = {}) => {
+    try {
+      const response = (await this.request(url, { ...options, method: METHODS.GET }, options.timeout)) as XMLHttpRequest;
+      const responseText = JSON.parse(response.response);
+      console.log('get: HTTPMethod');
+      console.log(typeof response.response);
+      return StatusNot200(response.status, responseText);
+    } catch (error: any) {
+      console.error(error.message);
+      return false;
+    }
+  };
 
-  put = (url: string, options?: IoptionsData) =>
-    // eslint-disable-next-line implicit-arrow-linebreak
-    this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
+  put: HTTPMethod = async (url, options = {}) => {
+    try {
+      const response = (await this.request(url, { ...options, method: METHODS.PUT }, options?.timeout)) as XMLHttpRequest;
+      const responseText = JSON.parse(response.response);
+      return StatusNot200(response.status, responseText);
+    } catch (error: any) {
+      console.error(error.message);
+      return false;
+    }
+  };
 
-  post = (url: string, options?: IoptionsData) =>
-    // eslint-disable-next-line implicit-arrow-linebreak
-    this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
+  post: HTTPMethod = async (url, options = {}) => {
+    try {
+      const response = (await this.request(url, { ...options, method: METHODS.POST }, options?.timeout)) as XMLHttpRequest;
+      const responseText = JSON.parse(response.response);
+      console.log('post JSON.parse', responseText);
+      return StatusNot200(response.status, responseText);
+    } catch (error: any) {
+      console.error(error.message);
+      return false;
+    }
+  };
 
-  delete = (url: string, options?: Ioptions) =>
-    // eslint-disable-next-line implicit-arrow-linebreak
-    this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
-  // PUT, POST, DELETE
+  delete: HTTPMethod = async (url: string, options?: Ioptions) => {
+    try {
+      const response = (await this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout)) as XMLHttpRequest;
+      const responseText = JSON.parse(response.response);
+      return StatusNot200(response.status, responseText);
+    } catch (error: any) {
+      console.error(error.message);
+      return false;
+    }
+  };
+  // -------------------------------
 
-  // options:
-  // headers — obj
-  // data — obj
   request = (url: string, options: IoptionsRequest, timeout = 5000) => {
     const { method, data, headers } = options;
 

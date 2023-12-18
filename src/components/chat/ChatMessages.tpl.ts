@@ -19,7 +19,7 @@ const tpl: string = `
         </div>
     </div>
 {{/if}}
-<div class="posts">
+<div class="posts"> 
     {{#if messages }}
         {{#each messages}}
             {{{this}}}
@@ -27,7 +27,7 @@ const tpl: string = `
     {{else}}
         <div class="nodata">Выберите чат чтобы отправить сообщение</div> 
     {{/if}}
-</div>
+ </div>
 {{#if chatTitle }}
     <div class="input-message">
         <div class="button-img-add"> 

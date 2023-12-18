@@ -184,6 +184,7 @@ export function cleanAlert() {
   store.set('warning', '');
   store.set('succsess', '');
 }
+
 // =========================================== Chats
 export const getTimestamp = (date: string): number => Date.parse(date);
 

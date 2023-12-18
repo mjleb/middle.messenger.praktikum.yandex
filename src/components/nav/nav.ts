@@ -1,7 +1,8 @@
 import Block from '@/services/block';
 import tpl from '@/components/nav/nav.tpl';
+import connect, { connectProps } from '@/services/connect';
 
-export default class PageNav extends Block {
+class PageNav extends Block {
   constructor() {
     super('section', {});
     if (!this.element) {
@@ -15,3 +16,5 @@ export default class PageNav extends Block {
     return this.compile(tpl, { ...this.props });
   }
 }
+
+export default connect(PageNav, connectProps);

@@ -1,5 +1,24 @@
 import { Iobj, ItextContent } from '@/types.ts';
-
+type tplotOptions = {
+  [key: string]: any;
+};
+const Rules: tplotOptions = {
+  error: {
+    text: 'Пожалуйста, введите корректные данные',
+  },
+  login: {
+    pattern: /^(?![_\d-]*$)[a-zA-Z\d_-]{3,20}$/,
+    text: 'от 3 до 20 символов, латиница, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов (допустимы дефис и нижнее подчёркивание)',
+  },
+  email: {
+    pattern: /^[a-zA-Z\d._%+-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/,
+    text: 'латиница, может включать цифры и спецсимволы вроде дефиса и подчёркивания, обязательно должна быть «собака» (@) и точка после неё, но перед точкой обязательно должны быть буквы',
+  },
+  password: {
+    pattern: /^(?=.*[A-Z])(?=.*\d).{8,40}$/,
+    text: 'от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра',
+  },
+};
 export default class InputValidator {
   Patterns;
 
@@ -74,4 +93,79 @@ export default class InputValidator {
       }
     }
   }
+}
+
+export function cleanInput(inputId: string) {
+  const elem = document.getElementById(inputId) as HTMLFormElement;
+  elem.value = null;
+  return true;
+}
+
+export function messageErrorforInput(inputId: string, text: string) {
+  /** JSDoc
+   * @param {string} inputId
+   * @param {string} text
+   */
+  const inputerror = document.getElementById(`${inputId}-error`) as HTMLFormElement;
+  inputerror.innerHTML = text;
+  return true;
+}
+export function messageHelptextforInput(inputId: string, text: string) {
+  /** JSDoc
+   * @param {string} inputId
+   * @param {string} text
+   */
+  const inputerror = document.getElementById(`${inputId}-help`) as HTMLFormElement;
+  inputerror.innerHTML = text;
+  return true;
+}
+
+export function validatorMessage(inputId: string): boolean {
+  /** JSDoc
+   * @param {string} inputId
+   * @param {boolean} error false - нет ошибок
+   */
+  let error: boolean = false;
+  messageErrorforInput(inputId, '');
+  messageHelptextforInput(inputId, '');
+  const inputdata = document.getElementById(inputId) as HTMLFormElement;
+  if (String(inputdata.value.trim()) === '') {
+    messageErrorforInput(inputId, 'Поле не может быть пустым');
+    error = true;
+  }
+  return error;
+}
+export function validatorEmpty(inputId: string): boolean {
+  /** JSDoc
+   * @param {string} inputId
+   * @param {boolean} error false - нет ошибок
+   */
+  let error: boolean = false;
+  messageErrorforInput(inputId, '');
+  messageHelptextforInput(inputId, '');
+  const inputdata = document.getElementById(inputId) as HTMLFormElement;
+  console.log();
+  if (String(inputdata.value.trim()) === '') {
+    messageErrorforInput(inputId, 'Поле не может быть пустым');
+    error = true;
+  }
+  return error;
+}
+
+export function validatorRules(inputId: string, typerules: string): boolean {
+  let error: boolean = false;
+  messageErrorforInput(inputId, '');
+  messageHelptextforInput(inputId, '');
+  const inputdata = document.getElementById(inputId) as HTMLFormElement;
+  error = validatorEmpty(inputId);
+  if (!error) {
+    const result = Rules.login.pattern.test(inputdata.value);
+    if (!result) {
+      messageErrorforInput(inputId, Rules.error.text);
+      messageHelptextforInput(inputId, Rules[typerules].text);
+      error = true;
+    }
+  }
+
+  return error;
 }

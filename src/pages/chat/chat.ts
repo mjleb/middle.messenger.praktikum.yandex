@@ -1,15 +1,12 @@
-import links from '../links.json';
 import tpl from './chatpage.tpl';
 import Block from '@/services/block';
 import ChatList from '@/components/chat/ChatList';
 import ChatMessages from '@/components/chat/ChatMessages';
 import store from '@/services/store';
 
-const APIuserName = 'тет-а-теты';
-//
 export default class PageChat extends Block {
   constructor() {
-    super('section', { user: APIuserName, links });
+    super('section', {});
 
     this.element.classList.add('chat');
   }

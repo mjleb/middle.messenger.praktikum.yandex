@@ -78,6 +78,7 @@ export class WS {
     });
 
     this._socket.addEventListener('message', async (event) => {
+      console.log('event.data', event.data);
       const data = JSON.parse(event.data);
       if (data.type === 'pong') {
         return;

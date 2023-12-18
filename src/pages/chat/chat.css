@@ -13,6 +13,7 @@
   max-height: 100vh;
   place-content: stretch space-around;
   flex-flow: row nowrap;
+  justify-content: stretch;
 
   & input {
     background-color: #efefef;
@@ -63,12 +64,17 @@
   & .context {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: stretch;
     width: auto;
-    max-width: 80%;
+    max-width: 100%;
     background-color: #fff;
     margin: 0;
     overflow: hidden hidden;
+
+    & > div {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
 
     & .user {
       flex: auto;
@@ -86,14 +92,12 @@
     }
 
     & .posts {
-      flex: auto;
+      flex: 1;
       display: flex;
-      padding: 10px;
-      text-align: left;
-      overflow: hidden auto;
-      align-items: baseline;
-      place-content: stretch flex-end;
-      flex-flow: column wrap;
+      flex-direction: column;
+      overflow-y: scroll;
+      justify-content: safe flex-end;
+      padding-bottom: 10px;
 
       & .nodata {
         width: 100%;
@@ -105,6 +109,7 @@
       }
 
       & .post {
+        min-width: 150px;
         align-self: flex-start;
         max-width: 60%;
         background-color: #f8f8f8;
@@ -112,13 +117,36 @@
         border-radius: 10px;
         border-top-left-radius: 0;
         margin: 5px;
+        text-align: left;
+        font-size: 15px;
+        color: var(--colorblack);
+
+        & img {
+          max-width: 300px;
+          width: 100%;
+          border: 1px solid var(--colorgreylight);
+          border-radius: 12px;
+          margin-top: 12px;
+        }
 
         & .date {
-          font-size: 9px;
+          font-size: 10px;
+          line-height: 1;
           font-weight: 500;
           margin-top: 10px;
-          color: #999;
-          text-align: center;
+          color: var(--colorgrey);
+          text-align: right;
+
+          & > div {
+            float: right;
+            margin-bottom: -5px;
+            margin-left: 10px;
+          }
+
+          & span {
+            font-size: 14px;
+            line-height: 1;
+          }
 
           & .read {
             color: #3369f3;

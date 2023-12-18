@@ -8,10 +8,11 @@ import Input from '../forms/input/index.ts';
 import Button from '../forms/button/button.ts';
 import Block from '@/services/block.ts';
 import { IMessageApi } from '@/types.ts';
-import { submitForm } from '@/services/helpers.ts';
+import { getChatDatetime, getTimestamp, submitForm } from '@/services/helpers.ts';
 import store, { StoreEvents } from '@/services/store.ts';
 import chatController from '@/controllers/chat';
 import Link from '@/components/nav/link.ts';
+import { cleanInput, validatorMessage } from '@/services/validator.ts';
 
 export default class ChatMessages extends Block {
   constructor() {
@@ -103,10 +104,9 @@ export default class ChatMessages extends Block {
       },
       inputs: [
         new Input({
-          class: ['validator-message'],
           label: '',
           name: 'message',
-          id: 'message',
+          id: 'id-message',
           type: 'text',
           required: true,
           status: '',
@@ -121,15 +121,13 @@ export default class ChatMessages extends Block {
           id: 'send',
           type: 'submit',
           events: {
-            click(e: any) {
+            async click(e: any) {
               e.preventDefault();
-              // submitForm('form-message');
-              const data = submitForm('form-message');
-              const addmessage = chatController.sendMessage(data.message);
-              console.log('chat message ', data.message, addmessage);
-              const form = document.getElementById('form-message') as HTMLFormElement;
-              const elem = form.elements[0] as HTMLInputElement;
-              elem.value = '';
+              if (!validatorMessage('id-message')) {
+                const data = submitForm('form-message');
+                await chatController.sendMessage(data.message);
+                cleanInput('id-message');
+              }
             },
           },
         }),
@@ -150,11 +148,13 @@ export default class ChatMessages extends Block {
 
     if (messages) {
       messages.forEach((item: IMessageApi) => {
+        const timestamp = getTimestamp(item?.time);
+        const date = getChatDatetime(timestamp);
         console.log('messages item', item);
         this.children.messages.push(
           new MessageItem({
             user: item.user,
-            time: item.time,
+            time: date,
             id: item.id,
             chat_id: item.chat_id,
             content: item.content,

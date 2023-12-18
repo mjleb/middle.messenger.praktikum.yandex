@@ -15,42 +15,20 @@ class ProfileController {
 
   public async avatarSave(data: Record<string, any>) {
     try {
-      cleanAlert();
-
-      const res = (await this.userApi.avataredit(data)) as XMLHttpRequest;
-
-      if (res.status !== 200) {
-        messageWarning(res.response);
-        return true;
-      }
-
-      authController.getUserId();
-      store.set('succsess', 'Файл успешно загружен');
-      messageSuccsess(res.response);
+      await this.userApi.avataredit(data);
       return true;
     } catch (e: any) {
-      messageError(e);
+      console.error(e.message);
       return false;
     }
   }
 
   public async profileSave(data: Record<string, any>) {
     try {
-      cleanAlert();
-
-      const res = (await this.userApi.profileedit(data)) as XMLHttpRequest;
-
-      if (res.status !== 200) {
-        messageWarning(res.response);
-        return true;
-      }
-
-      authController.getUserId();
-      store.set('succsess', 'Данные успешно сохраннены');
-      messageSuccsess(res.response);
+      await this.userApi.profileedit(data);
       return true;
     } catch (e: any) {
-      messageError(e);
+      console.error(e.message);
       return false;
     }
   }
