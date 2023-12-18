@@ -11,7 +11,7 @@ import connect, { connectProps } from '@/services/connect';
 import profileController from '@/controllers/profile';
 import { userDefault } from '@/shared/models';
 import links from '@/pages/links.json';
-import Link from '@/components/nav/link';
+import Link, { boxLinkLogout, boxLinkProfile, boxLinkProfilePassword } from '@/components/nav/link';
 import router from '@/services/router';
 import store from '@/services/store';
 
@@ -156,30 +156,9 @@ class PageProfileEdit extends Block {
         }),
       ],
     });
-    this.children.linkProfile = new Link({
-      name: 'Профиль',
-      events: {
-        click() {
-          router.go(links.profile);
-        },
-      },
-    });
-    this.children.linkProfilePassword = new Link({
-      name: 'Изменить пароль',
-      events: {
-        click() {
-          router.go(links.profilepassword);
-        },
-      },
-    });
-    this.children.linkLogout = new Link({
-      name: 'Выйти',
-      events: {
-        click() {
-          router.go(links.logout);
-        },
-      },
-    });
+    this.children.linkProfile = boxLinkProfile;
+    this.children.linkProfilePassword = boxLinkProfilePassword;
+    this.children.linkLogout = boxLinkLogout;
   }
 
   componentDidUpdate(): boolean {

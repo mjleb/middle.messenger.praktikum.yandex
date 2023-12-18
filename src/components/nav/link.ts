@@ -22,6 +22,14 @@ export default class Link extends Block {
     return this.compile(tpl, { ...this.props });
   }
 }
+
+/*
+    this.children.linkProfile = boxLinkProfile;
+    this.children.linkProfileEdit = boxLinkProfileEdit;
+    this.children.linkProfilePassword = boxLinkProfilePassword;
+    this.children.linkLogout = boxLinkLogout;
+*/
+
 // ------------------------
 export const boxLinkLogout = new Link({
   name: 'Выйти',
@@ -47,6 +55,16 @@ export const boxLinkProfileEdit = new Link({
   events: {
     click() {
       router.go(links.profileedit);
+    },
+  },
+});
+
+// -----------------------
+export const boxLinkProfile = new Link({
+  name: 'Профиль',
+  events: {
+    click() {
+      router.go(links.profile);
     },
   },
 });

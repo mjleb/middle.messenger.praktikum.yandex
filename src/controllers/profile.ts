@@ -1,17 +1,7 @@
-// eslint-disable-next-line object-curly-newline
-import { cleanAlert, messageError, messageSuccsess, messageWarning } from '@/services/helpers';
-
 import UserAPI from '@/api/user-api';
-import store from '@/services/store';
-import authController from '@/controllers/auth';
 
 class ProfileController {
   userApi = new UserAPI();
-
-  public profile() {
-    cleanAlert();
-    return true;
-  }
 
   public async avatarSave(data: Record<string, any>) {
     try {

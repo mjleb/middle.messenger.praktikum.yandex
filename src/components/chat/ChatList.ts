@@ -12,7 +12,7 @@ import ChatItem from '@/components/chat/chat';
 import Link from '@/components/nav/link';
 import router from '@/services/router';
 import links from '@/pages/links.json';
-import { IChat, IChatProps } from '@/types';
+import { IChat } from '@/types';
 
 export default class ChatList extends Block {
   constructor() {
@@ -78,11 +78,7 @@ export default class ChatList extends Block {
               async click(e: any) {
                 e.preventDefault();
                 const data = submitForm('form-new');
-                const newchat = await chatController.create(data.title);
-                // console.log('chat new ', newchat);
-                if (newchat.id) {
-                  // store.set('chatActiveId', newchat.id);
-                }
+                await chatController.create(data.title);
                 chatController.chatList();
                 modalClose('modal-new');
               },

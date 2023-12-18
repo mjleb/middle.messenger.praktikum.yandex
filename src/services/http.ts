@@ -1,6 +1,6 @@
-import { Ioptions, IoptionsData, IoptionsRequest } from '@/types';
-import links from '@/pages/links.json';
 import router from './router';
+import { Ioptions, IoptionsRequest } from '@/types';
+import links from '@/pages/links.json';
 
 const METHODS = {
   GET: 'GET',
@@ -9,6 +9,7 @@ const METHODS = {
   DELETE: 'DELETE',
 } as const;
 
+/*
 function queryStringify(data: Record<string, any>) {
   let url = '';
   for (const [key, value] of Object.entries(data)) {
@@ -20,6 +21,7 @@ function queryStringify(data: Record<string, any>) {
   console.log('url', url);
   return url;
 }
+*/
 
 // type IHTTPрrops = (url: string, options?: Ioptions) => Promise<unknown>;
 

@@ -9,7 +9,7 @@ import Input from '@/components/forms/input';
 import { submitForm } from '@/services/helpers';
 import authController from '@/controllers/auth';
 import links from '@/pages/links.json';
-import Link from '@/components/nav/link';
+import Link, { boxLinkLogout, boxLinkProfile, boxLinkProfileEdit } from '@/components/nav/link';
 import router from '@/services/router';
 
 export default class PageProfileEditPassw extends Block {
@@ -119,30 +119,9 @@ export default class PageProfileEditPassw extends Block {
         }),
       ],
     });
-    this.children.linkProfile = new Link({
-      name: 'Профиль',
-      events: {
-        click() {
-          router.go(links.profile);
-        },
-      },
-    });
-    this.children.linkProfileEdit = new Link({
-      name: 'Изменить данные',
-      events: {
-        click() {
-          router.go(links.profileedit);
-        },
-      },
-    });
-    this.children.linkLogout = new Link({
-      name: 'Выйти',
-      events: {
-        click() {
-          router.go(links.logout);
-        },
-      },
-    });
+    this.children.linkProfile = boxLinkProfile;
+    this.children.linkProfileEdit = boxLinkProfileEdit;
+    this.children.linkLogout = boxLinkLogout;
   }
 
   render() {

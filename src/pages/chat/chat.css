@@ -3,6 +3,25 @@
   color: #3369f3;
 }
 
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  min-width: 260px;
+  z-index: 1;
+  padding-top: 30px;
+
+  & > div {
+    --colorshadow: rgb(0 0 0 / 14%);
+
+    background-color: #fff;
+    border-radius: 12px;
+    filter: brightness(95%);
+    filter: drop-shadow(5px 5px 5px var(--colorshadow));
+    padding: 20px;
+  }
+}
+
 .chat {
   color: var(--colorgrey);
   display: flex;
@@ -57,6 +76,93 @@
         border-top-left-radius: 8px;
         border-bottom-left-radius: 8px;
         padding: 4px;
+      }
+    }
+  }
+
+  & .users {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+
+    & .user {
+      display: flex;
+      flex: 1;
+      flex-wrap: nowrap;
+      justify-content: stretch;
+      border-top: 1px solid #eaeaea;
+      padding: 10px;
+      padding-top: 13px;
+      margin-bottom: 13px;
+
+      &.active {
+        background-color: #e4edfd;
+      }
+    }
+
+    & .content {
+      display: flex;
+      padding-left: 10px;
+      place-content: stretch space-evenly;
+      width: 100%;
+      flex-flow: column nowrap;
+    }
+
+    & .title {
+      display: flex;
+      flex: auto 1;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      & .name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #1e1e1e;
+      }
+    }
+
+    & .datelast {
+      display: flex;
+      justify-content: right;
+      align-items: flex-end;
+      font-size: 11px;
+      text-align: right;
+    }
+
+    & .message {
+      display: flex;
+      flex: auto 1;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      text-align: left;
+      font-size: 12px;
+      line-height: 15px;
+      padding-top: 5px;
+      align-items: flex-start;
+
+      & .text {
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    & .badge {
+      min-width: 20px;
+      margin-left: 5px;
+
+      & span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 11px;
+        background-color: var(--colorprimary);
+        border-radius: 50%;
+        height: 20px;
+        min-width: 20px;
       }
     }
   }
@@ -252,93 +358,6 @@
       color: #999;
     }
   }
-
-  & .users {
-    display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-
-    & .user {
-      display: flex;
-      flex: 1;
-      flex-wrap: nowrap;
-      justify-content: stretch;
-      border-top: 1px solid #eaeaea;
-      padding: 10px;
-      padding-top: 13px;
-      margin-bottom: 13px;
-
-      &.active {
-        background-color: #e4edfd;
-      }
-    }
-
-    & .content {
-      display: flex;
-      padding-left: 10px;
-      place-content: stretch space-evenly;
-      width: 100%;
-      flex-flow: column nowrap;
-    }
-
-    & .title {
-      display: flex;
-      flex: auto 1;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      align-items: flex-start;
-
-      & .name {
-        font-size: 13px;
-        font-weight: 600;
-        color: #1e1e1e;
-      }
-    }
-
-    & .datelast {
-      display: flex;
-      justify-content: right;
-      align-items: flex-end;
-      font-size: 11px;
-      text-align: right;
-    }
-
-    & .message {
-      display: flex;
-      flex: auto 1;
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      text-align: left;
-      font-size: 12px;
-      line-height: 15px;
-      padding-top: 5px;
-      align-items: flex-start;
-
-      & .text {
-        -webkit-line-clamp: 2;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-    }
-
-    & .badge {
-      min-width: 20px;
-      margin-left: 5px;
-
-      & span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        font-size: 11px;
-        background-color: var(--colorprimary);
-        border-radius: 50%;
-        height: 20px;
-        min-width: 20px;
-      }
-    }
-  }
 }
 
 .dropbtn {
@@ -350,25 +369,6 @@
 .dropdown {
   position: relative;
   display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  min-width: 260px;
-  z-index: 1;
-  padding-top: 30px;
-
-  & > div {
-    --colorshadow: rgb(0 0 0 / 14%);
-
-    background-color: #fff;
-    border-radius: 12px;
-    filter: brightness(95%);
-    filter: drop-shadow(5px 5px 5px var(--colorshadow));
-    padding: 20px;
-  }
 }
 
 .dropdown-content .a {
