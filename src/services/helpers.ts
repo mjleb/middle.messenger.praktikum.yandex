@@ -236,12 +236,11 @@ export const getChatDatetime = (timestamp: number): string => {
   return `${getMonthName(date.getMonth())} ${date.getDate() + 1}, ${date.getFullYear()}`;
 };
 
-export function fJSONparse(event: any) {
+export function fJSONparse(data: any) {
   try {
-    const data = JSON.parse(event.data);
-    return data;
+    const res = JSON.parse(data);
+    return res;
   } catch (error: any) {
-    console.log(error.message);
-    return event.data;
+    return data;
   }
 }

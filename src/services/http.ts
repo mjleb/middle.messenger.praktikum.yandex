@@ -50,8 +50,7 @@ class HTTPTransport {
       const response = (await this.request(query, { ...options, method: METHODS.GET }, options.timeout)) as XMLHttpRequest;
       return StatusNot200(response.status, response);
     } catch (error: any) {
-      console.error(error.message);
-      return false;
+      return error;
     }
   };
 
@@ -60,8 +59,7 @@ class HTTPTransport {
       const response = (await this.request(url, { ...options, method: METHODS.PUT }, options?.timeout)) as XMLHttpRequest;
       return StatusNot200(response.status, response);
     } catch (error: any) {
-      console.error(error.message);
-      return false;
+      return error;
     }
   };
 
@@ -70,8 +68,7 @@ class HTTPTransport {
       const response = (await this.request(url, { ...options, method: METHODS.POST }, options?.timeout)) as XMLHttpRequest;
       return StatusNot200(response.status, response);
     } catch (error: any) {
-      console.error(error.message);
-      return false;
+      return error;
     }
   };
 
@@ -81,8 +78,7 @@ class HTTPTransport {
       // const responseText = JSON.parse(response.response);
       return StatusNot200(response.status, response);
     } catch (error: any) {
-      console.error(error.message);
-      return false;
+      return error;
     }
   };
   // -------------------------------
