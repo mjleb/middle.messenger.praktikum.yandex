@@ -53,10 +53,9 @@
 
     & form {
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
       width: 100%;
-      flex-wrap: wrap;
+      flex-flow: row wrap;
 
       & .group-input {
         flex: 1;
