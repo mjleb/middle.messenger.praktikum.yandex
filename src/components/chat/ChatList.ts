@@ -170,7 +170,7 @@ export default class ChatList extends Block {
       buttons: [
         new Button({
           label: '<span class="material-symbols-outlined" id="form-search-submit">search</span>',
-          id: 'form-search-button',
+          id: 'form-search-submit',
           type: 'submit',
           events: {
             async click(e: any) {
