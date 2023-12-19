@@ -45,7 +45,7 @@ export default class ModalAddUser extends Block {
         new Input({
           label: 'Логин пользователя',
           name: 'login',
-          id: 'id-login',
+          id: 'form-user-add-id-login',
           type: 'text',
           required: false,
           status: '',
@@ -65,7 +65,7 @@ export default class ModalAddUser extends Block {
               // -----------------
               const formname = e.target.id.replace('-submit', '');
               let checkValid = true;
-              if (validatorRules('id-login', 'login')) {
+              if (validatorRules('form-user-add-id-login', 'login')) {
                 checkValid = false;
               }
               if (checkValid) {
