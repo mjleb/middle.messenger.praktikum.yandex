@@ -12,7 +12,7 @@ import { getChatDatetime, getTimestamp, submitForm } from '@/services/helpers.ts
 import store, { StoreEvents } from '@/services/store.ts';
 import chatController from '@/controllers/chat';
 import Link from '@/components/nav/link.ts';
-import { cleanInput, validatorMessage } from '@/services/validator.ts';
+import { alertClean, cleanInput, validatorMessage } from '@/services/validator.ts';
 
 export default class ChatMessages extends Block {
   constructor() {
@@ -44,6 +44,7 @@ export default class ChatMessages extends Block {
             click(e: any) {
               e.preventDefault();
               store.set('searchusers', []);
+              alertClean('form-user-add');
               modalClose('modal-useradd');
             },
           },
