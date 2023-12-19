@@ -14,7 +14,7 @@ export default class AvatarPhoto extends Block {
     this.setProps(props);
     this.setProps({ user: store.getState().user ? store.getState().user : userDefault });
 
-    //this.element.setAttribute('id', props.id);
+    // this.element.setAttribute('id', props.id);
     this.element.classList.add('avatar');
 
     store.on(StoreEvents.Updated, () => {
