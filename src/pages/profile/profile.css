@@ -110,16 +110,17 @@
 
   & .linkphoto {
     position: absolute;
-    display: none;
+    display: flex;
     cursor: pointer;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: var(--bggray);
+    background-color: transparent;
     width: 11rem;
     height: 11rem;
     z-index: 100;
     vertical-align: bottom;
+    color: transparent;
 
     & .icon {
       display: none;
@@ -127,7 +128,9 @@
 
     &:hover {
       display: flex;
+      color: var(--colorwhite);
       background-color: rgb(0 0 0 / 50%);
+      font-size: 12px;
 
       & .icon {
         display: inline-block;

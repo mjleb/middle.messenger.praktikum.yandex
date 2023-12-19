@@ -1,6 +1,7 @@
 const tpl: string = ` 
         <div class="modal-dialog-centered">
             <div class="modal-content">
+                {{{buttonClose}}}
                 {{#each buttons}}
                     {{{this}}}
                 {{/each}}

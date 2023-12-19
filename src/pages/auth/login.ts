@@ -11,16 +11,37 @@ import Link from '@/components/nav/link';
 import router from '@/services/router';
 import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
 
+function validatorPageLogin(formname: string): boolean {
+  console.log('formname', formname);
+  alertClean(formname);
+  let FlagError = true;
+  if (validatorRules('id-login', 'login')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-password', 'password')) {
+    FlagError = false;
+  }
+  console.log(FlagError);
+  return FlagError;
+}
+
 class PageLogin extends Block {
   constructor() {
     super('section', {});
-
+    // -------
+    const props = {
+      id: 'login',
+      formname: `form-login`,
+    };
+    this.setProps(props);
+    // -------
     this.element.classList.add('auth');
+    this.element.setAttribute('id', props.id);
   }
 
   init() {
     this.children.form = new Form({
-      id: 'form-sign-in',
+      id: this.props.formname,
       events: {
         click(e: any) {
           e.preventDefault();
@@ -55,30 +76,25 @@ class PageLogin extends Block {
       buttons: [
         new Button({
           label: 'Войти',
-          id: 'sign-in',
+          id: `${this.props.formname}-submit`,
           type: 'submit',
           events: {
             async click(e: any) {
               e.preventDefault();
-              const formname = 'form-sign-in';
-              alertClean(formname);
-              let FlagError = true;
-              if (validatorRules('id-login', 'login')) {
-                FlagError = false;
-              }
-              if (validatorRules('id-password', 'password')) {
-                FlagError = false;
-              }
-              if (FlagError) {
+              // -----------------
+              const formname = e.target.id.replace('-submit', '');
+              const checkValid = validatorPageLogin(formname);
+              if (checkValid) {
                 const data = submitForm(formname);
-                console.log(data);
-                const res = await authController.login(data);
-                if (res == 'OK') {
-                  alertSuccess(formname, `Данные успешно обновлены`);
-                } else {
-                  alertMessage('error', formname, res);
+                try {
+                  const res = await authController.login(data);
+                  console.log(res);
+                  alertSuccess(formname, `Ok`);
+                } catch (error: any) {
+                  alertMessage('error', formname, error.message);
                 }
               }
+              // -----------------
             },
           },
         }),
@@ -95,7 +111,7 @@ class PageLogin extends Block {
   }
 
   componentDidUpdate(): boolean {
-    alertClean('form-sign-in');
+    this.init();
     return true;
   }
 

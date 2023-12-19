@@ -77,7 +77,7 @@ export default class ChatMessages extends Block {
       events: {
         click() {
           // console.log('Добавить пользователя');
-          modalOpen('modal-useradd');
+          modalOpen('useradd');
         },
       },
     });
@@ -90,7 +90,7 @@ export default class ChatMessages extends Block {
         async click() {
           // console.log('Удалить пользователя');
           await chatController.usersInChat();
-          modalOpen('modal-userdelete');
+          modalOpen('userdelete');
         },
       },
     });

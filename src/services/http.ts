@@ -1,5 +1,6 @@
+import { fJSONparse } from './helpers';
 import router from './router';
-import { Ioptions, IoptionsRequest } from '@/types';
+import { IoptionsRequest } from '@/types';
 import links from '@/pages/links.json';
 
 const METHODS = {
@@ -20,67 +21,27 @@ function queryStringify(data: Record<string, any>) {
   console.log('url', url);
   return url;
 }
+type RequestOptionsProps = {
+  data?: Record<string, any>;
+  headers?: Record<string, string>;
+  timeout?: number;
+  type?: string;
+};
+type HTTPMethodProps = (url: string, options?: RequestOptionsProps) => Promise<unknown>;
 
-// type IHTTPрrops = (url: string, options?: Ioptions) => Promise<unknown>;
-
-type HTTPMethod = <T>(url: string, options?: Ioptions) => Promise<T>;
-
-function StatusNot200(status: number, res: any) {
-  const path = window.location.pathname;
-  try {
-    const responseText = JSON.parse(res.response);
-    if (status !== 200) {
-      const { reason } = responseText;
-      console.warn(`Wrong: ${reason}`);
-      if (status == 401 && path != `${links.login}` && path != `${links.signup}`) {
-        router.go(links.login);
-      }
-      return reason;
-    }
-    return responseText;
-  } catch (e) {
-    return res.response;
-  }
-}
+// type HTTPMethod = <T>(url: string, options?: Ioptions) => Promise<T>;
 
 class HTTPTransport {
-  get: HTTPMethod = async (url, options = {}) => {
-    try {
-      const query = options.data ? `${url}?${queryStringify(options.data)}` : url;
-      const response = (await this.request(query, { ...options, method: METHODS.GET }, options.timeout)) as XMLHttpRequest;
-      return StatusNot200(response.status, response);
-    } catch (error: any) {
-      return error;
-    }
-  };
+  // -------------------------------
 
-  put: HTTPMethod = async (url, options = {}) => {
-    try {
-      const response = (await this.request(url, { ...options, method: METHODS.PUT }, options?.timeout)) as XMLHttpRequest;
-      return StatusNot200(response.status, response);
-    } catch (error: any) {
-      return error;
-    }
-  };
+  get: HTTPMethodProps = (url, options) => this.request(options?.data ? `${url}?${queryStringify(options.data)}` : url, { ...options, data: {}, method: METHODS.GET }, options?.timeout);
 
-  post: HTTPMethod = async (url, options = {}) => {
-    try {
-      const response = (await this.request(url, { ...options, method: METHODS.POST }, options?.timeout)) as XMLHttpRequest;
-      return StatusNot200(response.status, response);
-    } catch (error: any) {
-      return error;
-    }
-  };
+  post: HTTPMethodProps = (url, options) => this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
 
-  delete: HTTPMethod = async (url: string, options?: Ioptions) => {
-    try {
-      const response = (await this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout)) as XMLHttpRequest;
-      // const responseText = JSON.parse(response.response);
-      return StatusNot200(response.status, response);
-    } catch (error: any) {
-      return error;
-    }
-  };
+  put: HTTPMethodProps = (url, options) => this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
+
+  delete: HTTPMethodProps = (url, options) => this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
+
   // -------------------------------
 
   request = (url: string, options: IoptionsRequest, timeout = 5000) => {
@@ -101,15 +62,39 @@ class HTTPTransport {
           xhr.setRequestHeader(header, headers[header]);
         });
       }
-
+      /*
       // eslint-disable-next-line func-names
       xhr.onload = function () {
         resolve(xhr);
       };
+      xhr.onerror = reject;
+      */
+      // ----------------------
+      // eslint-disable-next-line func-names
+      xhr.onload = function () {
+        const responseText = fJSONparse(this.response);
+        if (this.status !== 200) {
+          const path = window.location.pathname;
+          if (this.status == 401 && path != `${links.login}` && path != `${links.signup}`) {
+            router.go(links.login);
+          }
+          const { reason } = responseText;
+          console.warn(`Wrong: ${reason}`);
+          reject(new Error(reason));
+        }
+        resolve(responseText);
+      };
+      // eslint-disable-next-line func-names
+      xhr.onerror = function () {
+        reject(new Error('Network Error'));
+      };
+      // ----------------------
       xhr.withCredentials = true;
       xhr.onabort = reject;
-      xhr.onerror = reject;
-      xhr.ontimeout = reject;
+      // eslint-disable-next-line func-names
+      xhr.ontimeout = function () {
+        reject(new Error('timeout'));
+      };
       xhr.timeout = timeout;
 
       if (options?.type !== 'form') {

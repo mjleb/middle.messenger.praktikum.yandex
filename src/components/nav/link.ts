@@ -68,3 +68,14 @@ export const boxLinkProfile = new Link({
     },
   },
 });
+// -----------------------
+export const boxLinkChat = new Link({
+  id: 'Открыть чат',
+  class: 'a',
+  icon: 'arrow_back',
+  events: {
+    click() {
+      router.go(links.chat);
+    },
+  },
+});

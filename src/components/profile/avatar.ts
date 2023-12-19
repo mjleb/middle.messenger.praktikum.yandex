@@ -1,10 +1,10 @@
-import Block from '@/services/block.ts';
-import { IProps } from '@/types.ts';
 import tpl from './avatar.tpl.ts';
 import AvatarPhoto from './avatarphoto.ts';
 import { modalOpen } from '../modal/modal.ts';
 import { userDefault } from '@/shared/models.ts';
 import store from '@/services/store';
+import Block from '@/services/block.ts';
+import { IProps } from '@/types.ts';
 
 export default class Avatar extends Block {
   constructor(props: IProps) {

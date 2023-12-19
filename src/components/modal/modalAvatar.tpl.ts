@@ -1,6 +1,7 @@
 const tpl: string = ` 
         <div class="modal-dialog-centered">
             <div class="modal-content">
+                {{{buttonClose}}}
                 {{#each buttons}}
                     {{{this}}}
                 {{/each}}
@@ -9,17 +10,8 @@ const tpl: string = `
                 {{#if warning}}<div class="alert alert-warning">{{warning}}</div>{{/if}}
                 {{#if succsess}}<div class="alert alert-succsess">{{succsess}}</div>{{/if}}
                 {{{body}}}
-                {{#if resulttext}}
-                    <h3>Результат поиска: {{{resulttext}}}</h3>
-                
-                {{/if}}
-                {{#if result}}<small>Нажмите, чтобы добавить</small>{{/if}}
-                <div class="links-list">
-                {{#each result}}
-                    {{{this}}}
-                {{/each}}
-                </div>
             </div>
         </div>
+ 
 `;
 export default tpl;

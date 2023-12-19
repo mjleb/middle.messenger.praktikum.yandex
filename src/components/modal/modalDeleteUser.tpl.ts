@@ -5,9 +5,11 @@ const tpl: string = `
                     {{{this}}}
                 {{/each}}
                 <h1>{{h1}}</h1>
-                {{#if error}}<div class="alert alert-error">{{error}}</div>{{/if}}
-                {{#if warning}}<div class="alert alert-warning">{{warning}}</div>{{/if}}
-                {{#if succsess}}<div class="alert alert-succsess">{{succsess}}</div>{{/if}}
+                <div id="{{id}}-alert-box" class="alert-box">
+                    <div id="{{id}}-alert-error" class="alert alert-error"></div>
+                    <div id="{{id}}-alert-warning" class="alert alert-warning"></div>
+                    <div id="{{id}}-alert-success" class="alert alert-success"></div>
+                </div>
                 {{#if resulttext}}
                     <h3>{{{resulttext}}}</h3>
                 {{/if}}

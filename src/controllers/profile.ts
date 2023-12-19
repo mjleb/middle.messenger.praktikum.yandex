@@ -9,7 +9,7 @@ class ProfileController {
       return true;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 
@@ -19,7 +19,7 @@ class ProfileController {
       return res;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 
@@ -29,7 +29,7 @@ class ProfileController {
       return res;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 }

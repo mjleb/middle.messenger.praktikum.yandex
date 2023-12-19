@@ -4,6 +4,7 @@ import Block from '@/services/block';
 import { IProps } from '@/types';
 import store, { StoreEvents } from '@/services/store';
 import chatController from '@/controllers/chat';
+import { alertClean, alertMessage } from '@/services/validator';
 
 export default class ModalDeleteUser extends Block {
   constructor(props: IProps) {
@@ -12,6 +13,7 @@ export default class ModalDeleteUser extends Block {
     if (!this.element) {
       return;
     }
+    this.setProps({ id: 'user-delete' });
 
     this.element.classList.add('modal');
     this.element.setAttribute('id', props.id);
@@ -33,7 +35,7 @@ export default class ModalDeleteUser extends Block {
   }
 
   componentDidUpdate(): boolean {
-    const chatActiveId = store.getState()?.chatActiveId;
+    // const chatActiveId = store.getState()?.chatActiveId;
 
     // ----------------------------
     const searchUsers = store.getState()?.usersinchat;
@@ -51,9 +53,15 @@ export default class ModalDeleteUser extends Block {
             icon: 'cancel',
             events: {
               async click() {
-                console.log('Удален', item.id, 'в чат ', chatActiveId);
-                await chatController.deleteChatUser(item.id);
-                await chatController.usersInChat();
+                alertClean('user-delete');
+                try {
+                  await chatController.deleteChatUser(item.id);
+                  await chatController.usersInChat();
+                  store.set('searchusers', []);
+                  alertMessage('success', 'user-delete', `Пользователь ${item.login} успешно удален`);
+                } catch (error: any) {
+                  alertMessage('error', 'user-delete', error.message);
+                }
               },
             },
           }),

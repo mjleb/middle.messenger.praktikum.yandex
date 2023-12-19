@@ -357,7 +357,7 @@ export default abstract class Block {
     }
 
     this._element.style.display = 'flex';
-    console.log('show internal');
+    // console.log('show internal');
   }
 
   // Hide block with simple CSS
@@ -366,6 +366,6 @@ export default abstract class Block {
       return;
     }
     this._element.style.display = 'none';
-    console.log('hide internal');
+    // console.log('hide internal');
   }
 }

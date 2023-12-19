@@ -1,6 +1,6 @@
+import { fJSONparse } from './helpers';
 import store from '@/services/store';
 import chatController from '@/controllers/chat';
-import { fJSONparse } from './helpers';
 
 export class WS {
   static basePath = 'wss://ya-praktikum.tech/ws/chats';

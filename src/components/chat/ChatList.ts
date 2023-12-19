@@ -2,9 +2,8 @@ import Button from '../forms/button/button';
 import Input from '../forms/input';
 import Form from '../forms/form/form';
 import { Modal, modalClose, modalOpen } from '../modal/modal';
-import ChatSearch from './ChatSearch';
 import Block from '@/services/block';
-import { getChatDatetime, getTimestamp, submitForm } from '@/services/helpers';
+import { getChatDatetime, getTimestamp, isEmpty, submitForm } from '@/services/helpers';
 import chatController from '@/controllers/chat';
 import tpl from '@/components/chat/ChatList.tpl';
 import store, { StoreEvents } from '@/services/store';
@@ -13,6 +12,7 @@ import Link from '@/components/nav/link';
 import router from '@/services/router';
 import links from '@/pages/links.json';
 import { IChat } from '@/types';
+import { alertClean, alertMessage, cleanInput, validatorRules } from '@/services/validator';
 
 export default class ChatList extends Block {
   constructor() {
@@ -20,7 +20,17 @@ export default class ChatList extends Block {
     if (!this.element) {
       return;
     }
+    // -------
+    const props = {
+      id: 'chat-list',
+      formname: `form-search`,
+    };
+
+    this.setProps(props);
+    // -------
     this.element.classList.add('menu');
+    this.element.setAttribute('id', props.id);
+    // -------
     store.on(StoreEvents.Updated, () => {
       const chats = store.getState()?.chats;
       this.setProps({ chats });
@@ -34,21 +44,21 @@ export default class ChatList extends Block {
   init() {
     this.children.modalNew = new Modal({
       id: 'modal-new',
-      buttons: [
-        new Button({
-          label: 'X',
-          id: 'modal-new',
-          type: 'submit',
-          class: 'button-close',
-          events: {
-            click(e: any) {
-              e.preventDefault();
-              modalClose('modal-new');
-            },
-          },
-        }),
-      ],
       h1: 'Добавление чата',
+      buttonClose: new Button({
+        id: `modal-new-close`,
+        label: 'X',
+        type: 'submit',
+        class: 'button-close',
+        events: {
+          click(e: any) {
+            e.preventDefault();
+            const idmodal = e.target.id.replace('-close', '');
+            const tagEdit = document.getElementById(idmodal);
+            if (tagEdit) tagEdit.style.display = 'none';
+          },
+        },
+      }),
       body: new Form({
         id: 'form-new',
         events: {
@@ -60,7 +70,7 @@ export default class ChatList extends Block {
           new Input({
             label: 'Название чата',
             name: 'title',
-            id: 'title',
+            id: 'form-new-id-title',
             type: 'text',
             required: false,
             status: '',
@@ -72,21 +82,40 @@ export default class ChatList extends Block {
         buttons: [
           new Button({
             label: 'Добавить',
-            id: 'addchatnew',
+            id: 'form-new-submit',
             type: 'submit',
             events: {
               async click(e: any) {
                 e.preventDefault();
-                const data = submitForm('form-new');
-                await chatController.create(data.title);
-                chatController.chatList();
-                modalClose('modal-new');
+
+                // -----------------
+                const formname = e.target.id.replace('-submit', '');
+                alertClean(formname);
+                const data = submitForm(formname);
+                let FlagError = true;
+                if (validatorRules('form-new-id-title', 'message')) {
+                  FlagError = false;
+                }
+                if (FlagError) {
+                  try {
+                    await chatController.create(data.title);
+                    chatController.chatList();
+                    alertMessage('success', formname, 'Чат добавлен');
+                    modalClose('modal-new');
+                    cleanInput('form-new-id-title');
+                    alertClean(formname);
+                  } catch (error: any) {
+                    alertMessage('error', formname, error.message);
+                  }
+                }
+                // -----------------
               },
             },
           }),
         ],
       }),
     });
+    /*
     this.children.modalSearch = new Modal({
       id: 'modal-search',
       buttons: [
@@ -108,6 +137,7 @@ export default class ChatList extends Block {
         id: 'searchr',
       }),
     });
+    */
     this.children.linkProfile = new Link({
       name: 'Профиль >>',
       class: 'a',
@@ -128,7 +158,7 @@ export default class ChatList extends Block {
         new Input({
           label: '',
           name: 'search',
-          id: 'search',
+          id: 'id-search',
           type: 'text',
           required: false,
           status: '',
@@ -139,17 +169,30 @@ export default class ChatList extends Block {
       ],
       buttons: [
         new Button({
-          label: '<span class="material-symbols-outlined">search</span>',
-          id: 'search',
+          label: '<span class="material-symbols-outlined" id="form-search-submit">search</span>',
+          id: 'form-search-button',
           type: 'submit',
           events: {
-            click(e: any) {
+            async click(e: any) {
               e.preventDefault();
-              const data = submitForm('form-search');
-              chatController.searchChats(data);
 
-              // console.log('chat search ', search);
-              // modalOpen('modal-search');
+              // -----------------
+              const formname = e.target.id.replace('-submit', '');
+              alertClean(formname);
+
+              const data = submitForm(formname);
+
+              try {
+                const res = await chatController.searchChats(data);
+
+                if (isEmpty(res)) {
+                  alertMessage('error', formname, 'не найдено');
+                }
+                // alertMessage('success', formname, `Ok`);
+              } catch (error: any) {
+                alertMessage('error', formname, error.message);
+              }
+              // -----------------
             },
           },
         }),
@@ -158,14 +201,13 @@ export default class ChatList extends Block {
     this.children.chats = [];
     this.children.addnewchat = new Button({
       label: '+ Новый чат',
-      id: 'newchat',
+      id: 'button-add-newchat',
       type: 'submit',
       class: 'p-10',
       events: {
         click(e: any) {
           e.preventDefault();
-          modalOpen('modal-new');
-          // console.log('new chat');
+          modalOpen('new');
         },
       },
     });

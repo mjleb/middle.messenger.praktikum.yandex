@@ -12,27 +12,59 @@ import Link from '@/components/nav/link';
 import router from '@/services/router';
 import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
 
+function validatorPageSignUp(formname: string): boolean {
+  console.log('formname', formname);
+  alertClean(formname);
+  let FlagError = true;
+  if (validatorRules('id-first_name', 'string')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-second_name', 'string')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-email', 'email')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-phone', 'phone')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-login', 'login')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-password', 'password')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-password2', 'password')) {
+    FlagError = false;
+  }
+  const data = submitForm(formname);
+  if (data.password != data.password2) {
+    FlagError = false;
+    alertMessage('error', formname, 'Пароли не совпадают');
+  }
+  console.log(FlagError);
+  return FlagError;
+}
+
 class PageSignUp extends Block {
   constructor() {
-    super('section', {
-      links,
-      email: '',
-      login: '',
-      first_name: '',
-      second_name: '',
-      display_name: '',
-      phone: '',
-      password: '',
-    });
+    super('section', {});
     if (!this.element) {
       return;
     }
+    // -------
+    const props = {
+      id: 'login',
+      formname: `form-sign-up`,
+    };
+    this.setProps(props);
+    // -------
     this.element.classList.add('auth');
   }
 
   init() {
     this.children.form = new Form({
-      id: 'form-sign-up',
+      id: this.props.formname,
       inputs: [
         new Input({
           class: ['validator-string'],
@@ -122,50 +154,25 @@ class PageSignUp extends Block {
       buttons: [
         new Button({
           label: 'Зарегистрироваться',
-          id: 'sign-up',
+          id: `${this.props.formname}-submit`,
           type: 'submit',
           events: {
             async click(e: any) {
               e.preventDefault();
-              const formname = 'form-sign-up';
-
-              alertClean(formname);
-              let FlagError = true;
-              if (validatorRules('id-first_name', 'string')) {
-                FlagError = false;
-              }
-              if (validatorRules('id-second_name', 'string')) {
-                FlagError = false;
-              }
-              if (validatorRules('id-email', 'email')) {
-                FlagError = false;
-              }
-              if (validatorRules('id-phone', 'phone')) {
-                FlagError = false;
-              }
-              if (validatorRules('id-login', 'login')) {
-                FlagError = false;
-              }
-              if (validatorRules('id-password', 'password')) {
-                FlagError = false;
-              }
-              if (validatorRules('id-password2', 'password')) {
-                FlagError = false;
-              }
-              const data = submitForm(formname);
-              if (data.password != data.password2) {
-                FlagError = false;
-                alertMessage('error', formname, 'Пароли не совпадают');
-              }
-              console.log(FlagError);
-              if (FlagError) {
-                const res = await authController.signup({ first_name: data.first_name, second_name: data.second_name, login: data.login, email: data.email, password: data.password, phone: data.phone });
-                if (res == 'OK') {
-                  alertSuccess(formname, `Данные успешно обновлены`);
-                } else {
-                  alertMessage('error', formname, res);
+              // -----------------
+              const formname = e.target.id.replace('-submit', '');
+              const checkValid = validatorPageSignUp(formname);
+              if (checkValid) {
+                const data = submitForm(formname);
+                try {
+                  const res = await authController.signup({ first_name: data.first_name, second_name: data.second_name, login: data.login, email: data.email, password: data.password, phone: data.phone });
+                  console.log(res);
+                  alertSuccess(formname, `Ok`);
+                } catch (error: any) {
+                  alertMessage('error', formname, error.message);
                 }
               }
+              // -----------------
             },
           },
         }),
@@ -179,6 +186,11 @@ class PageSignUp extends Block {
         },
       },
     });
+  }
+
+  componentDidUpdate(): boolean {
+    this.init();
+    return true;
   }
 
   render() {

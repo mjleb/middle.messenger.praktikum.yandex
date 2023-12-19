@@ -1,15 +1,15 @@
 import tpl from './profile.tpl';
 import Block from '@/services/block';
-import Avatar from '@/components/profile/avatar';
-import ModalAvatar from '@/components/profile/avatarmodal';
-import { modalClose, modalOpen } from '@/components/modal/modal';
-import Button from '@/components/forms/button/button';
+import ModalAvatar from '@/components/modal/modalAvatar';
 import connect, { connectProps } from '@/services/connect';
 import links from '@/pages/links.json';
-import Link, { boxLinkLogout, boxLinkProfileEdit, boxLinkProfilePassword } from '@/components/nav/link';
+import Link from '@/components/nav/link';
 import router from '@/services/router';
 import store from '@/services/store';
 import { userDefault } from '@/shared/models';
+import { modalOpen } from '@/components/modal/modal';
+import AvatarPhoto from '@/components/profile/avatarphoto';
+import authController from '@/controllers/auth';
 
 class PageProfile extends Block {
   constructor() {
@@ -17,8 +17,16 @@ class PageProfile extends Block {
       links,
       user: store.getState().user ? store.getState().user : userDefault,
     });
-
+    // -------
+    const props = {
+      id: 'profile',
+      formname: `form-profile`,
+      user: store.getState().user ? store.getState().user : userDefault,
+    };
+    this.setProps(props);
+    // -------
     this.element.classList.add('profile');
+    this.element.setAttribute('id', props.id);
   }
 
   init() {
@@ -32,38 +40,46 @@ class PageProfile extends Block {
         },
       },
     });
-    this.children.modal = new ModalAvatar({
-      id: 'modal-avatar',
-      h1: 'Загрузите файл',
-      buttons: [
-        new Button({
-          label: 'X',
-          id: 'avatar',
-          type: 'submit',
-          class: 'button-close',
-          events: {
-            click(e: any) {
-              e.preventDefault();
-              modalClose('modal-avatar');
-            },
-          },
-        }),
-      ],
-    });
 
-    this.children.avatar = new Avatar({
-      id: 'avatar',
+    this.children.modal = new ModalAvatar({
+      id: `modal-avatar-${this.props.id}`,
+    });
+    this.children.avatar = new AvatarPhoto({
+      id: `avatar-${this.props.id}`,
       events: {
         click(e: any) {
           e.preventDefault();
-          modalOpen('modal-avatar');
-          console.log('modalOpen');
+          console.log(`${e.target.id}`);
+          modalOpen(`${e.target.id}`);
         },
       },
     });
-    this.children.linkProfileEdit = boxLinkProfileEdit;
-    this.children.linkProfilePassword = boxLinkProfilePassword;
-    this.children.linkLogout = boxLinkLogout;
+
+    this.children.linkProfileEdit = new Link({
+      settings: { withInternalID: true },
+      name: 'Изменить данные',
+      events: {
+        click() {
+          router.go(links.profileedit);
+        },
+      },
+    });
+    this.children.linkProfilePassword = new Link({
+      name: 'Изменить пароль',
+      events: {
+        click() {
+          router.go(links.profilepassword);
+        },
+      },
+    });
+    this.children.linkLogout = new Link({
+      name: 'Выйти',
+      events: {
+        async click() {
+          await authController.logout();
+        },
+      },
+    });
   }
 
   render() {

@@ -1,23 +1,53 @@
 import tpl from './profileEditPassw.tpl';
 import Block from '@/services/block';
-import Avatar from '@/components/profile/avatar';
-import ModalAvatar from '@/components/profile/avatarmodal';
-import { modalClose, modalOpen } from '@/components/modal/modal';
+import ModalAvatar from '@/components/modal/modalAvatar';
+import { modalOpen } from '@/components/modal/modal';
 import Button from '@/components/forms/button/button';
 import FormProfile from '@/components/forms/form/formProfile';
 import Input from '@/components/forms/input';
 import { submitForm } from '@/services/helpers';
 import links from '@/pages/links.json';
-import Link, { boxLinkLogout, boxLinkProfile, boxLinkProfileEdit } from '@/components/nav/link';
+import Link from '@/components/nav/link';
 import router from '@/services/router';
 import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
 import profileController from '@/controllers/profile';
 import connect, { connectProps } from '@/services/connect';
+import AvatarPhoto from '@/components/profile/avatarphoto';
+import authController from '@/controllers/auth';
+
+function validatorPagePassword(formname: string): boolean {
+  alertClean(formname);
+  let FlagError = true;
+  if (validatorRules('id-oldPassword', 'password')) {
+    FlagError = false;
+  }
+  if (validatorRules('id-newPassword', 'password')) {
+    FlagError = false;
+  }
+  const data = submitForm(formname);
+  if (data.newPassword != data.newPassword2) {
+    FlagError = false;
+    alertMessage('error', formname, 'Пароли не совпадают');
+  }
+  if (data.oldPassword == '' || data.newPassword == '') {
+    FlagError = false;
+  }
+  console.log(FlagError);
+  return FlagError;
+}
 
 class PageProfileEditPassw extends Block {
   constructor() {
     super('section', {});
+    // -------
+    const props = {
+      id: 'profile-password',
+      formname: `form-password`,
+    };
+    this.setProps(props);
+    // -------
     this.element.classList.add('profile');
+    this.element.setAttribute('id', props.id);
   }
 
   init() {
@@ -32,34 +62,20 @@ class PageProfileEditPassw extends Block {
       },
     });
     this.children.modal = new ModalAvatar({
-      id: 'modal-avatar-passw',
-      h1: 'Загрузите файл',
-      buttons: [
-        new Button({
-          label: 'X',
-          id: 'avatar',
-          type: 'submit',
-          class: 'button-close',
-          events: {
-            click(e: any) {
-              e.preventDefault();
-              modalClose('modal-avatar-passw');
-            },
-          },
-        }),
-      ],
+      id: `modal-avatar-${this.props.id}`,
     });
-    this.children.avatar = new Avatar({
-      id: 'avatar-passw',
+    this.children.avatar = new AvatarPhoto({
+      id: `avatar-${this.props.id}`,
       events: {
         click(e: any) {
           e.preventDefault();
-          modalOpen('modal-avatar-passw');
+          console.log(`${e.target.id}`);
+          modalOpen(`${e.target.id}`);
         },
       },
     });
     this.children.form = new FormProfile({
-      id: 'form-password',
+      id: this.props.formname,
       events: {
         click(e: any) {
           e.preventDefault();
@@ -106,45 +122,58 @@ class PageProfileEditPassw extends Block {
       buttons: [
         new Button({
           label: 'Сохранить',
-          id: 'save',
+          id: `${this.props.formname}-submit`,
           type: 'submit',
           events: {
             async click(e: any) {
               e.preventDefault();
-              alertClean('form-password');
-              let FlagError = true;
-
-              if (validatorRules('id-oldPassword', 'password')) {
-                FlagError = false;
-              }
-              const data = submitForm('form-password');
-              if (data.newPassword != data.newPassword2) {
-                FlagError = false;
-                alertMessage('error', 'form-password', 'Пароли не совпадают');
-              }
-              if (data.oldPassword == '' || data.newPassword == '') {
-                FlagError = false;
-              }
-              if (FlagError) {
-                const res = await profileController.password({ oldPassword: data.oldPassword, newPassword: data.newPassword });
-                if (res == 'OK') {
-                  alertSuccess('form-password', `Данные успешно обновлены`);
-                } else {
-                  alertMessage('error', 'form-password', res);
+              // -----------------
+              const formname = e.target.id.replace('-submit', '');
+              const checkValid = validatorPagePassword(formname);
+              if (checkValid) {
+                const data = submitForm(formname);
+                try {
+                  const res = await profileController.password({ oldPassword: data.oldPassword, newPassword: data.newPassword });
+                  console.log(res);
+                  alertSuccess(formname, `Данные успешно обновлены`);
+                } catch (error: any) {
+                  alertMessage('error', formname, error.message);
                 }
               }
+              // -----------------
             },
           },
         }),
       ],
     });
-    this.children.linkProfile = boxLinkProfile;
-    this.children.linkProfileEdit = boxLinkProfileEdit;
-    this.children.linkLogout = boxLinkLogout;
+    this.children.linkProfile = new Link({
+      name: 'Профиль',
+      events: {
+        click() {
+          router.go(links.profile);
+        },
+      },
+    });
+    this.children.linkProfileEdit = new Link({
+      settings: { withInternalID: true },
+      name: 'Изменить данные',
+      events: {
+        click() {
+          router.go(links.profileedit);
+        },
+      },
+    });
+    this.children.linkLogout = new Link({
+      name: 'Выйти',
+      events: {
+        async click() {
+          await authController.logout();
+        },
+      },
+    });
   }
 
   componentDidUpdate(): boolean {
-    alertClean('form-password');
     this.init();
     return true;
   }

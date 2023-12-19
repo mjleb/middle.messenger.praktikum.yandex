@@ -37,7 +37,7 @@ class AuthController {
       return user;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 
@@ -59,7 +59,7 @@ class AuthController {
       return true;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 
@@ -73,7 +73,7 @@ class AuthController {
       return res;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 
@@ -85,7 +85,7 @@ class AuthController {
       return res;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 }

@@ -1,14 +1,14 @@
 const tpl: string = `
  
     {{#if label}}
-    <label for="id{{id}}">
+    <label for="{{id}}">
         {{label}}
         {{#if required}}<span class="required">*</span>{{/if}}
     </label>
     {{/if}}
     <div class="inputitem">
         <input type="{{type}}" class="{{class}} {{#if status}}{{status}}{{/if}}" id="{{id}}" name="{{name}}"  value="{{value}}" 
-            {{#if required}}required{{/if}} placeholder="{{placeholder}}" />
+            {{#if required}}required{{/if}} placeholder="{{placeholder}}" autocomplete="off" />
         <div class="helping-text">
           {{#if helpingText}}
             <span class="help-block {{#if status}}{{status}}{{/if}}">{{helpingText}}</span>

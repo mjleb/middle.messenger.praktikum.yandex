@@ -1,5 +1,4 @@
 import WSS from '@/services/ws';
-import AuthAPI from '@/api/auth-api';
 import ChatAPI from '@/api/chat-api';
 import UserAPI from '@/api/user-api';
 import store from '@/services/store';
@@ -8,8 +7,6 @@ import { IChat } from '@/types';
 type IgetChatToken = { token: string };
 
 class ChatController {
-  authApi = new AuthAPI();
-
   userApi = new UserAPI();
 
   chatApi = new ChatAPI();
@@ -21,7 +18,7 @@ class ChatController {
       return response;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 
@@ -33,21 +30,18 @@ class ChatController {
       return response;
     } catch (e: any) {
       console.error(e.message);
-      return e.message;
+      throw e;
     }
   }
 
   async searchChats(data: Record<string, any>) {
     try {
-      let title = {};
-      if (data.search != '') {
-        title = { title: data.search };
-      }
-      const response = await this.chatApi.get(title);
+      const response = await this.chatApi.get(data.search != '' ? { title: data.search } : undefined);
       store.set('chats', response);
       return response;
     } catch (e: any) {
       console.error(e.message);
+      throw e;
     }
     return true;
   }
@@ -59,6 +53,7 @@ class ChatController {
       return response;
     } catch (e: any) {
       console.error(e.message);
+      throw e;
     }
     return true;
   }
@@ -72,6 +67,7 @@ class ChatController {
       await this.chatApi.addChatUser(userId, chatActiveId);
     } catch (e: any) {
       console.error(e.message);
+      throw e;
     }
   }
 
@@ -85,6 +81,7 @@ class ChatController {
       store.set('usersinchat', response);
     } catch (e: any) {
       console.error(e.message);
+      throw e;
     }
   }
 
@@ -97,6 +94,7 @@ class ChatController {
       await this.chatApi.deleteChatUser(userId, chatActiveId);
     } catch (e: any) {
       console.error(e.message);
+      throw e;
     }
   }
 
@@ -118,7 +116,7 @@ class ChatController {
       return response.token;
     } catch (e: any) {
       console.error(e.message);
-      return false;
+      throw e;
     }
   }
 
@@ -127,6 +125,7 @@ class ChatController {
       await WSS.sendMessage(message);
     } catch (e: any) {
       console.error(e.message);
+      throw e;
     }
   }
 
@@ -144,6 +143,7 @@ class ChatController {
       this.getChatTitle(chatActiveId);
     } catch (e: any) {
       console.error(e.message);
+      throw e;
     }
   }
 

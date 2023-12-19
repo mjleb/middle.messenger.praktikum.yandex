@@ -1,6 +1,6 @@
 const tpl: string = `
 {{{modalNew}}}
-{{{modalSearch}}}
+ 
 
     <div class="profile-link">
         {{{linkProfile}}}

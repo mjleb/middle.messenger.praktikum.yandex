@@ -8,6 +8,7 @@ import Block from '@/services/block';
 import { submitForm } from '@/services/helpers';
 import store, { StoreEvents } from '@/services/store';
 import chatController from '@/controllers/chat';
+import { alertClean, alertMessage, cleanInput, validatorRules } from '@/services/validator';
 
 export default class ModalAddUser extends Block {
   constructor(props: IProps) {
@@ -34,7 +35,7 @@ export default class ModalAddUser extends Block {
 
   init() {
     this.children.body = new Form({
-      id: 'form-useradd',
+      id: 'form-user-add',
       events: {
         click(e: any) {
           e.preventDefault();
@@ -44,7 +45,7 @@ export default class ModalAddUser extends Block {
         new Input({
           label: 'Логин пользователя',
           name: 'login',
-          id: 'login',
+          id: 'id-login',
           type: 'text',
           required: false,
           status: '',
@@ -56,15 +57,28 @@ export default class ModalAddUser extends Block {
       buttons: [
         new Button({
           label: 'Найти',
-          id: 'search',
+          id: 'form-user-add-submit',
           type: 'submit',
           events: {
             async click(e: any) {
               e.preventDefault();
-              const data = submitForm('form-useradd');
-              const user = await chatController.searchUser(data);
-              console.log('modal user add', store.getState()?.searchusers, user);
-              // modalOpen('modal-search');
+              // -----------------
+              const formname = e.target.id.replace('-submit', '');
+              let checkValid = true;
+              if (validatorRules('id-login', 'login')) {
+                checkValid = false;
+              }
+              if (checkValid) {
+                const data = submitForm(formname);
+                try {
+                  await chatController.searchUser(data);
+                  // console.log(res);
+                  // alertMessage('success', formname, 'нейдено');
+                } catch (error: any) {
+                  alertMessage('error', formname, error.message);
+                }
+              }
+              // -----------------
             },
           },
         }),
@@ -73,7 +87,7 @@ export default class ModalAddUser extends Block {
   }
 
   componentDidUpdate(): boolean {
-    const chatActiveId = store.getState()?.chatActiveId;
+    // const chatActiveId = store.getState()?.chatActiveId;
     // ----------------------------
     const searchUsers = store.getState()?.searchusers;
     this.children.result = [];
@@ -90,9 +104,15 @@ export default class ModalAddUser extends Block {
             icon: 'add_circle',
             events: {
               async click() {
-                console.log('Добавлен', item.id, 'в чат ', chatActiveId);
-                await chatController.addChatUser(item.id);
-                store.set('searchusers', []);
+                alertClean('form-user-add');
+                try {
+                  await chatController.addChatUser(item.id);
+                  store.set('searchusers', []);
+                  cleanInput('id-login');
+                  alertMessage('success', 'form-user-add', `Пользователь  ${item.login} добавлен в чат`);
+                } catch (error: any) {
+                  alertMessage('error', 'form-user-add', error.message);
+                }
               },
             },
           }),
