@@ -1,5 +1,5 @@
-import Block from '@/services/block';
 import tpl from '../errors/error.tpl';
+import Block from '@/services/block';
 
 export default class PageMain extends Block {
   constructor() {

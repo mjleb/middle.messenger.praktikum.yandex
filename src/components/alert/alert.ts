@@ -1,18 +1,18 @@
-import Block from '@/services/block';
-import tpl from './chatUser.tpl';
+import tpl from './alert.tpl.ts';
+import Block from '@/services/block.ts';
 import { IProps } from '@/types.ts';
 
-export default class ChatUsers extends Block {
+export default class Alert extends Block {
   constructor(props: IProps) {
     super('div', props);
     if (!this.element) {
       return;
     }
-    this.element.classList.add('users');
+    this.element.classList.add('alert');
+    this.element.setAttribute('id', props.id);
   }
 
   render() {
-    this.dispatchComponentDidMount();
     return this.compile(tpl, { ...this.props });
   }
 }

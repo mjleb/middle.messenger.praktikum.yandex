@@ -12,7 +12,7 @@ export default class Button extends Block {
       return;
     }
     if (props.class) this.element.classList.add(props.class);
-    // this.element.setAttribute('id', props.id);
+    this.element.setAttribute('id', props.id);
   }
 
   render() {

@@ -1,7 +1,7 @@
 form {
   & .sucsess {
     padding: 15px;
-    color: green;
+    color: var(--colorgreen);
   }
 
   & .footer {
@@ -18,7 +18,7 @@ input[type='file' i]::-webkit-file-upload-button {
   font-weight: 400;
   line-height: 1.5;
   color: #51596c;
-  background-color: #fff;
+  background-color: var(--colorwhite);
   background-clip: padding-box;
   border: 0.0625rem solid rgb(220 224 229 / 60%);
   appearance: none;
@@ -35,10 +35,10 @@ input[type='file' i]::-webkit-file-upload-button {
   width: 100%;
   margin-bottom: 2rem;
   font-weight: 400;
-  font-size: 8px;
+  font-size: 9px;
 
   & .help-block {
-    color: var(--colordanger);
+    color: var(--colorgrey);
   }
 
   & .error {
@@ -47,7 +47,7 @@ input[type='file' i]::-webkit-file-upload-button {
 }
 
 label {
-  color: #999;
+  color: var(--colorgrey);
   display: inline-block;
   font-size: 9px;
   line-height: 9px;
@@ -67,4 +67,8 @@ input {
   font-size: 13px;
   outline: none;
   margin-bottom: 0.5rem;
+}
+
+.alert {
+  display: none;
 }

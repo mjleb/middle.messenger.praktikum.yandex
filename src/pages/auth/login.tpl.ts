@@ -3,7 +3,7 @@ const tpl: string = `
          <h1>Вход</h1>
         {{{form}}}
         <div>
-        <a href="/signin">Нет аккаунта?</a>
+        {{{linkSignUp}}}
         </div>
     </div>
 `;

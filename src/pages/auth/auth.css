@@ -1,5 +1,7 @@
 .auth {
   background-color: transparent;
+  display: flex;
+  width: 100%;
 
   & > div {
     max-width: 340px;

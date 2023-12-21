@@ -1,6 +1,8 @@
 import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './event-bus.ts';
+import { isEmpty } from './helpers.ts';
+import authController from '@/controllers/auth';
 
 type PropsType = Record<string, any>;
 
@@ -34,11 +36,12 @@ export default abstract class Block {
   _logging = false;
 
   constructor(tagName = 'div', propsAndChildren: PropsType) {
+    // devLog('Block', 'constructor');
+
     // Create a new event bus
     const eventBus = new EventBus();
 
     const { children, props } = this._getChildren(propsAndChildren);
-
     // Save children
     this.children = children;
 
@@ -53,9 +56,12 @@ export default abstract class Block {
       this._id = makeUUID();
     }
 
-    // Create proxy
-    this.props = this._makePropsProxy({ ...props, __id: this._id });
+    // --------- Login ?
 
+    // Create proxy
+    this.props = this._makePropsProxy({ ...props, __id: makeUUID() });
+
+    //----------
     // Set link to the new event bus
     this._eventBus = eventBus;
 
@@ -64,6 +70,28 @@ export default abstract class Block {
 
     // Emit "init" event
     eventBus.emit(Block.EVENTS.INIT);
+  }
+
+  public async checkLogin() {
+    try {
+      const auth = await authController.authCheck();
+      /// console.log('Block auth', auth);
+      if (!isEmpty(auth)) {
+        // console.log('!!!! Block checkLogin !isEmpty', auth);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        Object.entries(auth).forEach((entry) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const [key, value] = entry;
+          console.log('key=', key);
+          this.props = this._makePropsProxy({ ...this.props, key: value });
+        });
+
+        this._logging = true;
+      }
+      return true;
+    } catch (e: any) {
+      return false;
+    }
   }
 
   // Register required events
@@ -96,11 +124,14 @@ export default abstract class Block {
 
   init() {}
 
+  start() {}
+
   // EVENT: "componentDidMount" function
   _componentDidMount() {
     if (this._logging) {
-      console.log('EVENT: CDM', this);
+      // console.log('EVENT: CDM', this);
     }
+
     this.componentDidMount();
 
     Object.values(this.children).forEach((component) => {
@@ -122,9 +153,11 @@ export default abstract class Block {
 
   // EVENT: "componentDidUpdate" function
   _componentDidUpdate(oldProps: PropsType, newProps: PropsType) {
+    // console.log('_componentDidUpdate', oldProps, newProps);
     if (this._logging) {
-      console.log('EVENT: CDU', this);
+      // console.log('EVENT: CDU', this);
     }
+    this._componentDidMount();
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
       this._eventBus.emit(Block.EVENTS.FLOW_RENDER, 'emit render');
@@ -150,14 +183,14 @@ export default abstract class Block {
   // Could be overriden externally with render()
   _render() {
     if (this._logging) {
-      console.log('EVENT: RENDER', this);
+      // console.log('EVENT: RENDER', this);
     }
 
     if (!this._element) {
       return;
     }
 
-    const block = this.render();
+    const block: any = this.render();
 
     // Remove events
     this._removeEvents();
@@ -176,7 +209,8 @@ export default abstract class Block {
   }
 
   // Could be redeclared by user
-  abstract render(): DocumentFragment;
+  // abstract render(): DocumentFragment;
+  render() {}
 
   _removeEvents() {
     if (!(this._events && Object.keys(this._events).length)) {
@@ -226,6 +260,7 @@ export default abstract class Block {
   // Create proxy
   _makePropsProxy(props: PropsType) {
     // @todo Need to replace with a proper ES6 way
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
     // @todo avoid re-assignment
@@ -320,8 +355,9 @@ export default abstract class Block {
     if (!this._element) {
       return;
     }
-    this._element.style.display = 'block';
-    console.log('show internal');
+
+    this._element.style.display = 'flex';
+    // console.log('show internal');
   }
 
   // Hide block with simple CSS
@@ -330,6 +366,6 @@ export default abstract class Block {
       return;
     }
     this._element.style.display = 'none';
-    console.log('hide internal');
+    // console.log('hide internal');
   }
 }

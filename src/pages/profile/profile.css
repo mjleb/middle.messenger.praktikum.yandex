@@ -1,5 +1,22 @@
 .profile {
-  height: 100vh;
+  & .link-back {
+    position: absolute;
+    height: 100%;
+    width: 64px;
+    background-color: #fbfbfb;
+    align-items: center;
+
+    & a,
+    & .link {
+      width: 28px;
+      height: 28px;
+      color: var(--colorwhite);
+      background-color: var(--colorprimary);
+      border-radius: 50%;
+      line-height: 1px;
+      padding-top: 2px;
+    }
+  }
 
   & > div {
     max-width: 510px;
@@ -21,7 +38,7 @@
   }
 
   & ul {
-    margin-top: 5rem;
+    margin-top: 3rem;
     padding-inline-start: 0;
   }
 
@@ -91,21 +108,83 @@
     margin-top: 50px;
   }
 
-  & > div:hover {
-    background-color: #c0c0c0;
-  }
-
-  & .notphoto {
-    border-radius: 50%;
-    color: #cdcdcd;
+  & .linkphoto {
+    position: absolute;
     display: flex;
+    cursor: pointer;
     justify-content: center;
     align-items: center;
+    border-radius: 50%;
+    background-color: transparent;
     width: 11rem;
     height: 11rem;
-    font-size: 4rem;
-    font-weight: 500;
-    pointer-events: none;
-    text-transform: uppercase;
+    z-index: 100;
+    vertical-align: bottom;
+    color: transparent;
+
+    & .icon {
+      display: none;
+    }
+
+    &:hover {
+      display: flex;
+      color: var(--colorwhite);
+      background-color: rgb(0 0 0 / 50%);
+      font-size: 12px;
+
+      & .icon {
+        display: inline-block;
+      }
+    }
   }
+
+  & #avatar-photo {
+    height: 132px;
+
+    &:hover {
+      & .linkphoto {
+        display: flex;
+        background-color: rgb(0 0 0 / 50%);
+        color: var(--colorwhite);
+
+        & .icon {
+          display: inline-block;
+          width: 50%;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  & .photo {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+
+    & img {
+      border-radius: 50%;
+      width: 11rem;
+      height: 11rem;
+    }
+
+    & .material-symbols-outlined {
+      color: var(--textgray);
+      font-size: 44px;
+    }
+  }
+}
+
+& .notphoto {
+  border-radius: 50%;
+  background-color: var(--bggray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 11rem;
+  height: 11rem;
+  font-size: 4rem;
+  font-weight: 500;
+  text-transform: uppercase;
 }

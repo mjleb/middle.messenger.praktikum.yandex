@@ -1,4 +1,7 @@
-import { RequestOptions, JsonObject } from '@/types.ts';
+import { fJSONparse } from './helpers';
+import router from './router';
+import { IoptionsRequest } from '@/types';
+import links from '@/pages/links.json';
 
 const METHODS = {
   GET: 'GET',
@@ -7,8 +10,7 @@ const METHODS = {
   DELETE: 'DELETE',
 } as const;
 
-function queryStringify(data: string) {
-  // Можно делать трансформацию GET-параметров в отдельной функции
+function queryStringify(data: Record<string, any>) {
   let url = '';
   for (const [key, value] of Object.entries(data)) {
     if (url.length != 0) {
@@ -19,85 +21,95 @@ function queryStringify(data: string) {
   console.log('url', url);
   return url;
 }
-type Ioptions = {
-  dataGet: any;
-  method: string;
-  timeout: number;
+type RequestOptionsProps = {
+  data?: Record<string, any>;
+  headers?: Record<string, string>;
+  timeout?: number;
+  type?: string;
 };
-export class HTTPTransport {
-  get = (url: string, options: Ioptions) => {
-    const { dataGet } = options;
-    let urlnew: string = url;
-    if (dataGet) {
-      urlnew = `${url}?${queryStringify(dataGet)}`;
-    }
-    return this.request(urlnew, { ...options, method: METHODS.GET }, options.timeout);
-  };
+type HTTPMethodProps = (url: string, options?: RequestOptionsProps) => Promise<unknown>;
 
-  put = (url: string, options: RequestOptions = {}) => {
-    this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
-  };
+// type HTTPMethod = <T>(url: string, options?: Ioptions) => Promise<T>;
 
-  post = (url: string, options: RequestOptions = {}) => {
-    this.request(url, { ...options, method: METHODS.POST }, options.timeout);
-  };
+class HTTPTransport {
+  // -------------------------------
 
-  delete = (url: string, options: RequestOptions = {}) => {
-    this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
-  };
+  get: HTTPMethodProps = (url, options) => this.request(options?.data ? `${url}?${queryStringify(options.data)}` : url, { ...options, data: {}, method: METHODS.GET }, options?.timeout);
 
-  // PUT, POST, DELETE
+  post: HTTPMethodProps = (url, options) => this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
 
-  // options:
-  // headers — obj
-  // data — obj
-  request = (url: string, options: any, timeout = 5000) => {
-    const { method, data } = options;
-    console.log(timeout);
+  put: HTTPMethodProps = (url, options) => this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
+
+  delete: HTTPMethodProps = (url, options) => this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
+
+  // -------------------------------
+
+  request = (url: string, options: IoptionsRequest, timeout = 5000) => {
+    const { method, data, headers } = options;
 
     return new Promise((resolve, reject) => {
+      if (!method) {
+        reject(new Error('error'));
+        return;
+      }
+
       const xhr = new XMLHttpRequest();
 
       xhr.open(method, url);
-      if (method === METHODS.POST || method === METHODS.PUT) {
-        xhr.setRequestHeader('Content-type', 'application/json; charset=utf8');
-      }
 
-      xhr.onload = () => {
+      if (headers && Object.keys(headers).length) {
+        Object.keys(headers).forEach((header) => {
+          xhr.setRequestHeader(header, headers[header]);
+        });
+      }
+      /*
+      // eslint-disable-next-line func-names
+      xhr.onload = function () {
         resolve(xhr);
       };
-
-      xhr.onabort = reject;
       xhr.onerror = reject;
-      xhr.ontimeout = reject;
+      */
+      // ----------------------
+      // eslint-disable-next-line func-names
+      xhr.onload = function () {
+        const responseText = fJSONparse(this.response);
+        if (this.status !== 200) {
+          const path = window.location.pathname;
+          if (this.status == 401 && path != `${links.login}` && path != `${links.signup}`) {
+            router.go(links.login);
+          }
+          const { reason } = responseText;
+          console.warn(`Wrong: ${reason}`);
+          reject(new Error(reason));
+        }
+        resolve(responseText);
+      };
+      // eslint-disable-next-line func-names
+      xhr.onerror = function () {
+        reject(new Error('Network Error'));
+      };
+      // ----------------------
+      xhr.withCredentials = true;
+      xhr.onabort = reject;
+      // eslint-disable-next-line func-names
+      xhr.ontimeout = function () {
+        reject(new Error('timeout'));
+      };
+      xhr.timeout = timeout;
+
+      if (options?.type !== 'form') {
+        xhr.setRequestHeader('Content-Type', 'application/json');
+      }
 
       if (method === METHODS.GET || !data) {
         xhr.send();
+      } else if (options?.type === 'form') {
+        xhr.send(data as FormData);
       } else {
-        xhr.send(method === METHODS.POST || method === METHODS.PUT ? JSON.stringify(data) : data);
+        xhr.send(JSON.stringify(data));
       }
     });
   };
 }
 
-export function submitForm(id: string): void {
-  const form = document.getElementById(id) as HTMLFormElement;
-
-  if (!form) {
-    console.log('Форма не найдена');
-    return;
-  }
-
-  // Создаем объект FormData, который автоматически соберет все данные формы
-  const formData = new FormData(form);
-
-  // Преобразуем данные в JSON
-  const jsonData: JsonObject = {};
-
-  formData.forEach((value: any, key: string) => {
-    jsonData[key] = value;
-  });
-
-  // Выводим результат в консоль (вместо этого вы можете отправить данные на сервер)
-  console.log(jsonData);
-}
+export default HTTPTransport;

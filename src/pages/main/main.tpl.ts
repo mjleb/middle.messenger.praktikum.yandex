@@ -1,4 +1,5 @@
 const tpl: string = `
+    {{alert}}
     {{h1}}
     {{body}}
 `;
