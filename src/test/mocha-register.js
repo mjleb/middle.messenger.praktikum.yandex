@@ -1,7 +1,4 @@
-//const register = require('@babel/register').default;
-
-//register({ extensions: ['.ts', '.tsx', '.js', '.jsx'] });
-const jsdom = require('jsdom');
+import jsdom from 'jsdom';
 
 const { JSDOM } = jsdom;
 
