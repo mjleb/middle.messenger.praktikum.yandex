@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.js",
     "preview": "vite preview",
+    "prepare": "husky install",
     "test": "./node_modules/.bin/mocha",
     "lint:ts": "eslint \"**/*.{ts,tsx}\"",
     "lint:style": "npx stylelint **/*.css"
