@@ -7,17 +7,22 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "./node_modules/.bin/mocha"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
+    "chai": "^4.3.10",
     "eslint": "^8.54.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-prettier": "^5.0.1",
+    "mocha": "^10.2.0",
     "prettier": "^3.1.0",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",

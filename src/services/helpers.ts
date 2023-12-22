@@ -1,9 +1,12 @@
 /* eslint-disable operator-linebreak */
 // eslint-disable-next-line object-curly-newline
-import { IChat, IChatDetails, Indexed, JsonObject } from '@/types';
-import store from '@/services/store';
-import { devLog } from '@/shared/lib';
+import { IChat, IChatDetails, Indexed, JsonObject } from '../types';
+import store from './store';
+import { devLog } from '../shared/lib';
 
+export function hello(srt: string) {
+  return `Hello ${srt}`;
+}
 //--------------
 const isObject = (value: any) =>
   //  implicit-arrow-linebreak
