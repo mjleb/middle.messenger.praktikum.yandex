@@ -1,7 +1,7 @@
-import AuthAPI from '@/api/auth-api';
-import links from '@/pages/links.json';
-import store from '@/services/store';
-import router from '@/services/router';
+import AuthAPI from '../api/auth-api';
+import links from '../pages/links.json' assert { type: 'json' };
+import store from '../services/store';
+import router from '../services/router';
 
 class AuthController {
   authApi = new AuthAPI();

@@ -1,6 +1,6 @@
-import { IProps } from '@/types';
-import BaseAPI from '@/api/base-api';
-import HTTPTransport from '@/services/http';
+import { IProps } from '../types';
+import BaseAPI from './base-api';
+import HTTPTransport from '../services/http';
 
 const authAPIInstance = new HTTPTransport();
 

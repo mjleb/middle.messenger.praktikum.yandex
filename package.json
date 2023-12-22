@@ -8,7 +8,23 @@
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.js",
     "preview": "vite preview",
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "lint:ts": "eslint \"**/*.{ts,tsx}\"",
+    "lint:style": "npx stylelint **/*.css"
+  },
+  "lint-staged": {
+    "*.{ts, tsx}": [
+      "npm run lint:ts",
+      "npm run test"
+    ],
+    "*.{css}": [
+      "npm run lint:style"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "devDependencies": {
     "@types/chai": "^4.3.11",
@@ -22,6 +38,9 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
+    "jsdom": "^23.0.1",
+    "lint-staged": "^15.2.0",
     "mocha": "^10.2.0",
     "prettier": "^3.1.0",
     "stylelint": "^15.11.0",

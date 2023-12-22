@@ -1,8 +1,8 @@
-import { devLog } from '@/shared/lib';
-import store from '@/services/store';
-import Route from '@/services/route';
-import links from '@/pages/links.json';
-import authController from '@/controllers/auth';
+import { devLog } from '../shared/lib';
+import store from './store';
+import Route from './route';
+import links from '../pages/links.json' assert { type: 'json' };
+import authController from '../controllers/auth';
 
 class Router {
   static __instance: any;

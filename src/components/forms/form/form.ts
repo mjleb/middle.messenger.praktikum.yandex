@@ -1,7 +1,7 @@
 import { v4 as makeUUID } from 'uuid';
 import tpl from './form.tpl';
-import Block from '@/services/block';
-import { IProps } from '@/types';
+import Block from '../../../services/block';
+import { IProps } from '../../../types';
 
 export default class Form extends Block {
   constructor(props: IProps) {

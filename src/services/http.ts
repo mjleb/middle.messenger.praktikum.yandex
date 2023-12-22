@@ -1,7 +1,7 @@
 import { fJSONparse } from './helpers';
 import router from './router';
-import { IoptionsRequest } from '@/types';
-import links from '@/pages/links.json';
+import { IoptionsRequest } from '../types';
+import links from '../pages/links.json' assert { type: 'json' };
 
 const METHODS = {
   GET: 'GET',

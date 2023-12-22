@@ -1,15 +1,15 @@
 import tpl from './login.tpl';
-import links from '../links.json';
-import Block from '@/services/block';
-import Input from '@/components/forms/input/index';
-import Button from '@/components/forms/button/button';
-import Form from '@/components/forms/form/form';
-import { submitForm } from '@/services/helpers';
-import authController from '@/controllers/auth';
-import connect, { connectProps } from '@/services/connect';
-import Link from '@/components/nav/link';
-import router from '@/services/router';
-import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
+import links from '../links.json' assert { type: 'json' };
+import Block from '../../services/block';
+import Input from '../../components/forms/input/index';
+import Button from '../../components/forms/button/button';
+import Form from '../../components/forms/form/form';
+import { submitForm } from '../../services/helpers';
+import authController from '../../controllers/auth';
+import connect, { connectProps } from '../../services/connect';
+import Link from '../../components/nav/link';
+import router from '../../services/router';
+import { alertClean, alertMessage, alertSuccess, validatorRules } from '../../services/validator';
 
 function validatorPageLogin(formname: string): boolean {
   console.log('formname', formname);

@@ -1,16 +1,16 @@
 import tpl from './signup.tpl';
-import links from '../links.json';
-import Block from '@/services/block';
-import Input from '@/components/forms/input/index';
-import Button from '@/components/forms/button/button';
-import Form from '@/components/forms/form/form';
-import { submitForm } from '@/services/helpers';
-import authController from '@/controllers/auth';
-import { Indexed } from '@/types';
-import connect from '@/services/connect';
-import Link from '@/components/nav/link';
-import router from '@/services/router';
-import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
+import links from '../links.json' assert { type: 'json' };
+import Block from '../../services/block';
+import Input from '../../components/forms/input/index';
+import Button from '../../components/forms/button/button';
+import Form from '../../components/forms/form/form';
+import { submitForm } from '../../services/helpers';
+import authController from '../../controllers/auth';
+import { Indexed } from '../../types';
+import connect from '../../services/connect';
+import Link from '../../components/nav/link';
+import router from '../../services/router';
+import { alertClean, alertMessage, alertSuccess, validatorRules } from '../../services/validator';
 
 function validatorPageSignUp(formname: string): boolean {
   console.log('formname', formname);
