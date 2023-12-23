@@ -35,9 +35,6 @@ export class Router {
     Router.__instance = this;
   }
 
-  async init() {
-    devLog('Router init');
-  }
   // access null || private
 
   use(pathname: string, block: any, access?: string) {

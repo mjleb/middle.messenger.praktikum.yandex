@@ -11,6 +11,7 @@ class AuthController {
     const path = window.location.pathname;
     try {
       const user = await this.authApi.request();
+
       if (user) {
         // if (isEmpty(userStore)) {        }
         if (userStore != user) {
