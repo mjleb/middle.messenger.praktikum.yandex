@@ -23,13 +23,6 @@ export default class Link extends Block {
   }
 }
 
-/*
-    this.children.linkProfile = boxLinkProfile;
-    this.children.linkProfileEdit = boxLinkProfileEdit;
-    this.children.linkProfilePassword = boxLinkProfilePassword;
-    this.children.linkLogout = boxLinkLogout;
-*/
-
 // ------------------------
 export const boxLinkLogout = new Link({
   name: 'Выйти',

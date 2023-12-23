@@ -4,7 +4,7 @@ import Route from './route';
 import links from '../pages/links.json' assert { type: 'json' };
 import authController from '../controllers/auth';
 
-class Router {
+export class Router {
   static __instance: any;
 
   _baseUrl = new URL(window.location.href).origin;
@@ -50,7 +50,7 @@ class Router {
   }
 
   start() {
-    devLog('Router', 'start');
+    //devLog('Router', 'start');
 
     window.onpopstate = ((event: any) => {
       this._onRoute(event.currentTarget.location.pathname);
@@ -81,7 +81,7 @@ class Router {
   }
 
   go(pathname: string) {
-    devLog('Router go pathname', pathname);
+    //devLog('Router go pathname', pathname);
     this.history.pushState({}, '', pathname);
     this._onRoute(pathname);
   }
@@ -95,7 +95,7 @@ class Router {
   }
 
   getRoute(pathname: string) {
-    return this.routes.find((route) => route.match(pathname));
+    return this.routes.find((route) => route.match(pathname)) ?? null;
   }
 
   getPath() {
@@ -116,4 +116,5 @@ class Router {
   }
 }
 const router = new Router('#app');
+console.log('router', router);
 export default router;
