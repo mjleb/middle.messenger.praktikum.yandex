@@ -46,6 +46,10 @@ export class Router {
     return this;
   }
 
+  init() {
+    console.log('Router init');
+  }
+
   start() {
     // devLog('Router', 'start');
 

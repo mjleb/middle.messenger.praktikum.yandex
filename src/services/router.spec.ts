@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'chai';
 import sinon from 'sinon';
-
 import Block from './block';
 import Route from './route';
 import { Router } from './router';

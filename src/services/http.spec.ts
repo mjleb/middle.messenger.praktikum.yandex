@@ -2,12 +2,13 @@
 import sinonChai from 'sinon-chai';
 import { use, expect } from 'chai';
 import Sinon, { createSandbox } from 'sinon';
-import HTTPTransport from './http';
+import HTTPTransport, { RequestOptionsProps } from './http';
+import { IoptionsRequest } from '@/types';
 
 describe('Test class HTTPTransport', () => {
   use(sinonChai);
   const sandbox = createSandbox();
-  let request: Sinon.SinonStub<any[], any>;
+  let request: Sinon.SinonStub<[url: string, options?: RequestOptionsProps | undefined] & [url: string, options: IoptionsRequest, timeout?: number | undefined], Promise<unknown>>;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let http: HTTPTransport;

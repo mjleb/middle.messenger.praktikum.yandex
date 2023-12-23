@@ -21,13 +21,13 @@ export function queryStringify(data: Record<string, any>) {
 
   return encodeURI(url);
 }
-type RequestOptionsProps = {
+export type RequestOptionsProps = {
   data?: Record<string, any>;
   headers?: Record<string, string>;
   timeout?: number;
   type?: string;
 };
-type HTTPMethodProps = (url: string, options?: RequestOptionsProps) => Promise<unknown>;
+export type HTTPMethodProps = (url: string, options?: RequestOptionsProps) => Promise<unknown>;
 
 // type HTTPMethod = <T>(url: string, options?: Ioptions) => Promise<T>;
 
