@@ -24,6 +24,9 @@ class AuthController {
       return true;
     } catch (e: any) {
       console.error(e.message);
+      if (e.message == '401' && path != `${links.login}` && path != `${links.signup}`) {
+        router.go(links.login);
+      }
       return false;
     }
   }

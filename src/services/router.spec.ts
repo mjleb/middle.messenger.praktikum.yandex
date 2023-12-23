@@ -18,7 +18,7 @@ describe('Test class Router', () => {
         super('div', {});
       }
 
-      render() {
+      protectedrender() {
         // eslint-disable-next-line func-names
         return function () {
           return '<div>1</div>';
