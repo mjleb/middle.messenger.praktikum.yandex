@@ -20,6 +20,7 @@ describe('Test class Router', () => {
       }
 
       render() {
+        // eslint-disable-next-line func-names
         return function () {
           return '<div>1</div>';
         };

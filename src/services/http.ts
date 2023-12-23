@@ -78,7 +78,7 @@ class HTTPTransport {
           const path = window.location.pathname;
           if (this.status == 401 && path != `${links.login}` && path != `${links.signup}`) {
             reject(new Error('401'));
-            //router.go(links.login);
+            // router.go(links.login);
           }
           const { reason } = responseText;
           console.warn(`Wrong: ${reason}`);
