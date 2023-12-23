@@ -82,7 +82,7 @@ export default abstract class Block {
         Object.entries(auth).forEach((entry) => {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const [key, value] = entry;
-          //console.log('key=', key);
+          // console.log('key=', key);
           this.props = this._makePropsProxy({ ...this.props, key: value });
         });
 
