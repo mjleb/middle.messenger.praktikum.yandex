@@ -50,7 +50,7 @@ export class Router {
   }
 
   start() {
-    //devLog('Router', 'start');
+    // devLog('Router', 'start');
 
     window.onpopstate = ((event: any) => {
       this._onRoute(event.currentTarget.location.pathname);
@@ -81,7 +81,7 @@ export class Router {
   }
 
   go(pathname: string) {
-    //devLog('Router go pathname', pathname);
+    // devLog('Router go pathname', pathname);
     this.history.pushState({}, '', pathname);
     this._onRoute(pathname);
   }

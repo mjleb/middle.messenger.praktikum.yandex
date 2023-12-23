@@ -7,8 +7,6 @@ import Block from './block';
 import Route from './route';
 import { Router } from './router';
 
-const basePath = 'http://example.org';
-
 describe('Test class Router', () => {
   let ComponentNew: typeof Block;
   let router: Router;
