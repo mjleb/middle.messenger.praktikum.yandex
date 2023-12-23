@@ -116,5 +116,5 @@ export class Router {
   }
 }
 const router = new Router('#app');
-console.log('router', router);
+// console.log('router', router);
 export default router;
