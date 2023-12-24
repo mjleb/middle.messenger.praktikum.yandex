@@ -2,7 +2,7 @@ import tpl from './modalAvatar.tpl.ts';
 import Form from '../forms/form/form.ts';
 import Input from '../forms/input/index.ts';
 import Button from '../forms/button/button.ts';
-import { modalOpen } from './modal.ts';
+import { modalClose, modalOpen } from './modal.ts';
 import AvatarPhoto from '../profile/avatarphoto.ts';
 import { submitFormFile } from '@/services/helpers';
 import Block from '@/services/block.ts';
@@ -106,6 +106,7 @@ export default class ModalAvatarChat extends Block {
                   authcontroller.getUserId();
                   console.log('file load', res);
                   alertSuccess(formname, `Данные успешно обновлены`);
+                  modalClose('modal-avatar-chat');
                   chatController.chatList();
                 } catch (error: any) {
                   alertMessage('error', formname, error.message);

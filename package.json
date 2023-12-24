@@ -13,8 +13,8 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.ts": "npx eslint src/**/*",
-    "src/**/*.css": "npx stylelint src/**/*"
+    "*.ts": "npx eslint src/**/*.ts",
+    "*.css": "npx stylelint src/**/*.css"
   },
   "devDependencies": {
     "@types/chai": "^4.3.11",
