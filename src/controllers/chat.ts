@@ -2,7 +2,7 @@ import WSS from '@/services/ws';
 import ChatAPI from '@/api/chat-api';
 import UserAPI from '@/api/user-api';
 import store from '@/services/store';
-import { IChat } from '@/types';
+import { IChat, IProps } from '@/types';
 
 type IgetChatToken = { token: string };
 
@@ -64,7 +64,9 @@ class ChatController {
       if (!chatActiveId) {
         return;
       }
-      await this.chatApi.addChatUser(userId, chatActiveId);
+
+      const response = await this.chatApi.addChatUser(userId, chatActiveId);
+      console.log('ChatController addChatUser', response);
     } catch (e: any) {
       console.error(e.message);
       throw e;
@@ -149,6 +151,19 @@ class ChatController {
 
   async disconnect() {
     await WSS.disconnect();
+  }
+
+  public async chatAvatarSave(data: IProps) {
+    const chatId = store?.getState()?.chatActiveId;
+    if (!chatId) {
+      return;
+    }
+    try {
+      await this.chatApi.saveAvatar(data);
+    } catch (e: any) {
+      console.error(e.message);
+      throw e;
+    }
   }
 }
 

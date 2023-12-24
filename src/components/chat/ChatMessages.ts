@@ -13,6 +13,7 @@ import store, { StoreEvents } from '@/services/store.ts';
 import chatController from '@/controllers/chat';
 import Link from '@/components/nav/link.ts';
 import { alertClean, cleanInput, validatorMessage } from '@/services/validator.ts';
+import ModalAvatarChat from '../modal/modalAvatarChat.ts';
 
 export default class ChatMessages extends Block {
   constructor() {
@@ -70,6 +71,9 @@ export default class ChatMessages extends Block {
       ],
       h1: 'Удаление пользователя',
     });
+    this.children.modalAvatar = new ModalAvatarChat({
+      id: `modal-avatar-chat`,
+    });
     this.children.useradd = new Link({
       id: 'adduser',
       name: 'Добавить пользователя',
@@ -92,6 +96,17 @@ export default class ChatMessages extends Block {
           // console.log('Удалить пользователя');
           await chatController.usersInChat();
           modalOpen('userdelete');
+        },
+      },
+    });
+    this.children.chatavatar = new Link({
+      id: 'chatavatar',
+      name: 'Аватар чата',
+      class: 'a',
+      icon: 'download',
+      events: {
+        async click() {
+          modalOpen('avatar-chat');
         },
       },
     });

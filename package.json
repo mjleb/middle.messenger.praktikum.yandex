@@ -10,22 +10,11 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "test": "mocha",
-    "lint:ts": "eslint \"**/*.{ts,tsx}\"",
-    "lint:style": "npx stylelint **/*.css"
+    "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{ts, tsx}": [
-      "npm run lint:ts",
-      "npm run test"
-    ],
-    "*.{css}": [
-      "npm run lint:style"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "*.ts": "npx eslint src/**/*",
+    "src/**/*.css": "npx stylelint src/**/*"
   },
   "devDependencies": {
     "@types/chai": "^4.3.11",

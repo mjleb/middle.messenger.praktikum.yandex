@@ -15,13 +15,15 @@ function validatorPageLogin(formname: string): boolean {
   console.log('formname', formname);
   alertClean(formname);
   let FlagError = true;
-  if (validatorRules('id-login', 'login')) {
+  if (validatorRules('form-login-id-login', 'login')) {
+    //  console.log('validatorRules login', validatorRules('form-login-id-login', 'login'));
     FlagError = false;
   }
-  if (validatorRules('id-password', 'password')) {
+  if (validatorRules('form-login-id-password', 'password')) {
+    // console.log('validatorRules password', validatorRules('form-login-id-password', 'password'));
     FlagError = false;
   }
-  console.log(FlagError);
+  // console.log('validatorRules', FlagError);
   return FlagError;
 }
 
@@ -52,7 +54,7 @@ class PageLogin extends Block {
           class: ['validator-login'],
           label: 'Логин',
           name: 'login',
-          id: 'id-login',
+          id: 'form-login-id-login',
           type: 'text',
           required: true,
           status: '',
@@ -64,7 +66,7 @@ class PageLogin extends Block {
           class: ['validator-password'],
           label: 'Пароль',
           name: 'password',
-          id: 'id-password',
+          id: 'form-login-id-password',
           type: 'password',
           required: true,
           status: '',

@@ -1,6 +1,11 @@
 const tpl: string = `
 <div>
-    <span class="img"><img src="{{avatar}}" /> </span>
+    <span class="img">
+    {{#if avatar}}
+        <img src="https://ya-praktikum.tech/api/v2/resources{{avatar}}" />
+    {{/if}}
+ 
+    </span>
 </div>
 <div class="content">
     <div class="title">
