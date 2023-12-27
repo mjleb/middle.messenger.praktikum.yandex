@@ -1,9 +1,9 @@
-import Block from '@/services/block';
-import tpl from '@/components/nav/link.tpl';
-import { IProps } from '@/types';
-import authController from '@/controllers/auth';
-import router from '@/services/router';
-import links from '@/pages/links.json';
+import Block from '../../services/block';
+import tpl from './link.tpl';
+import { IProps } from '../../types';
+import authController from '../../controllers/auth';
+import router from '../../services/router';
+import links from '../../pages/links.json' assert { type: 'json' };
 
 export default class Link extends Block {
   constructor(props: IProps) {
@@ -22,13 +22,6 @@ export default class Link extends Block {
     return this.compile(tpl, { ...this.props });
   }
 }
-
-/*
-    this.children.linkProfile = boxLinkProfile;
-    this.children.linkProfileEdit = boxLinkProfileEdit;
-    this.children.linkProfilePassword = boxLinkProfilePassword;
-    this.children.linkLogout = boxLinkLogout;
-*/
 
 // ------------------------
 export const boxLinkLogout = new Link({

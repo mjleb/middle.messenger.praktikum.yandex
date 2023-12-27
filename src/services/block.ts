@@ -2,7 +2,7 @@ import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 import EventBus from './event-bus.ts';
 import { isEmpty } from './helpers.ts';
-import authController from '@/controllers/auth';
+import authController from '../controllers/auth';
 
 type PropsType = Record<string, any>;
 
@@ -112,7 +112,7 @@ export default abstract class Block {
   // EVENT: "init" function
   _init() {
     if (this._logging) {
-      console.log('EVENT: INIT', this);
+      // console.log('EVENT: INIT', this);
     }
     this.init();
 

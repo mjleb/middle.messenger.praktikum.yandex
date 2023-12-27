@@ -1,16 +1,15 @@
 import { fJSONparse } from './helpers';
-import router from './router';
-import { IoptionsRequest } from '@/types';
-import links from '@/pages/links.json';
+import { IoptionsRequest } from '../types';
+import links from '../pages/links.json' assert { type: 'json' };
 
-const METHODS = {
+export const METHODS = {
   GET: 'GET',
   POST: 'POST',
   PUT: 'PUT',
   DELETE: 'DELETE',
 } as const;
 
-function queryStringify(data: Record<string, any>) {
+export function queryStringify(data: Record<string, any>) {
   let url = '';
   for (const [key, value] of Object.entries(data)) {
     if (url.length != 0) {
@@ -18,16 +17,17 @@ function queryStringify(data: Record<string, any>) {
     }
     url += `${key}=${value}`;
   }
-  console.log('url', url);
-  return url;
+  // encodeURI(
+
+  return encodeURI(url);
 }
-type RequestOptionsProps = {
+export type RequestOptionsProps = {
   data?: Record<string, any>;
   headers?: Record<string, string>;
   timeout?: number;
   type?: string;
 };
-type HTTPMethodProps = (url: string, options?: RequestOptionsProps) => Promise<unknown>;
+export type HTTPMethodProps = (url: string, options?: RequestOptionsProps) => Promise<unknown>;
 
 // type HTTPMethod = <T>(url: string, options?: Ioptions) => Promise<T>;
 
@@ -56,6 +56,7 @@ class HTTPTransport {
       const xhr = new XMLHttpRequest();
 
       xhr.open(method, url);
+      // console.log('url', url);
 
       if (headers && Object.keys(headers).length) {
         Object.keys(headers).forEach((header) => {
@@ -76,7 +77,8 @@ class HTTPTransport {
         if (this.status !== 200) {
           const path = window.location.pathname;
           if (this.status == 401 && path != `${links.login}` && path != `${links.signup}`) {
-            router.go(links.login);
+            reject(new Error('401'));
+            // router.go(links.login);
           }
           const { reason } = responseText;
           console.warn(`Wrong: ${reason}`);

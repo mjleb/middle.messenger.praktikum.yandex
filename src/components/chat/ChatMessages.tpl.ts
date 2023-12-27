@@ -1,6 +1,7 @@
 const tpl: string = `
 {{{modalAdd}}}
 {{{modalDelete}}}
+{{{modalAvatar}}}
 {{#if chatTitle }}
     <div class="user">
          {{chatTitle}}
@@ -14,6 +15,7 @@ const tpl: string = `
                 <div>
                     {{{useradd}}}
                     {{{userdelete}}}
+                    {{{chatavatar}}}
                 </div>
             </div>
         </div>

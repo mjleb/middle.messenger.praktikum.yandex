@@ -172,6 +172,21 @@
     }
   }
 
+  & .img {
+    display: flex;
+    width: 47px;
+    height: 47px;
+    background-color: #efefef;
+    border-radius: 50%;
+    border: 1px solid #dedede;
+
+    & img {
+      border-radius: 50%;
+      width: 47px;
+      height: 47px;
+    }
+  }
+
   & .context {
     display: flex;
     flex-direction: column;
@@ -344,15 +359,6 @@
     border-top: 1px solid #eaeaea;
   }
 
-  & .img {
-    display: flex;
-    width: 47px;
-    height: 47px;
-    background-color: #efefef;
-    border-radius: 50%;
-    border: 1px solid #dedede;
-  }
-
   & .profile-link {
     margin-bottom: 20px;
     text-align: right;
@@ -361,6 +367,12 @@
     & a,
     & .link {
       color: #999;
+    }
+  }
+
+  & #form-file-chat-modal-avatar-chat {
+    & input {
+      height: auto;
     }
   }
 }

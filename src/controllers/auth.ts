@@ -1,7 +1,7 @@
-import AuthAPI from '@/api/auth-api';
-import links from '@/pages/links.json';
-import store from '@/services/store';
-import router from '@/services/router';
+import AuthAPI from '../api/auth-api';
+import links from '../pages/links.json' assert { type: 'json' };
+import store from '../services/store';
+import router from '../services/router';
 
 class AuthController {
   authApi = new AuthAPI();
@@ -11,6 +11,7 @@ class AuthController {
     const path = window.location.pathname;
     try {
       const user = await this.authApi.request();
+
       if (user) {
         // if (isEmpty(userStore)) {        }
         if (userStore != user) {
@@ -23,6 +24,9 @@ class AuthController {
       return true;
     } catch (e: any) {
       console.error(e.message);
+      if (e.message == '401' && path != `${links.login}` && path != `${links.signup}`) {
+        router.go(links.login);
+      }
       return false;
     }
   }

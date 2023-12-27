@@ -1,27 +1,29 @@
 import tpl from './login.tpl';
-import links from '../links.json';
-import Block from '@/services/block';
-import Input from '@/components/forms/input/index';
-import Button from '@/components/forms/button/button';
-import Form from '@/components/forms/form/form';
-import { submitForm } from '@/services/helpers';
-import authController from '@/controllers/auth';
-import connect, { connectProps } from '@/services/connect';
-import Link from '@/components/nav/link';
-import router from '@/services/router';
-import { alertClean, alertMessage, alertSuccess, validatorRules } from '@/services/validator';
+import links from '../links.json' assert { type: 'json' };
+import Block from '../../services/block';
+import Input from '../../components/forms/input/index';
+import Button from '../../components/forms/button/button';
+import Form from '../../components/forms/form/form';
+import { submitForm } from '../../services/helpers';
+import authController from '../../controllers/auth';
+import connect, { connectProps } from '../../services/connect';
+import Link from '../../components/nav/link';
+import router from '../../services/router';
+import { alertClean, alertMessage, alertSuccess, validatorRules } from '../../services/validator';
 
 function validatorPageLogin(formname: string): boolean {
   console.log('formname', formname);
   alertClean(formname);
   let FlagError = true;
-  if (validatorRules('id-login', 'login')) {
+  if (validatorRules('form-login-id-login', 'login')) {
+    //  console.log('validatorRules login', validatorRules('form-login-id-login', 'login'));
     FlagError = false;
   }
-  if (validatorRules('id-password', 'password')) {
+  if (validatorRules('form-login-id-password', 'password')) {
+    // console.log('validatorRules password', validatorRules('form-login-id-password', 'password'));
     FlagError = false;
   }
-  console.log(FlagError);
+  // console.log('validatorRules', FlagError);
   return FlagError;
 }
 
@@ -52,7 +54,7 @@ class PageLogin extends Block {
           class: ['validator-login'],
           label: 'Логин',
           name: 'login',
-          id: 'id-login',
+          id: 'form-login-id-login',
           type: 'text',
           required: true,
           status: '',
@@ -64,7 +66,7 @@ class PageLogin extends Block {
           class: ['validator-password'],
           label: 'Пароль',
           name: 'password',
-          id: 'id-password',
+          id: 'form-login-id-password',
           type: 'password',
           required: true,
           status: '',

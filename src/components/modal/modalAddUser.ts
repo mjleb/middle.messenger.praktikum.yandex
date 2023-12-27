@@ -106,9 +106,10 @@ export default class ModalAddUser extends Block {
               async click() {
                 alertClean('form-user-add');
                 try {
-                  await chatController.addChatUser(item.id);
+                  const res = await chatController.addChatUser(item.id);
+                  console.log(`Пользователь  ${item.login} добавлен в чат`, res);
                   store.set('searchusers', []);
-                  cleanInput('id-login');
+                  cleanInput('form-user-add-id-login');
                   alertMessage('success', 'form-user-add', `Пользователь  ${item.login} добавлен в чат`);
                 } catch (error: any) {
                   alertMessage('error', 'form-user-add', error.message);

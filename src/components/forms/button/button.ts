@@ -1,5 +1,5 @@
-import Block from '@/services/block.ts';
-import { IProps } from '@/types.ts';
+import Block from '../../../services/block.ts';
+import { IProps } from '../../../types.ts';
 import tpl from './button.tpl.ts';
 
 export default class Button extends Block {

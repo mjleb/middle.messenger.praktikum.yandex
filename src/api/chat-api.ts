@@ -1,4 +1,5 @@
 import BaseAPI from './base-api';
+import { IProps } from '@/types';
 import HTTPTransport from '@/services/http';
 
 const chatAPIInstance = new HTTPTransport();
@@ -36,5 +37,9 @@ export default class ChatAPI extends BaseAPI {
     return chatAPIInstance.delete(`${ChatAPI.apiPath}/users`, {
       data: { users: [userId], chatId },
     });
+  }
+
+  saveAvatar(data: IProps) {
+    return chatAPIInstance.put(`${ChatAPI.apiPath}/avatar`, { data, type: 'form' });
   }
 }

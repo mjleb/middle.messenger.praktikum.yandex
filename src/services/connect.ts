@@ -1,7 +1,6 @@
-import Block from '@/services/block';
-
-import { Indexed } from '@/types';
-import store, { StoreEvents } from '@/services/store';
+import Block from './block';
+import { Indexed } from '../types';
+import store, { StoreEvents } from './store';
 
 export default function connect(Component: typeof Block, mapStateToProps: (state: Indexed) => Indexed) {
   // используем class expression
